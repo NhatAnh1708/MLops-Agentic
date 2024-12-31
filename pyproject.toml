@@ -5,9 +5,5 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "fastapi[standard]>=0.115.6",
-    "loguru>=0.7.3",
     "pydantic>=2.10.3",
-    "pylint>=3.3.3",
-    "ruff>=0.8.4",
 ]
