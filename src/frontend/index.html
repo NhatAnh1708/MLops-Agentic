@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dony AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .chat-container {
+            height: calc(100vh - 180px);
+            overflow-y: auto;
+            padding: 0 15%;
+            margin-bottom: 0;
+        }
+        .message {
+            max-width: 100%;
+            margin: 20px 0;
+            padding: 16px;
+            border-radius: 8px;
+            line-height: 1.5;
+            font-size: 16px;
+        }
+        .user-message {
+            background-color: #FB923C;
+            color: white;
+            border: 1px solid #F97316;
+        }
+        .bot-message {
+            background-color: white;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+        }
+        .message-container {
+            display: flex;
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        .message-content {
+            flex: 1;
+            overflow-x: auto;
+        }
+        .input-container {
+            max-width: 48rem;
+            margin: 0 auto;
+            position: relative;
+            padding: 1rem;
+        }
+        .input-box {
+            border: 2px solid #FB923C;
+            box-shadow: 0 0 10px rgba(251, 146, 60, 0.1);
+            border-radius: 0.75rem;
+            background-color: #FFF7ED;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .input-box:focus-within {
+            border-color: #F97316;
+            box-shadow: 0 0 15px rgba(251, 146, 60, 0.2);
+        }
+        #messageInput::placeholder {
+            color: #FB923C;
+        }
+        #sendButton {
+            color: #F97316;
+        }
+        #sendButton:hover {
+            color: #EA580C;
+        }
+        .pulse-animation {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .sidebar {
+            width: 260px;
+        }
+        #pdf-container {
+            margin-top: 20px;
+            width: 100%;
+            height: 480px;
+            display: none;
+        }
+        .main-chat-area {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .mode-btn {
+            color: #9CA3AF;
+            transition: all 0.2s;
+        }
+        .mode-btn:hover {
+            color: white;
+        }
+        .mode-btn.active {
+            background-color: #4B5563;
+            color: white;
+        }
+        .markdown-body {
+            color: #24292e;
+            line-height: 1.5;
+        }
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow: auto;
+        }
+        .markdown-body code {
+            background-color: rgba(27,31,35,.05);
+            border-radius: 3px;
+            padding: .2em .4em;
+            margin: 0;
+            font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+            font-size: 85%;
+        }
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            font-size: 100%;
+            word-break: normal;
+            white-space: pre;
+            border: 0;
+        }
+        .markdown-body p {
+            margin-bottom: 16px;
+        }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3,
+        .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 2em;
+            margin-bottom: 16px;
+        }
+        .markdown-body blockquote {
+            padding: 0 1em;
+            color: #6a737d;
+            border-left: 0.25em solid #dfe2e5;
+            margin: 0 0 16px 0;
+        }
+        .markdown-body table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 16px 0;
+            width: 100%;
+        }
+        .markdown-body table th,
+        .markdown-body table td {
+            padding: 6px 13px;
+            border: 1px solid #dfe2e5;
+        }
+        .markdown-body table tr {
+            background-color: #fff;
+            border-top: 1px solid #c6cbd1;
+        }
+        .markdown-body table tr:nth-child(2n) {
+            background-color: #f6f8fa;
+        }
+        /* Notification styles */
+        .notifications-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notification {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            max-width: 450px;
+            animation: slideIn 0.3s ease-out;
+            border-left: 4px solid;
+        }
+
+        .notification.error {
+            border-left-color: #ef4444;
+        }
+
+        .notification.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .notification.info {
+            border-left-color: #3b82f6;
+        }
+
+        .notification-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .notification-message {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .notification-close {
+            flex-shrink: 0;
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+
+        .notification-close:hover {
+            color: #4b5563;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div id="chatOptionsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 w-[600px] max-w-90vw">
+            <h2 class="text-2xl font-bold text-center mb-6">Choose Chat Mode</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Text Chat Option -->
+                <div onclick="startNewChat('text')" class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-blue-500 transition-all">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-keyboard text-2xl text-blue-500"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg">Text Chat</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm text-center">Type and chat with AI assistant</p>
+                </div>
+
+                <!-- Voice Chat Option -->
+                <div onclick="startNewChat('voice')" class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-green-500 transition-all">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-microphone text-2xl text-green-500"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg">Voice Chat</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm text-center">Talk with AI using your voice</p>
+                </div>
+
+                <!-- Screen Share Option -->
+                <div onclick="startNewChat('screen')" class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-purple-500 transition-all">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-desktop text-2xl text-purple-500"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg">Screen Share</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm text-center">Share your screen for assistance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="textChatContainer" class="hidden flex-1 flex flex-col">
+        <!-- Chat Messages Area -->
+        <div class="flex-1 bg-gray-50 overflow-hidden">
+            <div class="chat-container p-4">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-robot text-2xl text-blue-500"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">AI Assistant</h2>
+                    <p class="text-gray-600">How can I help you today?</p>
+                </div>
+                <div id="textMessages" class="space-y-4">
+                    <!-- Messages will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Input Area -->
+        <div class="border-t border-gray-200 bg-white p-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-end space-x-2">
+                    <div class="flex-1 relative">
+                        <textarea 
+                            id="textInput"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 resize-none overflow-hidden focus:outline-none focus:border-blue-500"
+                            placeholder="Type your message..."
+                            rows="1"
+                            style="min-height: 44px; max-height: 200px;"
+                        ></textarea>
+                        <button id="sendTextMessage" class="absolute right-2 bottom-2 text-blue-500 hover:text-blue-600 disabled:text-gray-400">
+                            <i class="fas fa-paper-plane text-lg"></i>
+                        </button>
+                    </div>
+                    <button id="textMicButton" class="p-2 text-gray-500 hover:text-blue-500 rounded-full hover:bg-blue-50">
+                        <i class="fas fa-microphone text-lg"></i>
+                    </button>
+                </div>
+                <div class="text-xs text-gray-500 mt-2 text-center">
+                    Press Enter to send, Shift + Enter for new line
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screenShareContainer" class="hidden w-full">
+        <div class="p-4 bg-gray-100">
+            <video id="screenVideo" class="w-full h-64 bg-black rounded-lg" autoplay></video>
+            <div class="mt-4 flex justify-center">
+                <button id="startScreenShare" class="bg-purple-500 text-white px-6 py-2 rounded-lg">
+                    <i class="fas fa-desktop mr-2"></i>
+                    Start Sharing
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thêm popup cho screen mode -->
+    <div id="screenModePopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-[800px] max-h-[90vh] overflow-y-auto">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-900" id="screenModeTitle">Choose Screen Mode</h3>
+                <button onclick="closeScreenModePopup()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Mode Selection Buttons -->
+            <div id="screenModeSelection" class="space-y-4 mb-6">
+                <!-- Camera Option -->
+                <button onclick="startScreenMode('camera')" class="w-full flex items-center space-x-3 p-4 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-camera text-blue-500 text-xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <div class="font-semibold text-gray-900">Camera</div>
+                        <div class="text-sm text-gray-500">Start video call with camera</div>
+                    </div>
+                </button>
+
+                <!-- Screen Share Option -->
+                <button onclick="startScreenMode('screen')" class="w-full flex items-center space-x-3 p-4 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-desktop text-purple-500 text-xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <div class="font-semibold text-gray-900">Screen Share</div>
+                        <div class="text-sm text-gray-500">Share your screen</div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Video Preview Container -->
+            <div id="videoPreviewContainer" class="hidden">
+                <div class="flex space-x-4">
+                    <!-- Video Preview -->
+                    <div class="w-1/2">
+                        <video id="screenVideo" class="w-full h-[400px] bg-black rounded-lg object-contain mb-4" autoplay></video>
+                        <div class="flex justify-end space-x-2">
+                            <button onclick="stopScreenMode()" class="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200">
+                                <i class="fas fa-stop mr-1"></i>
+                                Stop Sharing
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Chat Section -->
+                    <div class="w-1/2 flex flex-col bg-gray-50 rounded-lg">
+                        <!-- Chat Messages -->
+                        <div id="videoChatMessages" class="flex-1 overflow-y-auto p-4 space-y-4" style="height: 320px;">
+                            <!-- Messages will appear here -->
+                            <div class="text-center text-gray-500 text-sm mb-4">
+                                Start chatting while sharing your screen/camera
+                            </div>
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="p-4 bg-white border-t rounded-b-lg">
+                            <div class="flex items-end space-x-2">
+                                <div class="flex-1 relative">
+                                    <textarea 
+                                        id="videoChatInput"
+                                        class="w-full resize-none border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
+                                        placeholder="Type your message..."
+                                        rows="1"
+                                        style="min-height: 40px; max-height: 120px;"
+                                    ></textarea>
+                                </div>
+                                <button onclick="sendVideoMessage()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sửa lại error modal -->
+    <div id="errorModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 w-[400px] shadow-xl">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-circle text-4xl text-red-500"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Connection Failed</h3>
+                <p class="text-gray-600 mb-6">
+                    Unable to connect to chat server. Please check your connection and try again.
+                </p>
+                <div class="flex justify-center space-x-3">
+                    <button onclick="retryConnection()" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-redo mr-2"></i>
+                        Retry
+                    </button>
+                    <button onclick="closeErrorModal()" class="bg-gray-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notifications-container"></div>
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar bg-gray-900 text-white p-4 flex flex-col">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 mb-6">
+                <img src="https://placehold.co/40x40" alt="Logo" class="rounded-lg">
+                <span class="text-xl font-bold">Dony AI</span>
+            </div>
+
+            <!-- New Chat Button -->
+            <button class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 rounded-lg p-3 mb-4 w-full">
+                <i class="fas fa-plus"></i>
+                <span>New Chat</span>
+            </button>
+
+            <!-- PDF Upload -->
+            <div class="mb-4">
+                <label class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 rounded-lg p-3 cursor-pointer">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Upload PDF</span>
+                    <input type="file" id="pdfInput" accept="application/pdf" class="hidden">
+                </label>
+            </div>
+
+            <!-- Chat History -->
+            <div class="flex-grow overflow-y-auto">
+                <div class="text-sm text-gray-400 mb-2">Recent chats</div>
+                <div class="space-y-2">
+                    <!-- Chat history items will be added here -->
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div class="border-t border-gray-700 pt-4 mt-4">
+                <div class="flex items-center space-x-3">
+                    <img src="https://placehold.co/30x30" alt="User" class="rounded-full">
+                    <span class="text-sm">User Account</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <div class="bg-gray-800 text-white p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-xl font-bold">AI Assistant</h1>
+                    <!-- Mode Switcher -->
+                    <div class="flex items-center bg-gray-700 rounded-lg p-1">
+                        <button onclick="switchMode('text')" id="textModeBtn" class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
+                            <i class="fas fa-keyboard"></i>
+                            <span class="text-sm">Text</span>
+                        </button>
+                        <button onclick="switchMode('voice')" id="voiceModeBtn" class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
+                            <i class="fas fa-microphone"></i>
+                            <span class="text-sm">Voice</span>
+                        </button>
+                        <button onclick="switchMode('screen')" id="screenModeBtn" class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
+                            <i class="fas fa-desktop"></i>
+                            <span class="text-sm">Screen</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div id="status" class="text-sm text-gray-400">Offline</div>
+                    <div id="status-indicator" class="w-3 h-3 bg-red-500 rounded-full"></div>
+                </div>
+            </div>
+
+            <!-- Main Chat Area -->
+            <div class="flex-1 flex">
+                <!-- PDF Preview -->
+                <div id="pdf-container" class="w-1/2 p-4 border-r border-gray-200">
+                    <embed id="pdfPreview" type="application/pdf" class="w-full h-full rounded-lg"/>
+                </div>
+
+                <!-- Chat Container -->
+                <div class="flex-1 bg-gray-50 overflow-hidden main-chat-area">
+                    <div id="chatLog" class="chat-container">
+                        <!-- Messages will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voice Controls -->
+            <div class="border-t border-gray-200 bg-white">
+                <!-- Voice Controls -->
+                <div id="voiceControls" class="hidden p-4">
+                    <div class="flex items-center justify-center space-x-4">
+                        <button id="startButton" class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 focus:outline-none">
+                            <i class="fas fa-microphone text-xl"></i>
+                        </button>
+                        <button id="stopButton" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-4 focus:outline-none">
+                            <i class="fas fa-stop text-xl"></i>
+                        </button>
+                    </div>
+                    <div id="recordingStatus" class="text-center mt-2 text-gray-600"></div>
+                </div>
+
+                <!-- Text Controls -->
+                <div id="textControls" class="hidden">
+                    <div class="input-container">
+                        <div class="input-box">
+                            <div class="flex items-end space-x-2">
+                                <div class="flex-1 relative">
+                                    <textarea 
+                                        id="messageInput"
+                                        class="w-full resize-none focus:outline-none border-0 bg-transparent p-0"
+                                        placeholder="Message..."
+                                        rows="1"
+                                        style="min-height: 24px; max-height: 200px;"
+                                    ></textarea>
+                                </div>
+                                <button id="sendButton" class="p-2 hover:scale-110 transition-transform">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500 text-center">
+                            Những thông tin do AI sinh ra đều cần được kiểm chứng.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        // Thêm biến cho text WebSocket URL
+        const TEXT_WS_URL = "ws://localhost:8000/ws/text";
+        const VOICE_WS_URL = "ws://localhost:8000/ws";
+
+        let currentFrameB64;
+        let webSocket = null;
+        let audioContext = null;
+        let mediaRecorder = null;
+        let processor = null;
+        let pcmData = [];
+        let interval = null;
+        let initialized = false;
+        let audioInputContext;
+        let workletNode;
+
+        // Add PDF handling
+        const pdfInput = document.getElementById('pdfInput');
+        const pdfPreview = document.getElementById('pdfPreview');
+        const pdfContainer = document.getElementById('pdf-container');
+
+        // Thêm biến để theo dõi số lần retry và thời gian chờ
+        let retryCount = 0;
+        const MAX_RETRIES = 5;
+        const RETRY_DELAY = 2000; // 2 seconds
+
+        // Cấu hình marked để xử lý code blocks tốt hơn
+        marked.setOptions({
+            highlight: function(code, lang) {
+                return code;
+            },
+            breaks: true,
+            gfm: true
+        });
+
+        window.addEventListener("load", async () => {
+            pdfInput.addEventListener('change', async (event) => {
+                console.log("pdfInput change event detected!");
+                const file = event.target.files[0];
+
+                 if (file && file.type === 'application/pdf') {
+                      const reader = new FileReader();
+
+                      reader.onload = (e) => {
+                          pdfPreview.setAttribute('src', e.target.result);
+                          pdfContainer.style.display = 'block';
+                          console.log('pdf rendered');
+                         
+                           // Convert to base64 and send immediately
+                         const base64Reader = new FileReader();
+                           base64Reader.onload = function(e){
+                            try{
+                                    const base64PDF = e.target.result.split(',')[1];
+                                    sendPDFMessage(base64PDF, file.name);
+                                }
+                                catch (err){
+                                    console.error("error processing pdf file", err)
+                                }
+
+                            };
+                           base64Reader.onerror = (err) => {
+                                console.error("error reading pdf file", err);
+                            }
+                            base64Reader.readAsDataURL(file);
+                      };
+                      reader.readAsDataURL(file);
+
+
+                    } else {
+                        alert('Please select a valid PDF file.');
+                        pdfContainer.style.display = 'none';
+                        pdfInput.value = ""; // Clear the file input
+                        pdfPreview.removeAttribute('src');
+                        console.warn("no pdf file detected");
+                    }
+
+            });
+        });
+
+        function connect(url = VOICE_WS_URL) {
+            return new Promise((resolve, reject) => {
+                try {
+                    console.log("connecting to:", url);
+                    webSocket = new WebSocket(url);
+
+                    webSocket.onclose = (event) => {
+                        console.log("websocket closed:", event);
+                        const statusIndicator = document.getElementById('status-indicator');
+                        const statusText = document.getElementById('status');
+                        statusIndicator.classList.remove('bg-green-500');
+                        statusIndicator.classList.add('bg-red-500');
+                        statusText.textContent = 'Disconnected - Retrying...';
+
+                        // Attempt to reconnect
+                        if (retryCount < MAX_RETRIES) {
+                            setTimeout(() => {
+                                retryCount++;
+                                console.log(`Attempting to reconnect... (${retryCount}/${MAX_RETRIES})`);
+                                connect(url).then(resolve).catch(reject);
+                            }, RETRY_DELAY);
+                        } else {
+                            statusText.textContent = 'Offline';
+                            reject(new Error("Max reconnection attempts reached"));
+                        }
+                    };
+
+                    webSocket.onerror = (event) => {
+                        console.log("websocket error:", event);
+                        // Don't reject here, let onclose handle reconnection
+                    };
+
+                    webSocket.onopen = (event) => {
+                        console.log("websocket open:", event);
+                        retryCount = 0; // Reset retry count on successful connection
+                        const statusIndicator = document.getElementById('status-indicator');
+                        const statusText = document.getElementById('status');
+                        statusIndicator.classList.remove('bg-red-500');
+                        statusIndicator.classList.add('bg-green-500');
+                        statusText.textContent = 'Online';
+                        
+                        if (url === VOICE_WS_URL) {
+                            sendInitialSetupMessage();
+                        }
+                        resolve();
+                    };
+
+                    webSocket.onmessage = receiveMessage;
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
+        function sendInitialSetupMessage() {
+
+            console.log("sending setup message");
+            setup_client_message = {
+                setup: {
+                    generation_config: { response_modalities: ["AUDIO"] },
+                },
+            };
+
+            webSocket.send(JSON.stringify(setup_client_message));
+        }
+
+        function sendPDFMessage(base64PDF, filename) {
+            try {
+                if (webSocket == null) {
+                    console.log("websocket not initialized");
+                    return;
+                }
+
+                const payload = {
+                    realtime_input: {
+                        media_chunks: [{
+                            mime_type: "application/pdf",
+                            data: base64PDF,
+                            filename: filename
+                        }]
+                    },
+                };
+
+                webSocket.send(JSON.stringify(payload));
+                console.log("PDF data sent immediately");
+            } catch (err) {
+                console.error("Error sending PDF message:", err);
+            }
+        }
+
+        function sendVoiceMessage(b64PCM) {
+            try {
+                if (webSocket == null) {
+                    console.log("websocket not initialized");
+                    return;
+                }
+
+                payload = {
+                    realtime_input: {
+                        media_chunks: [{
+                            mime_type: "audio/pcm",
+                            data: b64PCM,
+                        }]
+                    },
+                };
+
+                webSocket.send(JSON.stringify(payload));
+                console.log("sent payload with audio data");
+            }
+            catch (err) {
+                console.error("Error sending audio message:", err);
+            }
+
+        }
+
+        function receiveMessage(event) {
+            try {
+                const messageData = JSON.parse(event.data);
+                console.log("Received message:", messageData);
+                
+                if (messageData.type === "end") {
+                    const thinkingElement = document.getElementById('thinking');
+                    if (thinkingElement) {
+                        thinkingElement.remove();
+                    }
+                    const currentMessage = document.querySelector('.bot-message-current');
+                    if (currentMessage) {
+                        currentMessage.classList.remove('bot-message-current');
+                    }
+                    return;
+                }
+
+                if (messageData.type === "error") {
+                    // Thay vì hiển thị trong chat, show notification
+                    const errorText = typeof messageData.text === 'object' ? 
+                        JSON.stringify(messageData.text) : messageData.text;
+                    
+                    // Xác định loại lỗi và tiêu đề phù hợp
+                    let title = "Error";
+                    if (errorText.includes("API limit reached")) {
+                        title = "API Limit Reached";
+                    } else if (errorText.includes("service is currently at capacity")) {
+                        title = "Service Capacity";
+                    } else if (errorText.includes("Connection error")) {
+                        title = "Connection Error";
+                    }
+                    
+                    showNotification('error', title, errorText);
+                    
+                    // Remove thinking indicator if exists
+                    const thinkingElement = document.getElementById('thinking');
+                    if (thinkingElement) {
+                        thinkingElement.remove();
+                    }
+                    return;
+                }
+
+                if (messageData.type === "chunk") {
+                    let currentBotMessage = document.querySelector('.bot-message-current');
+                    
+                    if (!currentBotMessage) {
+                        const thinkingElement = document.getElementById('thinking');
+                        if (thinkingElement) {
+                            thinkingElement.remove();
+                        }
+
+                        const div = document.getElementById('chatLog');
+                        const messageContainer = document.createElement("div");
+                        messageContainer.className = "message-container";
+                        
+                        const avatar = document.createElement("div");
+                        avatar.className = "message-avatar";
+                        avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>`;
+                        
+                        const messageContent = document.createElement("div");
+                        messageContent.className = "message-content";
+                        
+                        const messageParagraph = document.createElement("div");
+                        messageParagraph.className = "bot-message message bot-message-current markdown-body";
+                        
+                        // Convert and render markdown
+                        const messageText = typeof messageData.text === 'object' ? 
+                            JSON.stringify(messageData.text) : messageData.text;
+                        
+                        // Always treat response as markdown
+                        messageParagraph.innerHTML = marked.parse(messageText);
+                        messageParagraph.setAttribute('data-raw-content', messageText);
+                        
+                        messageContent.appendChild(messageParagraph);
+                        messageContainer.appendChild(avatar);
+                        messageContainer.appendChild(messageContent);
+                        div.appendChild(messageContainer);
+                    } else {
+                        // Update entire content with new response
+                        const messageText = typeof messageData.text === 'object' ? 
+                            JSON.stringify(messageData.text) : messageData.text;
+                        
+                        currentBotMessage.innerHTML = marked.parse(messageText);
+                        currentBotMessage.setAttribute('data-raw-content', messageText);
+                    }
+
+                    const chatLog = document.getElementById('chatLog');
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                }
+            }
+            catch (err) {
+                console.error("Error receiving message:", err);
+                console.error("Raw message data:", event.data);
+                showNotification('error', 'Error', 'An unexpected error occurred');
+            }
+        }
+
+        async function initializeAudioContext() {
+            if (initialized) return;
+
+            audioInputContext = new (window.AudioContext ||
+                window.webkitAudioContext)({
+                sampleRate: 24000
+            });
+            await audioInputContext.audioWorklet.addModule("pcm-processor.js");
+            workletNode = new AudioWorkletNode(audioInputContext, "pcm-processor");
+            workletNode.connect(audioInputContext.destination);
+            initialized = true;
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function convertPCM16LEToFloat32(pcmData) {
+            const inputArray = new Int16Array(pcmData);
+            const float32Array = new Float32Array(inputArray.length);
+
+            for (let i = 0; i < inputArray.length; i++) {
+                float32Array[i] = inputArray[i] / 32768;
+            }
+
+            return float32Array;
+        }
+
+        async function injestAudioChuckToPlay(base64AudioChunk) {
+            try {
+                if (audioInputContext.state === "suspended") {
+                    await audioInputContext.resume();
+                }
+                const arrayBuffer = base64ToArrayBuffer(base64AudioChunk);
+                const float32Data = convertPCM16LEToFloat32(arrayBuffer);
+
+                workletNode.port.postMessage(float32Data);
+            }
+            catch (error) {
+                console.error("Error processing audio chunk:", error);
+            }
+        }
+
+        function recordChunk() {
+            const buffer = new ArrayBuffer(pcmData.length * 2);
+            const view = new DataView(buffer);
+            pcmData.forEach((value, index) => {
+                view.setInt16(index * 2, value, true);
+            });
+
+            const base64 = btoa(
+                String.fromCharCode.apply(null, new Uint8Array(buffer))
+            );
+
+            sendVoiceMessage(base64);
+            pcmData = [];
+        }
+
+        async function startAudioInput() {
+            audioContext = new AudioContext({
+                sampleRate: 16000,
+            });
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    channelCount: 1,
+                    sampleRate: 16000,
+                },
+            });
+
+            const source = audioContext.createMediaStreamSource(stream);
+            processor = audioContext.createScriptProcessor(4096, 1, 1);
+
+            processor.onaudioprocess = (e) => {
+                const inputData = e.inputBuffer.getChannelData(0);
+                const pcm16 = new Int16Array(inputData.length);
+                for (let i = 0; i < inputData.length; i++) {
+                    pcm16[i] = inputData[i] * 0x7fff;
+                }
+                pcmData.push(...pcm16);
+            };
+
+            source.connect(processor);
+            processor.connect(audioContext.destination);
+
+            interval = setInterval(recordChunk, 3000);
+        }
+
+        function stopAudioInput() {
+            if (processor) {
+                processor.disconnect();
+            }
+            if (audioContext) {
+                audioContext.close();
+            }
+
+            clearInterval(interval);
+        }
+
+        function displayMessage(message) {
+            console.log(message);
+            addParagraphToDiv("chatLog", message);
+        }
+
+        function addParagraphToDiv(divId, text) {
+            const div = document.getElementById(divId);
+            const messageContainer = document.createElement("div");
+            messageContainer.className = "message-container";
+            
+            // Xác định loại tin nhắn
+            const isUser = text.startsWith("You:");
+            const avatar = document.createElement("div");
+            avatar.className = "message-avatar";
+            
+            // Set avatar based on message type
+            if (isUser) {
+                avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                    <i class="fas fa-user text-white"></i>
+                </div>`;
+            } else {
+                avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                    <i class="fas fa-robot text-white"></i>
+                </div>`;
+            }
+            
+            const messageContent = document.createElement("div");
+            messageContent.className = "message-content";
+            
+            const messageParagraph = document.createElement("p");
+            messageParagraph.className = isUser ? "user-message message" : "bot-message message";
+            
+            // Xử lý text để loại bỏ prefix "You:" hoặc "GEMINI:"
+            const displayText = text.replace(/^(You:|GEMINI:)\s*/, '');
+            messageParagraph.textContent = displayText;
+            
+            messageContent.appendChild(messageParagraph);
+            messageContainer.appendChild(avatar);
+            messageContainer.appendChild(messageContent);
+            div.appendChild(messageContainer);
+            
+            // Scroll to bottom
+            div.scrollTop = div.scrollHeight;
+        }
+
+        startButton.addEventListener('click', startAudioInput);
+        stopButton.addEventListener('click', stopAudioInput);
+
+        class Response {
+            constructor(data) {
+                this.text = null;
+                this.audioData = null;
+                this.endOfTurn = null;
+
+                if (data.text) {
+                    this.text = data.text
+                }
+
+                if (data.audio) {
+                    this.audioData = data.audio;
+                }
+            }
+        }
+
+        // Thêm hàm xử lý screen mode
+        function showScreenModePopup() {
+            document.getElementById('screenModePopup').classList.remove('hidden');
+        }
+
+        function closeScreenModePopup() {
+            // Stop screen/camera sharing
+            stopScreenMode();
+            
+            // Hide popup
+            document.getElementById('screenModePopup').classList.add('hidden');
+            
+            // Switch back to text mode
+            switchMode('text');
+        }
+
+        async function startScreenMode(type) {
+            const selectionDiv = document.getElementById('screenModeSelection');
+            const previewDiv = document.getElementById('videoPreviewContainer');
+            const titleElement = document.getElementById('screenModeTitle');
+            const video = document.getElementById('screenVideo');
+
+            try {
+                let stream;
+                if (type === 'camera') {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: true
+                    });
+                    titleElement.textContent = 'Camera Preview';
+                } else {
+                    stream = await navigator.mediaDevices.getDisplayMedia({
+                        video: true
+                    });
+                    titleElement.textContent = 'Screen Share Preview';
+                }
+                
+                video.srcObject = stream;
+                
+                // Show video preview, hide selection buttons
+                selectionDiv.classList.add('hidden');
+                previewDiv.classList.remove('hidden');
+
+                // Handle stream stop
+                stream.getTracks()[0].onended = () => {
+                    stopScreenMode();
+                };
+            } catch (err) {
+                console.error("Error starting " + type + ":", err);
+            }
+        }
+
+        // Thêm hàm dừng screen/camera
+        function stopScreenMode() {
+            const video = document.getElementById('screenVideo');
+            const selectionDiv = document.getElementById('screenModeSelection');
+            const previewDiv = document.getElementById('videoPreviewContainer');
+            const titleElement = document.getElementById('screenModeTitle');
+
+            // Stop all tracks
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
+
+            // Reset UI
+            titleElement.textContent = 'Choose Screen Mode';
+            previewDiv.classList.add('hidden');
+            selectionDiv.classList.remove('hidden');
+        }
+
+        // Sửa lại hàm switchMode
+        async function switchMode(mode) {
+            // Update active button
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`${mode}ModeBtn`).classList.add('active');
+
+            // Hide all controls
+            document.getElementById('voiceControls').classList.add('hidden');
+            document.getElementById('textControls').classList.add('hidden');
+            document.getElementById('screenShareContainer').classList.add('hidden');
+
+            // Cleanup current connections if needed
+            if (webSocket && mode !== 'voice') {
+                webSocket.close();
+                webSocket = null;
+            }
+            if (audioContext && mode !== 'voice') {
+                audioContext.close();
+                audioContext = null;
+            }
+            clearInterval(interval);
+
+            // Initialize new mode
+            switch(mode) {
+                case 'text':
+                    document.getElementById('textControls').classList.remove('hidden');
+                    document.querySelector('h1.text-xl').textContent = 'AI Assistant';
+                    initializeTextChat();
+                    break;
+                case 'voice':
+                    document.getElementById('voiceControls').classList.remove('hidden');
+                    document.querySelector('h1.text-xl').textContent = 'Voice Assistant';
+                    await initializeVoiceChat();
+                    break;
+                case 'screen':
+                    showScreenModePopup();
+                    break;
+            }
+        }
+
+        function showErrorModal() {
+            // Ẩn tất cả các modal khác
+            document.getElementById('chatOptionsModal').classList.add('hidden');
+            document.getElementById('screenModePopup').classList.add('hidden');
+            
+            // Hiện error modal
+            document.getElementById('errorModal').classList.remove('hidden');
+            
+            // Reset UI status
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusText = document.getElementById('status');
+            statusIndicator.classList.remove('bg-green-500');
+            statusIndicator.classList.add('bg-red-500');
+            statusText.textContent = 'Offline';
+        }
+
+        function closeErrorModal() {
+            document.getElementById('errorModal').classList.add('hidden');
+            document.getElementById('chatOptionsModal').classList.remove('hidden');
+        }
+
+        // Sửa lại hàm startNewChat để thêm timeout
+        async function startNewChat(type) {
+            try {
+                const testWs = new WebSocket(type === 'voice' ? VOICE_WS_URL : TEXT_WS_URL);
+                
+                // Thêm timeout cho connection
+                const timeout = setTimeout(() => {
+                    testWs.close();
+                    showErrorModal();
+                }, 5000); // 5 giây timeout
+
+                testWs.onerror = () => {
+                    clearTimeout(timeout);
+                    showErrorModal();
+                    testWs.close();
+                };
+
+                testWs.onopen = () => {
+                    clearTimeout(timeout);
+                    testWs.close();
+                    document.getElementById('chatLog').innerHTML = '';
+                    document.getElementById('chatOptionsModal').classList.add('hidden');
+                    switchMode(type);
+                };
+            } catch (error) {
+                console.error("Connection test failed:", error);
+                showErrorModal();
+            }
+        }
+
+        // Set default active mode when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('textModeBtn').classList.add('active');
+        });
+
+        // Tách riêng phần khởi tạo voice chat
+        async function initializeVoiceChat() {
+            try {
+                // Khởi tạo audio context
+                await initializeAudioContext();
+                
+                // Kết nối WebSocket với voice URL
+                await connect(VOICE_WS_URL);
+                
+                // Update UI status
+                const statusIndicator = document.getElementById('status-indicator');
+                const statusText = document.getElementById('status');
+                statusIndicator.classList.remove('bg-red-500');
+                statusIndicator.classList.add('bg-green-500');
+                statusText.textContent = 'Online';
+            } catch (error) {
+                console.error("Failed to initialize voice chat:", error);
+                // Show error notification
+                const statusIndicator = document.getElementById('status-indicator');
+                const statusText = document.getElementById('status');
+                statusIndicator.classList.remove('bg-green-500');
+                statusIndicator.classList.add('bg-red-500');
+                statusText.textContent = 'Failed to connect';
+            }
+        }
+
+        // Thêm các hàm xử lý text chat
+        async function initializeTextChat() {
+            try {
+                // Kết nối text WebSocket
+                await connect(TEXT_WS_URL);
+                
+                // Update status
+                const statusIndicator = document.getElementById('status-indicator');
+                const statusText = document.getElementById('status');
+                statusIndicator.classList.remove('bg-red-500');
+                statusIndicator.classList.add('bg-green-500');
+                statusText.textContent = 'Online';
+
+                const messageInput = document.getElementById('messageInput');
+                const sendButton = document.getElementById('sendButton');
+
+                // Auto-resize textarea
+                messageInput.addEventListener('input', () => {
+                    messageInput.style.height = 'auto';
+                    messageInput.style.height = Math.min(messageInput.scrollHeight, 200) + 'px';
+                });
+
+                // Handle Enter key
+                messageInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+
+                // Send button click
+                sendButton.addEventListener('click', sendMessage);
+
+                function sendMessage() {
+                    const message = messageInput.value.trim();
+                    if (!message) return;
+
+                    // Add message to chat
+                    displayMessage("You: " + message);
+                    
+                    // Send message through WebSocket
+                    if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+                        webSocket.send(JSON.stringify({ text: message }));
+                    } else {
+                        console.error("WebSocket not connected");
+                        // Attempt to reconnect
+                        connect(TEXT_WS_URL).then(() => {
+                            // Retry sending message after reconnection
+                            webSocket.send(JSON.stringify({ text: message }));
+                        }).catch(error => {
+                            console.error("Failed to reconnect:", error);
+                            displayMessage("System: Connection lost. Please try again.");
+                        });
+                        return;
+                    }
+                    
+                    // Clear input and reset height
+                    messageInput.value = '';
+                    messageInput.style.height = '24px';
+
+                    // Add thinking indicator
+                    addThinkingIndicator();
+                }
+            } catch (error) {
+                console.error("Failed to initialize text chat:", error);
+                // Update status to show error
+                const statusIndicator = document.getElementById('status-indicator');
+                const statusText = document.getElementById('status');
+                statusIndicator.classList.remove('bg-green-500');
+                statusIndicator.classList.add('bg-red-500');
+                statusText.textContent = 'Failed to connect';
+                
+                displayMessage("System: Failed to connect to chat server. Please try again.");
+            }
+        }
+
+        // Thêm hàm xử lý tin nhắn trong video mode
+        function sendVideoMessage() {
+            const input = document.getElementById('videoChatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add message to chat
+            addVideoMessage('You: ' + message, 'user');
+            
+            // Clear input
+            input.value = '';
+
+            // Add thinking indicator
+            addVideoMessage('AI is typing...', 'thinking');
+
+            // Simulate AI response (replace with actual API call)
+            setTimeout(() => {
+                // Remove thinking message
+                removeThinkingMessage();
+                // Add AI response
+                addVideoMessage('AI: This is a response while sharing screen/camera', 'ai');
+            }, 1000);
+        }
+
+        function addVideoMessage(text, type) {
+            const messagesDiv = document.getElementById('videoChatMessages');
+            const messageDiv = document.createElement('div');
+            
+            if (type === 'thinking') {
+                messageDiv.className = 'thinking-message flex items-center space-x-2 text-gray-500';
+                messageDiv.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <span>${text}</span>
+                        <div class="flex space-x-1">
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageDiv.className = `flex ${type === 'user' ? 'justify-end' : 'justify-start'} mb-2`;
+                messageDiv.innerHTML = `
+                    <div class="max-w-[80%] ${type === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-lg px-4 py-2">
+                        ${text}
+                    </div>
+                `;
+            }
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function removeThinkingMessage() {
+            const thinkingMessage = document.querySelector('.thinking-message');
+            if (thinkingMessage) {
+                thinkingMessage.remove();
+            }
+        }
+
+        // Thêm event listener cho Enter key trong video chat
+        document.getElementById('videoChatInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendVideoMessage();
+            }
+        });
+
+        // Auto-resize cho textarea
+        document.getElementById('videoChatInput').addEventListener('input', (e) => {
+            const textarea = e.target;
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        });
+
+        function retryConnection() {
+            closeErrorModal();
+            const lastAttemptedMode = document.querySelector('.mode-btn.active')?.id?.replace('ModeBtn', '') || 'text';
+            startNewChat(lastAttemptedMode);
+        }
+
+        // Thêm hàm kiểm tra kết nối
+        function checkConnection() {
+            if (!webSocket || webSocket.readyState !== WebSocket.OPEN) {
+                const currentMode = document.querySelector('.mode-btn.active')?.id?.replace('ModeBtn', '') || 'text';
+                const wsUrl = currentMode === 'voice' ? VOICE_WS_URL : TEXT_WS_URL;
+                
+                connect(wsUrl).catch(error => {
+                    console.error("Connection check failed:", error);
+                });
+            }
+        }
+
+        // Thêm interval để kiểm tra kết nối định kỳ
+        setInterval(checkConnection, 5000);
+
+        // Thêm hàm xử lý notifications
+        function showNotification(type, title, message, duration = 5000) {
+            const container = document.querySelector('.notifications-container');
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let iconHtml = '';
+            switch(type) {
+                case 'error':
+                    iconHtml = '<i class="fas fa-exclamation-circle text-red-500"></i>';
+                    break;
+                case 'warning':
+                    iconHtml = '<i class="fas fa-exclamation-triangle text-yellow-500"></i>';
+                    break;
+                case 'info':
+                    iconHtml = '<i class="fas fa-info-circle text-blue-500"></i>';
+                    break;
+            }
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    ${iconHtml}
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <div class="notification-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Handle close button
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            });
+            
+            // Auto remove after duration
+            if (duration) {
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 300);
+                    }
+                }, duration);
+            }
+        }
+    </script>
+</body>
+
+</html>
