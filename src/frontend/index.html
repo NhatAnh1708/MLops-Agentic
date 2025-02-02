@@ -8,8 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .chat-container {
-            height: calc(100vh - 180px);
             overflow-y: auto;
+            max-height: 700px;
             padding: 0 15%;
             margin-bottom: 0;
         }
@@ -32,6 +32,7 @@
             border: 1px solid #e5e7eb;
         }
         .message-container {
+            overflow-y: auto;
             display: flex;
             padding: 16px 0;
             border-bottom: 1px solid #e5e7eb;
@@ -44,13 +45,14 @@
         }
         .message-content {
             flex: 1;
-            overflow-x: auto;
+            overflow-y: auto;
         }
         .input-container {
             max-width: 48rem;
             margin: 0 auto;
-            position: relative;
             padding: 1rem;
+            background-color: white;
+            z-index: 10;
         }
         .input-box {
             border: 2px solid #FB923C;
@@ -60,6 +62,7 @@
             padding: 0.75rem;
             margin-bottom: 0.5rem;
             transition: all 0.2s ease;
+            margin-top: 0.5rem;
         }
         .input-box:focus-within {
             border-color: #F97316;
@@ -266,6 +269,53 @@
                 transform: translateX(100%);
                 opacity: 0;
             }
+        }
+
+        /* Toggle switch hover effect */
+        .toggle-container:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* Make toggle switch more prominent */
+        #agentToggle:checked + div {
+            background-color: #2563eb;
+        }
+
+        #agentToggle:checked + div:after {
+            transform: translateX(100%);
+        }
+
+        /* Add transition effects */
+        #agentToggle + div {
+            transition: all 0.3s ease;
+        }
+
+        #agentToggle + div:after {
+            transition: all 0.3s ease;
+        }
+
+        /* Increase clickable area */
+        .toggle-label {
+            padding: 8px;
+            margin: -8px;
+        }
+
+        .toggle-container {
+            z-index: 20;
+        }
+
+        /* Thêm style cho clear chat button hover */
+        .clear-chat-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .clear-chat-btn:hover {
+            color: #EF4444;
+        }
+
+        /* Đảm bảo chat container có thể scroll */
+        #chatLog {
+            min-height: 0; /* Quan trọng cho flexbox scroll */
         }
     </style>
 </head>
@@ -502,14 +552,20 @@
 
             <!-- Chat History -->
             <div class="flex-grow overflow-y-auto">
-                <div class="text-sm text-gray-400 mb-2">Recent chats</div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm text-gray-400">Recent chats</span>
+                    <button onclick="clearChat()" class="text-sm text-gray-400 hover:text-white flex items-center">
+                        <i class="fas fa-trash-alt mr-1"></i>
+                        Clear Chat
+                    </button>
+                </div>
                 <div class="space-y-2">
                     <!-- Chat history items will be added here -->
                 </div>
             </div>
 
             <!-- User Profile -->
-            <div class="border-t border-gray-700 pt-4 mt-4">
+            <div class="mt-auto pt-4 border-t border-gray-700">
                 <div class="flex items-center space-x-3">
                     <img src="https://placehold.co/30x30" alt="User" class="rounded-full">
                     <span class="text-sm">User Account</span>
@@ -553,49 +609,64 @@
                 </div>
 
                 <!-- Chat Container -->
-                <div class="flex-1 bg-gray-50 overflow-hidden main-chat-area">
-                    <div id="chatLog" class="chat-container">
+                <div class="flex-1 bg-gray-50 overflow-hidden flex flex-col">
+                    <div id="chatLog" class="chat-container flex-1">
                         <!-- Messages will be added here -->
                     </div>
-                </div>
-            </div>
 
-            <!-- Voice Controls -->
-            <div class="border-t border-gray-200 bg-white">
-                <!-- Voice Controls -->
-                <div id="voiceControls" class="hidden p-4">
-                    <div class="flex items-center justify-center space-x-4">
-                        <button id="startButton" class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 focus:outline-none">
-                            <i class="fas fa-microphone text-xl"></i>
-                        </button>
-                        <button id="stopButton" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-4 focus:outline-none">
-                            <i class="fas fa-stop text-xl"></i>
-                        </button>
-                    </div>
-                    <div id="recordingStatus" class="text-center mt-2 text-gray-600"></div>
-                </div>
-
-                <!-- Text Controls -->
-                <div id="textControls" class="hidden">
-                    <div class="input-container">
-                        <div class="input-box">
-                            <div class="flex items-end space-x-2">
-                                <div class="flex-1 relative">
-                                    <textarea 
-                                        id="messageInput"
-                                        class="w-full resize-none focus:outline-none border-0 bg-transparent p-0"
-                                        placeholder="Message..."
-                                        rows="1"
-                                        style="min-height: 24px; max-height: 200px;"
-                                    ></textarea>
-                                </div>
-                                <button id="sendButton" class="p-2 hover:scale-110 transition-transform">
-                                    <i class="fas fa-paper-plane"></i>
+                    <!-- Controls -->
+                    <div class="border-t border-gray-200 bg-white">
+                        <!-- Voice Controls -->
+                        <div id="voiceControls" class="hidden p-4">
+                            <div class="flex items-center justify-center space-x-4">
+                                <button id="startButton" class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 focus:outline-none">
+                                    <i class="fas fa-microphone text-xl"></i>
+                                </button>
+                                <button id="stopButton" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-4 focus:outline-none">
+                                    <i class="fas fa-stop text-xl"></i>
                                 </button>
                             </div>
+                            <div id="recordingStatus" class="text-center mt-2 text-gray-600"></div>
                         </div>
-                        <div class="text-xs text-gray-500 text-center">
-                            Những thông tin do AI sinh ra đều cần được kiểm chứng.
+
+                        <!-- Text Controls -->
+                        <div id="textControls" class="hidden">
+                            <div class="input-container">
+                                <div class="flex justify-end mb-2">
+                                    <div class="toggle-container flex items-center bg-gray-100 hover:bg-gray-200 transition-colors duration-200 px-4 py-2 rounded-lg cursor-pointer">
+                                        <span class="text-sm font-medium text-gray-700 mr-3">AI Agent</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="agentToggle" class="sr-only peer">
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+                                                rounded-full peer dark:bg-gray-600 
+                                                peer-checked:after:translate-x-full peer-checked:bg-blue-600
+                                                after:content-[''] after:absolute after:top-0.5 after:left-[2px] 
+                                                after:bg-white after:rounded-full after:h-6 after:w-6 
+                                                after:transition-all dark:border-gray-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="input-box">
+                                    <div class="flex items-end space-x-2">
+                                        <div class="flex-1 relative">
+                                            <textarea 
+                                                id="messageInput"
+                                                class="w-full resize-none focus:outline-none border-0 bg-transparent p-0"
+                                                placeholder="Message..."
+                                                rows="1"
+                                                style="min-height: 24px; max-height: 200px;"
+                                            ></textarea>
+                                        </div>
+                                        <button id="sendButton" class="p-2 hover:scale-110 transition-transform">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500 text-center">
+                                    Những thông tin do AI sinh ra đều cần được kiểm chứng.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -815,11 +886,9 @@
                 }
 
                 if (messageData.type === "error") {
-                    // Thay vì hiển thị trong chat, show notification
                     const errorText = typeof messageData.text === 'object' ? 
                         JSON.stringify(messageData.text) : messageData.text;
                     
-                    // Xác định loại lỗi và tiêu đề phù hợp
                     let title = "Error";
                     if (errorText.includes("API limit reached")) {
                         title = "API Limit Reached";
@@ -831,7 +900,6 @@
                     
                     showNotification('error', title, errorText);
                     
-                    // Remove thinking indicator if exists
                     const thinkingElement = document.getElementById('thinking');
                     if (thinkingElement) {
                         thinkingElement.remove();
@@ -872,17 +940,58 @@
                         messageParagraph.innerHTML = marked.parse(messageText);
                         messageParagraph.setAttribute('data-raw-content', messageText);
                         
-                        messageContent.appendChild(messageParagraph);
+                        // Add links if they exist
+                        if (messageData.links && messageData.links.length > 0) {
+                            const linksContainer = document.createElement("div");
+                            linksContainer.className = "mt-3 space-y-2";
+                            
+                            messageData.links.forEach(link => {
+                                const linkElement = document.createElement("a");
+                                linkElement.href = link.url;
+                                linkElement.target = "_blank";
+                                linkElement.className = "block px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors";
+                                linkElement.innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>${link.text}`;
+                                linksContainer.appendChild(linkElement);
+                            });
+                            
+                            messageContent.appendChild(messageParagraph);
+                            messageContent.appendChild(linksContainer);
+                        } else {
+                            messageContent.appendChild(messageParagraph);
+                        }
+                        
                         messageContainer.appendChild(avatar);
                         messageContainer.appendChild(messageContent);
                         div.appendChild(messageContainer);
                     } else {
-                        // Update entire content with new response
+                        // Update existing message
                         const messageText = typeof messageData.text === 'object' ? 
                             JSON.stringify(messageData.text) : messageData.text;
                         
                         currentBotMessage.innerHTML = marked.parse(messageText);
                         currentBotMessage.setAttribute('data-raw-content', messageText);
+                        
+                        // Update links if they exist
+                        const existingLinksContainer = currentBotMessage.parentElement.querySelector('.space-y-2');
+                        if (existingLinksContainer) {
+                            existingLinksContainer.remove();
+                        }
+                        
+                        if (messageData.links && messageData.links.length > 0) {
+                            const linksContainer = document.createElement("div");
+                            linksContainer.className = "mt-3 space-y-2";
+                            
+                            messageData.links.forEach(link => {
+                                const linkElement = document.createElement("a");
+                                linkElement.href = link.url;
+                                linkElement.target = "_blank";
+                                linkElement.className = "block px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors";
+                                linkElement.innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>${link.text}`;
+                                linksContainer.appendChild(linkElement);
+                            });
+                            
+                            currentBotMessage.parentElement.appendChild(linksContainer);
+                        }
                     }
 
                     const chatLog = document.getElementById('chatLog');
@@ -1294,21 +1403,30 @@
                     const message = messageInput.value.trim();
                     if (!message) return;
 
+                    // Get agent toggle state
+                    const useAgent = document.getElementById('agentToggle').checked;
+
                     // Add message to chat
                     displayMessage("You: " + message);
                     
-                    // Send message through WebSocket
+                    // Send message through WebSocket with agent info
                     if (webSocket && webSocket.readyState === WebSocket.OPEN) {
-                        webSocket.send(JSON.stringify({ text: message }));
+                        webSocket.send(JSON.stringify({ 
+                            text: message,
+                            agent: useAgent  // true/false based on toggle
+                        }));
                     } else {
                         console.error("WebSocket not connected");
                         // Attempt to reconnect
                         connect(TEXT_WS_URL).then(() => {
                             // Retry sending message after reconnection
-                            webSocket.send(JSON.stringify({ text: message }));
+                            webSocket.send(JSON.stringify({ 
+                                text: message,
+                                agent: useAgent
+                            }));
                         }).catch(error => {
                             console.error("Failed to reconnect:", error);
-                            displayMessage("System: Connection lost. Please try again.");
+                            showNotification('error', 'Connection Error', 'Failed to connect to server');
                         });
                         return;
                     }
@@ -1483,6 +1601,58 @@
                         }, 300);
                     }
                 }, duration);
+            }
+        }
+
+        // Lưu trạng thái toggle vào localStorage
+        document.getElementById('agentToggle').addEventListener('change', function(e) {
+            localStorage.setItem('useAIAgent', e.target.checked);
+        });
+
+        // Khôi phục trạng thái toggle khi load page
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedState = localStorage.getItem('useAIAgent');
+            if (savedState !== null) {
+                document.getElementById('agentToggle').checked = savedState === 'true';
+            }
+        });
+
+        // Thêm event listener cho container
+        document.querySelector('.toggle-container').addEventListener('click', function(e) {
+            const toggle = document.getElementById('agentToggle');
+            if (e.target !== toggle) { // Nếu không click trực tiếp vào input
+                toggle.checked = !toggle.checked;
+                // Trigger change event
+                toggle.dispatchEvent(new Event('change'));
+            }
+        });
+
+        function clearChat() {
+            // Hiển thị confirm dialog
+            if (confirm('Are you sure you want to clear all chat history?')) {
+                // Clear chat messages
+                document.getElementById('chatLog').innerHTML = '';
+                
+                // Clear text input
+                document.getElementById('messageInput').value = '';
+                
+                // Reset textarea height
+                document.getElementById('messageInput').style.height = '24px';
+                
+                // Thêm welcome message mới
+                const welcomeHtml = `
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-robot text-2xl text-blue-500"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">AI Assistant</h2>
+                        <p class="text-gray-600">How can I help you today?</p>
+                    </div>
+                `;
+                document.getElementById('chatLog').innerHTML = welcomeHtml;
+                
+                // Show notification
+                showNotification('info', 'Chat Cleared', 'Chat history has been cleared successfully');
             }
         }
     </script>

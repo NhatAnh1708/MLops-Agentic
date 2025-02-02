@@ -1,3 +1,5 @@
+import os
+
 import logfire
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,7 +10,7 @@ from src.routes.index import web_router
 from src.routes.websocket import websocket_router
 
 app = FastAPI()
-logfire.configure()
+logfire.configure(environment=os.getenv("LOGFIRE_ENVIRONMENT"))
 
 app.add_middleware(
     CORSMiddleware,
