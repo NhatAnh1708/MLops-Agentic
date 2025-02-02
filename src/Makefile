@@ -19,5 +19,6 @@ stop-supabase:
 
 
 # Scripts for fastapi
-
+dev:
+	uv run fastapi dev server.py 
 
