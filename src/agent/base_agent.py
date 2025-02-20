@@ -3,13 +3,12 @@ from dataclasses import dataclass
 
 from dotenv import load_dotenv
 from google import genai
-import logfire
+from loguru import logger
 import google.generativeai as genai2
 
 
 from ..agent.helper.google_search import is_google_search
 
-logfire.configure(environment=os.getenv("LOGFIRE_ENVIRONMENT"))
 
 load_dotenv()
 
@@ -26,10 +25,10 @@ class BaseAgent:
         async with self.client.aio.live.connect(
             model=self.model_id, config=self.config
         ) as session:
-            logfire.info(str(message))
+            logger.info(str(message))
             # greetings_question = self.classify_question(message=message)
             greetings_question = True
-            logfire.info(str(greetings_question))
+            logger.info(str(greetings_question))
             if greetings_question:
                 message_after_processing = self.is_process_message(message=message)
                 await session.send(input=message_after_processing, end_of_turn=True)
@@ -86,7 +85,7 @@ class BaseAgent:
 
     def is_process_message(self, message: str):
         result_google = is_google_search(input=message, search_type="search")
-        logfire.info(str(result_google))
+        logger.info(str(result_google))
         prompt = f"""
         Context:
         {result_google}
@@ -94,7 +93,7 @@ class BaseAgent:
         {message}
         Answer:
         """
-        logfire.info(prompt)
+        logger.info(prompt)
         return prompt
 
 

@@ -1,0 +1,11 @@
+[project]
+name = "ansible_setup"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ansible==8.3.0",
+    "google-auth==2.28.1",
+    "requests==2.31.0",
+]

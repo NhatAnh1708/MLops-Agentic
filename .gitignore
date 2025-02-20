@@ -1,11 +1,12 @@
 .DS_Store
 .env
-notebooks/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
+agent_history.gif
+deployments/
+notebooks/
 # C extensions
 *.so
 
