@@ -1,0 +1,20 @@
+volumes:
+  jenkins_home:
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    image: danny1708/jenkins-custom
+    container_name: jenkins-custom
+    restart: unless-stopped
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock

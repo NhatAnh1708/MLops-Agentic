@@ -48,9 +48,9 @@
             overflow-y: auto;
         }
         .input-container {
-            max-width: 48rem;
+            max-width: 50rem;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 10px;
             background-color: white;
             z-index: 10;
         }
@@ -317,6 +317,115 @@
         #chatLog {
             min-height: 0; /* Quan trọng cho flexbox scroll */
         }
+
+        .copy-section {
+            position: relative;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .copy-section:hover .copy-button {
+            opacity: 1;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 4px 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .copy-button:hover {
+            background: #f0f0f0;
+        }
+
+        .example-questions-container {
+            max-height: 15rem;
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            border-top: 1px solid #e5e7eb;
+            padding: 1rem;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .example-questions-title {
+            color: #4B5563;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .example-questions-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .example-btn {
+            background-color: white;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        .example-btn:hover {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .text-container {
+            flex: 1;
+            min-width: 0; /* Để tránh overflow */
+        }
+
+        .api-image {
+            max-width: 400px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Đảm bảo tin nhắn không bị tràn */
+        .message-content {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .example-questions-sidebar .example-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            padding: 0.75rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            color: #fff;
+            width: 100%;
+            text-align: left;
+        }
+
+        .example-questions-sidebar .example-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 
@@ -531,7 +640,7 @@
         <div class="sidebar bg-gray-900 text-white p-4 flex flex-col">
             <!-- Logo -->
             <div class="flex items-center space-x-3 mb-6">
-                <img src="https://placehold.co/40x40" alt="Logo" class="rounded-lg">
+                <img src="/static/images/logo.png" alt="Logo" class="rounded-lg w-10 h-10">
                 <span class="text-xl font-bold">Dony AI</span>
             </div>
 
@@ -551,7 +660,7 @@
             </div>
 
             <!-- Chat History -->
-            <div class="flex-grow overflow-y-auto">
+            <div class="flex-grow overflow-y-auto mb-4">
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-sm text-gray-400">Recent chats</span>
                     <button onclick="clearChat()" class="text-sm text-gray-400 hover:text-white flex items-center">
@@ -561,6 +670,25 @@
                 </div>
                 <div class="space-y-2">
                     <!-- Chat history items will be added here -->
+                </div>
+            </div>
+
+            <!-- Example Questions -->
+            <div class="example-questions-sidebar mb-4">
+                <p class="text-sm text-gray-400 mb-2">Câu hỏi mẫu:</p>
+                <div class="space-y-2">
+                    <button class="example-btn w-full text-left">
+                        Tôi muốn mua một chiếc laptop dưới 15 triệu, bạn có gợi ý gì không?
+                    </button>
+                    <button class="example-btn w-full text-left">
+                        So sánh giúp tôi iPhone 15 Pro và Samsung S24 Ultra
+                    </button>
+                    <button class="example-btn w-full text-left">
+                        Gợi ý cho tôi một số thương hiệu giày thể thao tốt
+                    </button>
+                    <button class="example-btn w-full text-left">
+                        Tôi nên mua máy ảnh mirrorless nào để chụp ảnh du lịch?
+                    </button>
                 </div>
             </div>
 
@@ -613,7 +741,6 @@
                     <div id="chatLog" class="chat-container flex-1">
                         <!-- Messages will be added here -->
                     </div>
-
                     <!-- Controls -->
                     <div class="border-t border-gray-200 bg-white">
                         <!-- Voice Controls -->
@@ -634,7 +761,7 @@
                             <div class="input-container">
                                 <div class="flex justify-end mb-2">
                                     <div class="toggle-container flex items-center bg-gray-100 hover:bg-gray-200 transition-colors duration-200 px-4 py-2 rounded-lg cursor-pointer">
-                                        <span class="text-sm font-medium text-gray-700 mr-3">AI Agent</span>
+                                        <span class="text-sm font-medium text-gray-700 mr-3">Power Search</span>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" id="agentToggle" class="sr-only peer">
                                             <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
@@ -675,10 +802,10 @@
     </div>
 
     <script defer>
-        // Thêm biến cho text WebSocket URL
-        const TEXT_WS_URL = "ws://localhost:8000/ws/text";
-        const VOICE_WS_URL = "ws://localhost:8000/ws";
-
+        const TEXT_WS_URL = "{{ TEXT_WS_URL }}";
+        const VOICE_WS_URL = "{{ VOICE_WS_URL }}";
+        console.log(TEXT_WS_URL)
+        console.log(VOICE_WS_URL)
         let currentFrameB64;
         let webSocket = null;
         let audioContext = null;
@@ -756,7 +883,6 @@
         function connect(url = VOICE_WS_URL) {
             return new Promise((resolve, reject) => {
                 try {
-                    console.log("connecting to:", url);
                     webSocket = new WebSocket(url);
 
                     webSocket.onclose = (event) => {
@@ -786,7 +912,6 @@
                     };
 
                     webSocket.onopen = (event) => {
-                        console.log("websocket open:", event);
                         retryCount = 0; // Reset retry count on successful connection
                         const statusIndicator = document.getElementById('status-indicator');
                         const statusText = document.getElementById('status');
@@ -809,7 +934,6 @@
 
         function sendInitialSetupMessage() {
 
-            console.log("sending setup message");
             setup_client_message = {
                 setup: {
                     generation_config: { response_modalities: ["AUDIO"] },
@@ -868,155 +992,120 @@
 
         }
 
+        function playAudio(base64Audio) {
+            const audio = new Audio("data:audio/wav;base64," + base64Audio);
+            audio.play().catch(error => {
+                console.error("Error playing audio:", error);
+            });
+        }
+
         function receiveMessage(event) {
             try {
                 const messageData = JSON.parse(event.data);
-                console.log("Received message:", messageData);
-                
-                if (messageData.type === "end") {
-                    const thinkingElement = document.getElementById('thinking');
-                    if (thinkingElement) {
-                        thinkingElement.remove();
-                    }
-                    const currentMessage = document.querySelector('.bot-message-current');
-                    if (currentMessage) {
-                        currentMessage.classList.remove('bot-message-current');
-                    }
-                    return;
+                console.log("messageData: ", messageData)
+                const response = new Response(messageData);
+                // Remove thinking indicator if it exists
+                const thinkingElement = document.getElementById('thinking');
+                if (thinkingElement) {
+                    thinkingElement.remove();
                 }
-
-                if (messageData.type === "error") {
-                    const errorText = typeof messageData.text === 'object' ? 
-                        JSON.stringify(messageData.text) : messageData.text;
+                if (response.text) {
+                    // Find or create message container
+                    let messageContainer = document.querySelector('.message-container:last-child');
                     
-                    let title = "Error";
-                    if (errorText.includes("API limit reached")) {
-                        title = "API Limit Reached";
-                    } else if (errorText.includes("service is currently at capacity")) {
-                        title = "Service Capacity";
-                    } else if (errorText.includes("Connection error")) {
-                        title = "Connection Error";
-                    }
-                    
-                    showNotification('error', title, errorText);
-                    
-                    const thinkingElement = document.getElementById('thinking');
-                    if (thinkingElement) {
-                        thinkingElement.remove();
-                    }
-                    return;
-                }
-
-                if (messageData.type === "chunk") {
-                    let currentBotMessage = document.querySelector('.bot-message-current');
-                    
-                    if (!currentBotMessage) {
-                        const thinkingElement = document.getElementById('thinking');
-                        if (thinkingElement) {
-                            thinkingElement.remove();
-                        }
-
-                        const div = document.getElementById('chatLog');
-                        const messageContainer = document.createElement("div");
+                    // If no container exists or last message is from user, create new one
+                    if (!messageContainer || messageContainer.querySelector('.user-message')) {
+                        messageContainer = document.createElement("div");
                         messageContainer.className = "message-container";
                         
+                        // Create avatar
                         const avatar = document.createElement("div");
                         avatar.className = "message-avatar";
                         avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
                             <i class="fas fa-robot text-white"></i>
                         </div>`;
                         
+                        // Create message content container
                         const messageContent = document.createElement("div");
                         messageContent.className = "message-content";
                         
-                        const messageParagraph = document.createElement("div");
-                        messageParagraph.className = "bot-message message bot-message-current markdown-body";
+                        // Create content wrapper
+                        const contentWrapper = document.createElement("div");
+                        contentWrapper.className = "content-wrapper";
                         
-                        // Convert and render markdown
-                        const messageText = typeof messageData.text === 'object' ? 
-                            JSON.stringify(messageData.text) : messageData.text;
+                        // Create text container
+                        const textContainer = document.createElement("div");
+                        textContainer.className = "text-container markdown-body";
                         
-                        // Always treat response as markdown
-                        messageParagraph.innerHTML = marked.parse(messageText);
-                        messageParagraph.setAttribute('data-raw-content', messageText);
-                        
-                        // Add links if they exist
-                        if (messageData.links && messageData.links.length > 0) {
-                            const linksContainer = document.createElement("div");
-                            linksContainer.className = "mt-3 space-y-2";
-                            
-                            messageData.links.forEach(link => {
-                                const linkElement = document.createElement("a");
-                                linkElement.href = link.url;
-                                linkElement.target = "_blank";
-                                linkElement.className = "block px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors";
-                                linkElement.innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>${link.text}`;
-                                linksContainer.appendChild(linkElement);
-                            });
-                            
-                            messageContent.appendChild(messageParagraph);
-                            messageContent.appendChild(linksContainer);
-                        } else {
-                            messageContent.appendChild(messageParagraph);
-                        }
-                        
+                        contentWrapper.appendChild(textContainer);
+                        messageContent.appendChild(contentWrapper);
                         messageContainer.appendChild(avatar);
                         messageContainer.appendChild(messageContent);
-                        div.appendChild(messageContainer);
-                    } else {
-                        // Update existing message
-                        const messageText = typeof messageData.text === 'object' ? 
-                            JSON.stringify(messageData.text) : messageData.text;
                         
-                        currentBotMessage.innerHTML = marked.parse(messageText);
-                        currentBotMessage.setAttribute('data-raw-content', messageText);
-                        
-                        // Update links if they exist
-                        const existingLinksContainer = currentBotMessage.parentElement.querySelector('.space-y-2');
-                        if (existingLinksContainer) {
-                            existingLinksContainer.remove();
-                        }
-                        
-                        if (messageData.links && messageData.links.length > 0) {
-                            const linksContainer = document.createElement("div");
-                            linksContainer.className = "mt-3 space-y-2";
-                            
-                            messageData.links.forEach(link => {
-                                const linkElement = document.createElement("a");
-                                linkElement.href = link.url;
-                                linkElement.target = "_blank";
-                                linkElement.className = "block px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors";
-                                linkElement.innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>${link.text}`;
-                                linksContainer.appendChild(linkElement);
-                            });
-                            
-                            currentBotMessage.parentElement.appendChild(linksContainer);
-                        }
+                        document.getElementById('chatLog').appendChild(messageContainer);
                     }
-
+                    
+                    // Get text container and append new text
+                    const textContainer = messageContainer.querySelector('.text-container');
+                    textContainer.innerHTML = marked.parse(response.text);
+                    
+                    // Check for image and append if it exists
+                    if (response.gif_url) {
+                        // Remove existing image if any
+                        const existingImage = messageContainer.querySelector('.api-image');
+                        if (existingImage) {
+                            existingImage.remove();
+                        }
+                        
+                        const imageElement = document.createElement("img");
+                        imageElement.src = response.gif_url;
+                        imageElement.alt = "Image from API";
+                        imageElement.className = "api-image";
+                        
+                        const contentWrapper = messageContainer.querySelector('.content-wrapper');
+                        contentWrapper.appendChild(imageElement);
+                    }
+                    
+                    // Scroll to bottom
                     const chatLog = document.getElementById('chatLog');
                     chatLog.scrollTop = chatLog.scrollHeight;
+                }
+
+                if (response.audioData) {
+                    injestAudioChuckToPlay(response.audioData);
                 }
             }
             catch (err) {
                 console.error("Error receiving message:", err);
-                console.error("Raw message data:", event.data);
-                showNotification('error', 'Error', 'An unexpected error occurred');
             }
         }
 
         async function initializeAudioContext() {
             if (initialized) return;
 
-            audioInputContext = new (window.AudioContext ||
-                window.webkitAudioContext)({
-                sampleRate: 24000
-            });
-            await audioInputContext.audioWorklet.addModule("pcm-processor.js");
-            workletNode = new AudioWorkletNode(audioInputContext, "pcm-processor");
-            workletNode.connect(audioInputContext.destination);
-            initialized = true;
+            try {
+                console.log("dang khoi tao initaudio")
+                audioInputContext = new (window.AudioContext || window.webkitAudioContext)({
+                    sampleRate: 24000
+                });
+
+                // Đảm bảo audioWorklet đã sẵn sàng
+                await audioInputContext.audioWorklet.addModule("/static/pcm-processor.js");
+
+                // Khởi tạo workletNode
+                workletNode = new AudioWorkletNode(audioInputContext, "pcm-processor");
+
+                // Kết nối tới AudioContext
+                workletNode.connect(audioInputContext.destination);
+
+                // Đánh dấu là đã khởi tạo
+                initialized = true;
+                console.log("✅ AudioContext & WorkletNode đã được khởi tạo thành công!");
+            } catch (error) {
+                console.error("❌ Lỗi khởi tạo AudioContext hoặc WorkletNode:", error);
+            }
         }
+
 
         function base64ToArrayBuffer(base64) {
             const binaryString = window.atob(base64);
@@ -1040,18 +1129,25 @@
 
         async function injestAudioChuckToPlay(base64AudioChunk) {
             try {
+                if (!workletNode || !workletNode.port) {
+                    console.error("workletNode hoặc port chưa được khởi tạo.");
+                    return;
+                }
+
                 if (audioInputContext.state === "suspended") {
+                    console.log("Resuming audio context...");
                     await audioInputContext.resume();
                 }
+
                 const arrayBuffer = base64ToArrayBuffer(base64AudioChunk);
                 const float32Data = convertPCM16LEToFloat32(arrayBuffer);
 
                 workletNode.port.postMessage(float32Data);
-            }
-            catch (error) {
+            } catch (error) {
                 console.error("Error processing audio chunk:", error);
             }
         }
+
 
         function recordChunk() {
             const buffer = new ArrayBuffer(pcmData.length * 2);
@@ -1109,13 +1205,8 @@
             clearInterval(interval);
         }
 
-        function displayMessage(message) {
-            console.log(message);
-            addParagraphToDiv("chatLog", message);
-        }
-
-        function addParagraphToDiv(divId, text) {
-            const div = document.getElementById(divId);
+        function displayMessage(text) {
+            const div = document.getElementById('chatLog');
             const messageContainer = document.createElement("div");
             messageContainer.className = "message-container";
             
@@ -1138,14 +1229,19 @@
             const messageContent = document.createElement("div");
             messageContent.className = "message-content";
             
-            const messageParagraph = document.createElement("p");
-            messageParagraph.className = isUser ? "user-message message" : "bot-message message";
+            // Create hidden element to store raw text
+            const rawTextElement = document.createElement("div");
+            rawTextElement.className = "raw-text hidden";
+            rawTextElement.textContent = text.replace(/^(You:|GEMINI:)\s*/, '');
             
-            // Xử lý text để loại bỏ prefix "You:" hoặc "GEMINI:"
-            const displayText = text.replace(/^(You:|GEMINI:)\s*/, '');
-            messageParagraph.textContent = displayText;
+            // Create markdown rendered element
+            const markdownElement = document.createElement("div");
+            markdownElement.className = isUser ? "user-message message" : "bot-message message markdown-body";
+            markdownElement.innerHTML = isUser ? text.replace(/^(You:|GEMINI:)\s*/, '') : 
+                                       marked.parse(text.replace(/^(You:|GEMINI:)\s*/, ''));
             
-            messageContent.appendChild(messageParagraph);
+            messageContent.appendChild(rawTextElement);
+            messageContent.appendChild(markdownElement);
             messageContainer.appendChild(avatar);
             messageContainer.appendChild(messageContent);
             div.appendChild(messageContainer);
@@ -1162,13 +1258,17 @@
                 this.text = null;
                 this.audioData = null;
                 this.endOfTurn = null;
-
+                this.gif_url = null;
                 if (data.text) {
                     this.text = data.text
                 }
 
                 if (data.audio) {
                     this.audioData = data.audio;
+                }
+
+                if (data.gif_url) {
+                    this.gif_url = data.gif_url;
                 }
             }
         }
@@ -1314,7 +1414,7 @@
                 const timeout = setTimeout(() => {
                     testWs.close();
                     showErrorModal();
-                }, 5000); // 5 giây timeout
+                }, 50000); // 5 giây timeout
 
                 testWs.onerror = () => {
                     clearTimeout(timeout);
@@ -1434,9 +1534,6 @@
                     // Clear input and reset height
                     messageInput.value = '';
                     messageInput.style.height = '24px';
-
-                    // Add thinking indicator
-                    addThinkingIndicator();
                 }
             } catch (error) {
                 console.error("Failed to initialize text chat:", error);
@@ -1655,6 +1752,64 @@
                 showNotification('info', 'Chat Cleared', 'Chat history has been cleared successfully');
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function setupCopyButtons() {
+                document.querySelectorAll('.copy-section').forEach(section => {
+                    if (!section.querySelector('.copy-button')) {
+                        const button = document.createElement('button');
+                        button.className = 'copy-button';
+                        button.innerHTML = 'Copy';
+                        button.onclick = async () => {
+                            const textToCopy = section.textContent.replace('Copy', '').trim();
+                            await navigator.clipboard.writeText(textToCopy);
+                            button.innerHTML = 'Copied!';
+                            setTimeout(() => {
+                                button.innerHTML = 'Copy';
+                            }, 2000);
+                        };
+                        section.appendChild(button);
+                    }
+                });
+            }
+
+            // Observe DOM changes to add copy buttons to new content
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    if (mutation.addedNodes.length) {
+                        setupCopyButtons();
+                    }
+                });
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+
+        // Thêm hàm xử lý example questions
+        document.addEventListener('DOMContentLoaded', function() {
+            const exampleButtons = document.querySelectorAll('.example-btn');
+            const messageInput = document.getElementById('messageInput');
+
+            exampleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Copy nội dung của button vào input
+                    messageInput.value = this.textContent.trim();
+                    
+                    // Tự động điều chỉnh chiều cao của textarea
+                    messageInput.style.height = 'auto';
+                    messageInput.style.height = Math.min(messageInput.scrollHeight, 200) + 'px';
+                    
+                    // Focus vào input
+                    messageInput.focus();
+                    
+                    // Tùy chọn: Tự động scroll đến input
+                    messageInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+        });
     </script>
 </body>
 

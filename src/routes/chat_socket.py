@@ -4,14 +4,13 @@ import asyncio
 
 from dotenv import load_dotenv
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
-import logfire
 
-
-from src.agent.base_agent import base_agent
-from src.agent.gemini_agent import gemini_agent
+from ..agent.base_agent import base_agent
+from ..agent.gemini_agent import gemini_agent
+from loguru import logger
 
 load_dotenv()
-logfire.configure(environment=os.getenv("LOGFIRE_ENVIRONMENT"))
+
 
 websocket_router = APIRouter()
 
@@ -26,46 +25,42 @@ async def websocket_text_endpoint(websocket: WebSocket):
     while True:
         try:
             data = await websocket.receive_json()
-            logfire.info(str(data))
+            logger.info(str(data))
 
             if "text" in data:
                 retries = 0
                 while retries < MAX_RETRIES:
                     try:
-                        current_response = ""
                         # Sử dụng agent nếu flag được bật
                         if data["agent"]:
-                            current_response = await gemini_agent.chat(message=data["text"])
-                            logfire.debug("BUG")
-                            logfire.info(str(current_response))
-                            await websocket.send_json(
-                                {
-                                    "text": current_response,
-                                    "type": "chunk",
-                                    "format": "markdown",
-                                }
-                            )
+                            async for response_chunk in gemini_agent.chat(
+                                message=data
+                            ):
+                                await websocket.send_json(
+                                    {
+                                        "text": response_chunk['text'],
+                                        "gif_url": response_chunk['gif_url'],
+                                        "type": "chunk",
+                                        "format": "markdown"
+                                    }
+                                )
                         else:
-                            logfire.info("No use AI Agent")
+                            logger.info("No use AI Agent")
                             async for response_chunk in base_agent.chat(
                                 message=data["text"]
                             ):
-                                logfire.info(
-                                    f"Response chunk content: {response_chunk}"
-                                )
                                 try:
                                     chunk_content = str(response_chunk["content"])
-                                    current_response += chunk_content
-
                                     await websocket.send_json(
                                         {
-                                            "text": current_response,
+                                            "text": chunk_content,
+                                            "gif_url": None,
                                             "type": "chunk",
                                             "format": "markdown",
                                         }
                                     )
                                 except Exception as send_error:
-                                    logfire.error(f"Error sending chunk: {send_error}")
+                                    logger.error(f"Error sending chunk: {send_error}")
                                     await websocket.send_json(
                                         {
                                             "text": "Error sending response chunk",
@@ -77,7 +72,7 @@ async def websocket_text_endpoint(websocket: WebSocket):
                         await websocket.send_json({"type": "end"})
                         break
                     except Exception as process_error:
-                        logfire.error(f"Error processing message: {process_error}!")
+                        logger.error(f"Error processing message: {process_error}!")
                         error_message = str(process_error)
                         if "RESOURCE_EXHAUSTED" in error_message:
                             retries += 1
@@ -108,15 +103,15 @@ async def websocket_text_endpoint(websocket: WebSocket):
                         break
 
         except WebSocketDisconnect:
-            logfire.info("Client disconnected")
+            logger.info("Client disconnected")
             break
 
         except Exception as e:
-            logfire.error(f"Connection error: {str(e)}!")
+            logger.error(f"Connection error: {str(e)}!")
             try:
                 await websocket.send_json(
                     {"text": "Connection error. Please try again.", "type": "error"}
                 )
             except:
-                logfire.error("Could not send error message to client")
+                logger.error("Could not send error message to client")
             continue
