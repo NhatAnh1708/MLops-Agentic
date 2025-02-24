@@ -1,12 +1,7 @@
 from dotenv import load_dotenv
-from browser_use.browser.views import BrowserState
-from browser_use.agent.views import AgentOutput
-from redis import Redis
-import json
-from loguru import logger
 
 load_dotenv()
-redis_client = Redis(host="localhost", port=6379, db=0)
+
 
 def base64_to_image(base64_string: str, output_filename: str):
     """Convert base64 string to image."""
@@ -23,8 +18,8 @@ def base64_to_image(base64_string: str, output_filename: str):
 
 
 def cleanup_screenshots():
-    import shutil
     import os
+    import shutil
 
     screenshots_dir = "frontend/screenshots"
     if os.path.exists(screenshots_dir):

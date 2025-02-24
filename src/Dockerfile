@@ -1,46 +1,28 @@
-FROM python:3.11-slim-bookworm AS base
+# Use an official Python image as the base
+FROM python:3.11-slim
 
-FROM base AS builder
-COPY --from=ghcr.io/astral-sh/uv:0.4.9 /uv /bin/uv
-ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
-WORKDIR /app
-COPY uv.lock pyproject.toml /app/
+# Set environment variables to avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
 
+# Install Playwright dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    gnupg \
+    curl && \
+    pip install playwright && \
+    playwright install-deps && \
+    playwright install && \
+    rm -rf /var/lib/apt/lists/*
+# Copy requirements.txt and install Python dependencies
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-RUN apt-get update && apt-get install -y \
-    gcc \
-    portaudio19-dev \
-    libnss3 \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
-    libdrm2 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxfixes3 \
-    libxrandr2 \
-    libgbm1 \
-    libasound2 \
-    libpango-1.0-0 \
-    libpangocairo-1.0-0 \
-    libcups2 \
-    libxshmfence1 \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN --mount=type=cache,target=/root/.cache/uv \
-  uv sync --frozen --no-install-project --no-dev
-
-RUN pip install playwright
-RUN playwright install
-
+# Copy the rest of the application files
 COPY . /app
-RUN --mount=type=cache,target=/root/.cache/uv \
-  uv sync --frozen --no-dev
 
-FROM base
-COPY --from=builder /app /app
-ARG LOGFIRE_TOKEN
-ENV LOGFIRE_TOKEN=$LOGFIRE_TOKEN
-ENV PATH="/app/.venv/bin:$PATH"
+# Set working directory
+WORKDIR /app
 
-EXPOSE 80
-CMD ["/app/.venv/bin/fastapi", "dev", "app/server.py", "--port", "80", "--host", "0.0.0.0"]
+EXPOSE 30000
+
+CMD ["uvicorn", "server:app", "--port", "30000", "--host", "0.0.0.0"]

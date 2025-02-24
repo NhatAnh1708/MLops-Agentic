@@ -1,8 +1,9 @@
 import os
-from fastapi.templating import Jinja2Templates
+
+from dotenv import load_dotenv
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
-from dotenv import load_dotenv
+from fastapi.templating import Jinja2Templates
 
 load_dotenv()
 web_router = APIRouter()

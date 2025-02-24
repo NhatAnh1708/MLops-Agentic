@@ -20,16 +20,19 @@ stop-supabase:
 
 # Scripts for fastapi
 dev:
-	uv run fastapi dev server.py 
+	uv run uvicorn server:app --reload
 
 
-docker:
-	docker build --build-arg LOGFIRE_TOKEN='sjHHgtQ2WYkTVdrl0zywtjbCsdgxvZJMl9QJJvwKFNT1' -t danny1708/ai-agent-service .
+docker-amd64:
+	docker build -t danny1708/ai-agent-service . --platform linux/amd64
+docker-m1:
+	docker build -t danny1708/ai-agent-service-m1 .
 
-prod: docker
-	docker run --env-file .env -p 80:80 danny1708/ai-agent-service
+prod: docker-m1
+	docker run --env-file .env -p 30000:30000 danny1708/ai-agent-service-m1
+
 stop:
-	docker stop $(docker ps -q --filter ancestor=danny1708/ai-agent-service)
+	docker stop ai-agent-service
 
 prune:
 	docker system prune
@@ -55,4 +58,3 @@ help:
 	@echo "  make vnc-connect - Connect to the running VNC server"
 	@echo "  make vnc-stop   - Stop the running VNC server"
 	@echo "  make help       - Display this help message"
-
