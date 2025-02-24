@@ -1,22 +1,22 @@
-from fastapi import APIRouter, WebSocket
-from dataclasses import dataclass
-from typing import Dict, Any
 import asyncio
+import base64
 import json
 import os
+from dataclasses import dataclass
+from typing import Any, Dict
+
+from dotenv import load_dotenv
+from fastapi import APIRouter, WebSocket
 from google import genai
-import base64
 from llama_index.core import (
-    VectorStoreIndex,
+    Settings,
     SimpleDirectoryReader,
     StorageContext,
+    VectorStoreIndex,
     load_index_from_storage,
-    Settings,
 )
-
-# from llama_index.embeddings.gemini import GeminiEmbedding
-# from llama_index.llms.gemini import Gemini
-from dotenv import load_dotenv
+from llama_index.embeddings.gemini import GeminiEmbedding
+from llama_index.llms.gemini import Gemini
 from loguru import logger
 
 load_dotenv()
@@ -29,14 +29,10 @@ voice_routers = APIRouter()
 class GeminiConfig:
     """Configuration for Gemini API connection"""
 
-    api_key: str = os.environ["GOOGLE_API_KEY"]
+    api_key: str = os.environ["GEMINI_API_KEY"]
     model: str = "gemini-2.0-flash-exp"
     embedding_model: str = "models/text-embedding-004"
-    system_instruction: str = """You are a helpful assistant and you MUST always use the query_docs tool to query the document 
-    towards any questions. It is mandatory to base your answers on the information from the output of the query_docs tool, 
-    and include the context from the query tool in your response to the user's question.
-    Do not mention your operations like "I am searching the document now".
-    """
+    system_instruction: str = os.environ["SYSTEM_INSTRUCTION"]
 
 
 class DocumentIndex:
@@ -107,7 +103,10 @@ class GeminiSession:
         self.doc_index.build_index()
 
         await self.websocket.send_json(
-            {"text": f"PDF file {filename} has been uploaded and indexed successfully."}
+            {
+                "text": f"PDF file {filename} has been \
+        uploaded and indexed successfully."
+            }
         )
 
     async def handle_tool_call(self, response) -> None:

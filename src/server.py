@@ -1,12 +1,13 @@
 import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from .routes.health import health_router
-from .routes.index import web_router
-from .routes.chat_socket import websocket_router
-from .routes.voice_socket import voice_routers
+from routes.chat_socket import websocket_router
+from routes.health import health_router
+from routes.index import web_router
+from routes.voice_socket import voice_routers
 
 app = FastAPI()
 

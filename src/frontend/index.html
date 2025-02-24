@@ -308,7 +308,7 @@
         .clear-chat-btn {
             transition: all 0.2s ease;
         }
-        
+
         .clear-chat-btn:hover {
             color: #EF4444;
         }
@@ -325,11 +325,11 @@
             border-radius: 4px;
             margin-bottom: 10px;
         }
-        
+
         .copy-section:hover .copy-button {
             opacity: 1;
         }
-        
+
         .copy-button {
             position: absolute;
             top: 5px;
@@ -342,7 +342,7 @@
             opacity: 0;
             transition: opacity 0.2s;
         }
-        
+
         .copy-button:hover {
             background: #f0f0f0;
         }
@@ -354,20 +354,20 @@
             padding: 1rem;
             box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        
+
         .example-questions-title {
             color: #4B5563;
             font-size: 0.875rem;
             margin-bottom: 0.75rem;
             font-weight: 500;
         }
-        
+
         .example-questions-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
         }
-        
+
         .example-btn {
             background-color: white;
             border-radius: 0.5rem;
@@ -378,7 +378,7 @@
             cursor: pointer;
             padding: 0.5rem 0.75rem;
         }
-        
+
         .example-btn:hover {
             background-color: #f3f4f6;
             border-color: #d1d5db;
@@ -430,6 +430,31 @@
 </head>
 
 <body class="bg-gray-100">
+    <!-- Add WebSocket Config Modal -->
+    <div id="wsConfigModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 w-[500px] max-w-90vw">
+            <h2 class="text-2xl font-bold text-center mb-6">WebSocket Configuration</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Text WebSocket URL</label>
+                    <input type="text" id="textWsInput"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="ws://your-ip:port">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Voice WebSocket URL</label>
+                    <input type="text" id="voiceWsInput"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="ws://your-ip:port">
+                </div>
+                <button onclick="saveWsConfig()"
+                    class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
+                    Save Configuration
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div id="chatOptionsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-8 w-[600px] max-w-90vw">
             <h2 class="text-2xl font-bold text-center mb-6">Choose Chat Mode</h2>
@@ -492,7 +517,7 @@
             <div class="max-w-4xl mx-auto">
                 <div class="flex items-end space-x-2">
                     <div class="flex-1 relative">
-                        <textarea 
+                        <textarea
                             id="textInput"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 resize-none overflow-hidden focus:outline-none focus:border-blue-500"
                             placeholder="Type your message..."
@@ -590,7 +615,7 @@
                         <div class="p-4 bg-white border-t rounded-b-lg">
                             <div class="flex items-end space-x-2">
                                 <div class="flex-1 relative">
-                                    <textarea 
+                                    <textarea
                                         id="videoChatInput"
                                         class="w-full resize-none border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Type your message..."
@@ -699,6 +724,13 @@
                     <span class="text-sm">User Account</span>
                 </div>
             </div>
+
+            <!-- Add Configuration Button -->
+            <button onclick="showWsConfig()"
+                class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 rounded-lg p-3 w-full mb-4">
+                <i class="fas fa-cog"></i>
+                <span>WebSocket Config</span>
+            </button>
         </div>
 
         <!-- Main Content -->
@@ -764,11 +796,11 @@
                                         <span class="text-sm font-medium text-gray-700 mr-3">Power Search</span>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" id="agentToggle" class="sr-only peer">
-                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
-                                                rounded-full peer dark:bg-gray-600 
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300
+                                                rounded-full peer dark:bg-gray-600
                                                 peer-checked:after:translate-x-full peer-checked:bg-blue-600
-                                                after:content-[''] after:absolute after:top-0.5 after:left-[2px] 
-                                                after:bg-white after:rounded-full after:h-6 after:w-6 
+                                                after:content-[''] after:absolute after:top-0.5 after:left-[2px]
+                                                after:bg-white after:rounded-full after:h-6 after:w-6
                                                 after:transition-all dark:border-gray-600"></div>
                                         </label>
                                     </div>
@@ -777,7 +809,7 @@
                                 <div class="input-box">
                                     <div class="flex items-end space-x-2">
                                         <div class="flex-1 relative">
-                                            <textarea 
+                                            <textarea
                                                 id="messageInput"
                                                 class="w-full resize-none focus:outline-none border-0 bg-transparent p-0"
                                                 placeholder="Message..."
@@ -802,8 +834,8 @@
     </div>
 
     <script defer>
-        const TEXT_WS_URL = "{{ TEXT_WS_URL }}";
-        const VOICE_WS_URL = "{{ VOICE_WS_URL }}";
+        let TEXT_WS_URL = "";
+        let VOICE_WS_URL = "";
         console.log(TEXT_WS_URL)
         console.log(VOICE_WS_URL)
         let currentFrameB64;
@@ -837,6 +869,28 @@
         });
 
         window.addEventListener("load", async () => {
+            const savedTextWs = localStorage.getItem('textWsUrl');
+            const savedVoiceWs = localStorage.getItem('voiceWsUrl');
+
+            // Hide all modals first
+            document.getElementById('chatOptionsModal').classList.add('hidden');
+            document.getElementById('wsConfigModal').classList.add('hidden');
+
+            if (!savedTextWs || !savedVoiceWs) {
+                // Show WebSocket config modal first
+                document.getElementById('wsConfigModal').classList.remove('hidden');
+                isInitialized = false;
+            } else {
+                TEXT_WS_URL = savedTextWs;
+                VOICE_WS_URL = savedVoiceWs;
+                console.log(TEXT_WS_URL);
+                console.log(VOICE_WS_URL);
+                isInitialized = true;
+            }
+
+            // Add click event listener for config button
+            document.querySelector('button[onclick="showWsConfig()"]').addEventListener('click', showWsConfig);
+
             pdfInput.addEventListener('change', async (event) => {
                 console.log("pdfInput change event detected!");
                 const file = event.target.files[0];
@@ -848,7 +902,7 @@
                           pdfPreview.setAttribute('src', e.target.result);
                           pdfContainer.style.display = 'block';
                           console.log('pdf rendered');
-                         
+
                            // Convert to base64 and send immediately
                          const base64Reader = new FileReader();
                            base64Reader.onload = function(e){
@@ -918,7 +972,7 @@
                         statusIndicator.classList.remove('bg-red-500');
                         statusIndicator.classList.add('bg-green-500');
                         statusText.textContent = 'Online';
-                        
+
                         if (url === VOICE_WS_URL) {
                             sendInitialSetupMessage();
                         }
@@ -1004,68 +1058,87 @@
                 const messageData = JSON.parse(event.data);
                 console.log("messageData: ", messageData)
                 const response = new Response(messageData);
+
                 // Remove thinking indicator if it exists
                 const thinkingElement = document.getElementById('thinking');
                 if (thinkingElement) {
                     thinkingElement.remove();
                 }
+
                 if (response.text) {
-                    // Find or create message container
-                    let messageContainer = document.querySelector('.message-container:last-child');
-                    
-                    // If no container exists or last message is from user, create new one
-                    if (!messageContainer || messageContainer.querySelector('.user-message')) {
-                        messageContainer = document.createElement("div");
-                        messageContainer.className = "message-container";
-                        
-                        // Create avatar
-                        const avatar = document.createElement("div");
-                        avatar.className = "message-avatar";
-                        avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                            <i class="fas fa-robot text-white"></i>
-                        </div>`;
-                        
-                        // Create message content container
-                        const messageContent = document.createElement("div");
-                        messageContent.className = "message-content";
-                        
-                        // Create content wrapper
-                        const contentWrapper = document.createElement("div");
-                        contentWrapper.className = "content-wrapper";
-                        
-                        // Create text container
-                        const textContainer = document.createElement("div");
-                        textContainer.className = "text-container markdown-body";
-                        
-                        contentWrapper.appendChild(textContainer);
-                        messageContent.appendChild(contentWrapper);
-                        messageContainer.appendChild(avatar);
-                        messageContainer.appendChild(messageContent);
-                        
-                        document.getElementById('chatLog').appendChild(messageContainer);
-                    }
-                    
-                    // Get text container and append new text
-                    const textContainer = messageContainer.querySelector('.text-container');
-                    textContainer.innerHTML = marked.parse(response.text);
-                    
-                    // Check for image and append if it exists
-                    if (response.gif_url) {
-                        // Remove existing image if any
-                        const existingImage = messageContainer.querySelector('.api-image');
-                        if (existingImage) {
-                            existingImage.remove();
+                    // Check if agent mode is enabled
+                    const isAgentMode = document.getElementById('agentToggle').checked;
+
+                    if (isAgentMode) {
+                        // Original behavior for agent mode - create new message for each response
+                        displayMessage("GEMINI: " + response.text);
+
+                        // Handle GIF URL for agent mode
+                        if (response.gif_url) {
+                            const messageContainer = document.querySelector('.message-container:last-child');
+                            const contentWrapper = messageContainer.querySelector('.content-wrapper');
+
+                            const imageElement = document.createElement("img");
+                            imageElement.src = response.gif_url;
+                            imageElement.alt = "Image from API";
+                            imageElement.className = "api-image";
+
+                            contentWrapper.appendChild(imageElement);
                         }
-                        
-                        const imageElement = document.createElement("img");
-                        imageElement.src = response.gif_url;
-                        imageElement.alt = "Image from API";
-                        imageElement.className = "api-image";
-                        
-                        const contentWrapper = messageContainer.querySelector('.content-wrapper');
-                        contentWrapper.appendChild(imageElement);
+                    } else {
+                        // Streaming behavior for non-agent mode
+                        let messageContainer = document.querySelector('.message-container:last-child');
+
+                        if (!messageContainer || messageContainer.querySelector('.user-message')) {
+                            messageContainer = document.createElement("div");
+                            messageContainer.className = "message-container";
+
+                            const avatar = document.createElement("div");
+                            avatar.className = "message-avatar";
+                            avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                                <i class="fas fa-robot text-white"></i>
+                            </div>`;
+
+                            const messageContent = document.createElement("div");
+                            messageContent.className = "message-content";
+
+                            const contentWrapper = document.createElement("div");
+                            contentWrapper.className = "content-wrapper";
+
+                            const textContainer = document.createElement("div");
+                            textContainer.className = "bot-message message markdown-body";
+
+                            contentWrapper.appendChild(textContainer);
+                            messageContent.appendChild(contentWrapper);
+                            messageContainer.appendChild(avatar);
+                            messageContainer.appendChild(messageContent);
+
+                            document.getElementById('chatLog').appendChild(messageContainer);
+                        }
+
+                        const textContainer = messageContainer.querySelector('.message-content .bot-message');
+                        const currentText = textContainer.getAttribute('data-raw-text') || '';
+                        const newText = currentText + response.text;
+                        textContainer.setAttribute('data-raw-text', newText);
+                        textContainer.innerHTML = marked.parse(newText);
+
+                        // Handle GIF URL for non-agent mode
+                        if (response.gif_url) {
+                            const existingImage = messageContainer.querySelector('.api-image');
+                            if (existingImage) {
+                                existingImage.remove();
+                            }
+
+                            const imageElement = document.createElement("img");
+                            imageElement.src = response.gif_url;
+                            imageElement.alt = "Image from API";
+                            imageElement.className = "api-image";
+
+                            const contentWrapper = messageContainer.querySelector('.content-wrapper');
+                            contentWrapper.appendChild(imageElement);
+                        }
                     }
-                    
+
                     // Scroll to bottom
                     const chatLog = document.getElementById('chatLog');
                     chatLog.scrollTop = chatLog.scrollHeight;
@@ -1209,12 +1282,12 @@
             const div = document.getElementById('chatLog');
             const messageContainer = document.createElement("div");
             messageContainer.className = "message-container";
-            
+
             // Xác định loại tin nhắn
             const isUser = text.startsWith("You:");
             const avatar = document.createElement("div");
             avatar.className = "message-avatar";
-            
+
             // Set avatar based on message type
             if (isUser) {
                 avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
@@ -1225,27 +1298,26 @@
                     <i class="fas fa-robot text-white"></i>
                 </div>`;
             }
-            
+
             const messageContent = document.createElement("div");
             messageContent.className = "message-content";
-            
-            // Create hidden element to store raw text
-            const rawTextElement = document.createElement("div");
-            rawTextElement.className = "raw-text hidden";
-            rawTextElement.textContent = text.replace(/^(You:|GEMINI:)\s*/, '');
-            
-            // Create markdown rendered element
-            const markdownElement = document.createElement("div");
-            markdownElement.className = isUser ? "user-message message" : "bot-message message markdown-body";
-            markdownElement.innerHTML = isUser ? text.replace(/^(You:|GEMINI:)\s*/, '') : 
-                                       marked.parse(text.replace(/^(You:|GEMINI:)\s*/, ''));
-            
-            messageContent.appendChild(rawTextElement);
-            messageContent.appendChild(markdownElement);
+
+            // Create content wrapper for text and image
+            const contentWrapper = document.createElement("div");
+            contentWrapper.className = "content-wrapper";
+
+            // Create text container
+            const textContainer = document.createElement("div");
+            textContainer.className = isUser ? "user-message message" : "bot-message message markdown-body";
+            textContainer.innerHTML = isUser ? text.replace(/^(You:|GEMINI:)\s*/, '') :
+                           marked.parse(text.replace(/^(You:|GEMINI:)\s*/, ''));
+
+            contentWrapper.appendChild(textContainer);
+            messageContent.appendChild(contentWrapper);
             messageContainer.appendChild(avatar);
             messageContainer.appendChild(messageContent);
             div.appendChild(messageContainer);
-            
+
             // Scroll to bottom
             div.scrollTop = div.scrollHeight;
         }
@@ -1281,10 +1353,10 @@
         function closeScreenModePopup() {
             // Stop screen/camera sharing
             stopScreenMode();
-            
+
             // Hide popup
             document.getElementById('screenModePopup').classList.add('hidden');
-            
+
             // Switch back to text mode
             switchMode('text');
         }
@@ -1309,9 +1381,9 @@
                     });
                     titleElement.textContent = 'Screen Share Preview';
                 }
-                
+
                 video.srcObject = stream;
-                
+
                 // Show video preview, hide selection buttons
                 selectionDiv.classList.add('hidden');
                 previewDiv.classList.remove('hidden');
@@ -1388,10 +1460,10 @@
             // Ẩn tất cả các modal khác
             document.getElementById('chatOptionsModal').classList.add('hidden');
             document.getElementById('screenModePopup').classList.add('hidden');
-            
+
             // Hiện error modal
             document.getElementById('errorModal').classList.remove('hidden');
-            
+
             // Reset UI status
             const statusIndicator = document.getElementById('status-indicator');
             const statusText = document.getElementById('status');
@@ -1409,7 +1481,7 @@
         async function startNewChat(type) {
             try {
                 const testWs = new WebSocket(type === 'voice' ? VOICE_WS_URL : TEXT_WS_URL);
-                
+
                 // Thêm timeout cho connection
                 const timeout = setTimeout(() => {
                     testWs.close();
@@ -1445,10 +1517,10 @@
             try {
                 // Khởi tạo audio context
                 await initializeAudioContext();
-                
+
                 // Kết nối WebSocket với voice URL
                 await connect(VOICE_WS_URL);
-                
+
                 // Update UI status
                 const statusIndicator = document.getElementById('status-indicator');
                 const statusText = document.getElementById('status');
@@ -1471,7 +1543,7 @@
             try {
                 // Kết nối text WebSocket
                 await connect(TEXT_WS_URL);
-                
+
                 // Update status
                 const statusIndicator = document.getElementById('status-indicator');
                 const statusText = document.getElementById('status');
@@ -1508,10 +1580,10 @@
 
                     // Add message to chat
                     displayMessage("You: " + message);
-                    
+
                     // Send message through WebSocket with agent info
                     if (webSocket && webSocket.readyState === WebSocket.OPEN) {
-                        webSocket.send(JSON.stringify({ 
+                        webSocket.send(JSON.stringify({
                             text: message,
                             agent: useAgent  // true/false based on toggle
                         }));
@@ -1520,7 +1592,7 @@
                         // Attempt to reconnect
                         connect(TEXT_WS_URL).then(() => {
                             // Retry sending message after reconnection
-                            webSocket.send(JSON.stringify({ 
+                            webSocket.send(JSON.stringify({
                                 text: message,
                                 agent: useAgent
                             }));
@@ -1530,7 +1602,7 @@
                         });
                         return;
                     }
-                    
+
                     // Clear input and reset height
                     messageInput.value = '';
                     messageInput.style.height = '24px';
@@ -1543,7 +1615,7 @@
                 statusIndicator.classList.remove('bg-green-500');
                 statusIndicator.classList.add('bg-red-500');
                 statusText.textContent = 'Failed to connect';
-                
+
                 displayMessage("System: Failed to connect to chat server. Please try again.");
             }
         }
@@ -1556,7 +1628,7 @@
 
             // Add message to chat
             addVideoMessage('You: ' + message, 'user');
-            
+
             // Clear input
             input.value = '';
 
@@ -1575,7 +1647,7 @@
         function addVideoMessage(text, type) {
             const messagesDiv = document.getElementById('videoChatMessages');
             const messageDiv = document.createElement('div');
-            
+
             if (type === 'thinking') {
                 messageDiv.className = 'thinking-message flex items-center space-x-2 text-gray-500';
                 messageDiv.innerHTML = `
@@ -1596,7 +1668,7 @@
                     </div>
                 `;
             }
-            
+
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
@@ -1634,7 +1706,7 @@
             if (!webSocket || webSocket.readyState !== WebSocket.OPEN) {
                 const currentMode = document.querySelector('.mode-btn.active')?.id?.replace('ModeBtn', '') || 'text';
                 const wsUrl = currentMode === 'voice' ? VOICE_WS_URL : TEXT_WS_URL;
-                
+
                 connect(wsUrl).catch(error => {
                     console.error("Connection check failed:", error);
                 });
@@ -1647,10 +1719,10 @@
         // Thêm hàm xử lý notifications
         function showNotification(type, title, message, duration = 5000) {
             const container = document.querySelector('.notifications-container');
-            
+
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
-            
+
             let iconHtml = '';
             switch(type) {
                 case 'error':
@@ -1663,7 +1735,7 @@
                     iconHtml = '<i class="fas fa-info-circle text-blue-500"></i>';
                     break;
             }
-            
+
             notification.innerHTML = `
                 <div class="notification-icon">
                     ${iconHtml}
@@ -1676,9 +1748,9 @@
                     <i class="fas fa-times"></i>
                 </div>
             `;
-            
+
             container.appendChild(notification);
-            
+
             // Handle close button
             const closeBtn = notification.querySelector('.notification-close');
             closeBtn.addEventListener('click', () => {
@@ -1687,7 +1759,7 @@
                     notification.remove();
                 }, 300);
             });
-            
+
             // Auto remove after duration
             if (duration) {
                 setTimeout(() => {
@@ -1729,13 +1801,13 @@
             if (confirm('Are you sure you want to clear all chat history?')) {
                 // Clear chat messages
                 document.getElementById('chatLog').innerHTML = '';
-                
+
                 // Clear text input
                 document.getElementById('messageInput').value = '';
-                
+
                 // Reset textarea height
                 document.getElementById('messageInput').style.height = '24px';
-                
+
                 // Thêm welcome message mới
                 const welcomeHtml = `
                     <div class="text-center mb-4">
@@ -1747,7 +1819,7 @@
                     </div>
                 `;
                 document.getElementById('chatLog').innerHTML = welcomeHtml;
-                
+
                 // Show notification
                 showNotification('info', 'Chat Cleared', 'Chat history has been cleared successfully');
             }
@@ -1797,19 +1869,61 @@
                 button.addEventListener('click', function() {
                     // Copy nội dung của button vào input
                     messageInput.value = this.textContent.trim();
-                    
+
                     // Tự động điều chỉnh chiều cao của textarea
                     messageInput.style.height = 'auto';
                     messageInput.style.height = Math.min(messageInput.scrollHeight, 200) + 'px';
-                    
+
                     // Focus vào input
                     messageInput.focus();
-                    
+
                     // Tùy chọn: Tự động scroll đến input
                     messageInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 });
             });
         });
+
+        // Add WebSocket configuration functions
+        function showWsConfig() {
+            // Load saved values from localStorage if they exist
+            const savedTextWs = localStorage.getItem('textWsUrl');
+            const savedVoiceWs = localStorage.getItem('voiceWsUrl');
+
+            if (savedTextWs) document.getElementById('textWsInput').value = savedTextWs;
+            if (savedVoiceWs) document.getElementById('voiceWsInput').value = savedVoiceWs;
+
+            // Hide all other modals and show config modal
+            document.getElementById('chatOptionsModal').classList.add('hidden');
+            document.getElementById('wsConfigModal').classList.remove('hidden');
+        }
+
+        function saveWsConfig() {
+            const textWs = document.getElementById('textWsInput').value.trim();
+            const voiceWs = document.getElementById('voiceWsInput').value.trim();
+
+            if (!textWs || !voiceWs) {
+                showNotification('error', 'Configuration Error', 'Please enter both WebSocket URLs');
+                return;
+            }
+
+            // Save to localStorage
+            localStorage.setItem('textWsUrl', textWs);
+            localStorage.setItem('voiceWsUrl', voiceWs);
+
+            // Update global variables
+            TEXT_WS_URL = textWs;
+            VOICE_WS_URL = voiceWs;
+
+            // Hide config modal and show chat options
+            document.getElementById('wsConfigModal').classList.add('hidden');
+
+            if (!initialized) {
+                document.getElementById('chatOptionsModal').classList.remove('hidden');
+                initialized = true;
+            }
+
+            showNotification('info', 'Configuration Saved', 'WebSocket configuration has been updated');
+        }
     </script>
 </body>
 

@@ -3,12 +3,17 @@ from dataclasses import dataclass
 
 from pydantic_ai import Agent
 from pydantic_ai.models.groq import GroqModel
-from models.google_search import ShoppingSearchResult
+
 from agent.helper.google_search import is_google_search
+from models.google_search import ShoppingSearchResult
 
 
 @dataclass
-class AiAgent:
+class PydanticAiAgent:
+    """
+    Pydantic AI agent
+    """
+
     model = GroqModel(
         "llama-3.3-70b-versatile",
         api_key="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",
@@ -27,4 +32,4 @@ class AiAgent:
         return result.data
 
 
-ai_agent = AiAgent()
+ai_agent = PydanticAiAgent()

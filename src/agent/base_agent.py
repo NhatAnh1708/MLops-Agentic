@@ -1,44 +1,50 @@
 import os
 from dataclasses import dataclass
 
+import google.generativeai as genai2
 from dotenv import load_dotenv
 from google import genai
 from loguru import logger
-import google.generativeai as genai2
 
-
-from ..agent.helper.google_search import is_google_search
-
+from agent.helper.google_search import is_google_search
 
 load_dotenv()
 
 
 @dataclass
 class BaseAgent:
+    """
+    Base agent for the Gemini model.
+    """
+
     client = genai.Client(
-        api_key=os.getenv("GOOGLE_API_KEY"), http_options={"api_version": "v1alpha"}
+        api_key=os.getenv("GEMINI_API_KEY"), http_options={"api_version": "v1alpha"}
     )
     model_id = "gemini-2.0-flash-exp"
     config = {"response_modalities": ["TEXT"]}
 
     async def chat(self, message: str):
+        """
+        Chat with the Gemini model.
+        """
         async with self.client.aio.live.connect(
             model=self.model_id, config=self.config
         ) as session:
             logger.info(str(message))
             # greetings_question = self.classify_question(message=message)
             greetings_question = True
-            logger.info(str(greetings_question))
             if greetings_question:
                 message_after_processing = self.is_process_message(message=message)
                 await session.send(input=message_after_processing, end_of_turn=True)
-            # await session.send(input=message, end_of_turn=True)
             async for response in session.receive():
                 if response.text is None:
                     continue
                 yield {"type": "text", "content": response.text}
 
     def classify_question(self, message: str):
+        """
+        Classify the question.
+        """
         api_key = os.getenv("GOOGLE_API_KEY")
         if not api_key:
             raise ValueError("GOOGLE_API_KEY not found in environment variables")
@@ -73,8 +79,8 @@ class BaseAgent:
         chat = model.start_chat()
         response = chat.send_message(
             f"""Determine if this message is a greeting question: "{message}"
-            Only respond with a function call to is_greetings_question.
-            A greeting includes hello, hi, hey, good morning/afternoon/evening, etc....""",
+        Only respond with a function call to is_greetings_question.
+        A greeting includes hello, hi, hey, good morning/afternoon/evening, etc....""",
             tools=tools,
         )
 
@@ -84,8 +90,10 @@ class BaseAgent:
         return False
 
     def is_process_message(self, message: str):
+        """
+        Process the message.
+        """
         result_google = is_google_search(input=message, search_type="search")
-        logger.info(str(result_google))
         prompt = f"""
         Context:
         {result_google}
@@ -93,7 +101,6 @@ class BaseAgent:
         {message}
         Answer:
         """
-        logger.info(prompt)
         return prompt
 
 
