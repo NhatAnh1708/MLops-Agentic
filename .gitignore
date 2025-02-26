@@ -2,13 +2,16 @@
 .env
 # Byte-compiled / optimized / DLL files
 __pycache__/
+iac/terraform/*.json
+iac/ansible_setup/secrets/*.json
+iac/ansible_setup/inventory
 *.py[cod]
 *$py.class
 agent_history.gif
 notebooks/
 # C extensions
 *.so
-iac/terraform/.credentials/gen-lang-client-0208746421-195c2e818acf.json
+iac/terraform/.credentials/
 iac/ansible_setup/secrets/gen-lang-client-0208746421-195c2e818acf.json
 deployments/lmnr
 # Distribution / packaging

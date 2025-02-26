@@ -3,7 +3,7 @@
   tasks:
     - name: Start an instance
       gcp_compute_instance:
-        name: jenkins-server
+        name: production-server
         machine_type: e2-standard-2
         # Refer to https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts
         # or use the command `gcloud compute images list --project=ubuntu-os-cloud`
@@ -17,7 +17,7 @@
             boot: true
             initialize_params:
               source_image: projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230727
-              disk_size_gb: 50
+              disk_size_gb: 30
         network_interfaces:
           - network:
               selfLink: global/networks/default
@@ -26,15 +26,16 @@
                 type: ONE_TO_ONE_NAT
         state: present # change to absent to delete the instance
 
-    - name: Create inbound firewall rule for port 8080 and 30000
+    - name: Create inbound firewall rule for production
       gcp_compute_firewall:
-        name: allow-port-8080-30000
+        name: allow-port-80-443-30000
         network:
           selfLink: global/networks/default
         allowed:
           - ip_protocol: TCP
             ports:
-              - 8080
+              - 80
+              - 443
               - 30000
         source_ranges:
           - 0.0.0.0/0 # Allow traffic from any source (use a more specific source range for security)
