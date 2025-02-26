@@ -12,6 +12,7 @@ iac/terraform/.credentials/gen-lang-client-0208746421-195c2e818acf.json
 iac/ansible_setup/secrets/gen-lang-client-0208746421-195c2e818acf.json
 deployments/lmnr
 # Distribution / packaging
+gen-lang-client-0208746421-195c2e818acf.json
 .Python
 build/
 develop-eggs/
