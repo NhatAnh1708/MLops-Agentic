@@ -60,4 +60,4 @@
         ports:
           - 8080:8080
           - 30000:30000
-        detach: yes # Run the container in the background
+        detach: yes
