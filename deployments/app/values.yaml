@@ -1,0 +1,4 @@
+image:
+  repository: danny1708/ai-agent-service
+  tag: latest
+  pullPolicy: Always

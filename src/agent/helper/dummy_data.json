@@ -1,0 +1,248 @@
+{
+    "searchParameters": {
+        "q": "iphone 16",
+        "gl": "vn",
+        "type": "shopping",
+        "engine": "google"
+    },
+    "shopping": [
+        {
+            "title": "iPhone 16 Pro Max 256GB | Chính hãng VN/A",
+            "source": "CellphoneS",
+            "link": "https://cellphones.com.vn/iphone-16-pro-max.html?region_id=3759015",
+            "price": "₫32,990,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSq6Q2LWi8I_HrLTitsVpSMLFa-IVM9-NH7yGpxNzEubNQmz6PRLPRL_gaXNa3ShGK4fQ05&usqp=CAE",
+            "rating": 5,
+            "ratingCount": 1,
+            "position": 1
+        },
+        {
+            "title": "iPhone 16 - Chính hãng VN/A",
+            "source": "Hoàng Hà Mobile",
+            "link": "https://hoanghamobile.com/dien-thoai/iphone-16?srsltid=AfmBOopWRsTGxscSfWkxWXaQJ_PyUSmcjdqCzw2GfnlIgHo2NK8n58fBoEE",
+            "price": "₫20,990,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTYf0fGDWqTZuImbetd8LZHeWkamzRpSMPH6Ncog4-upTKCED2kJJ9G7YTMj0ujkQlAMUQzC5-B&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 2,
+            "position": 2
+        },
+        {
+            "title": "iPhone 16 Pro Max 256GB",
+            "source": "Thế Giới Di Động",
+            "link": "https://www.thegioididong.com/dtdd/iphone-16-pro-max",
+            "price": "₫32,890,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQtyieMZqqt_tlnEWeevemEkHzNbLCEpB_Y-KyiaFnwpfSveV-H3-DzsVRp&usqp=CAE",
+            "position": 3
+        },
+        {
+            "title": "iPhone 16 Pro Max 256GB - Chính hãng VN/A - MYWY3VN/A",
+            "source": "minhtuanmobile.com",
+            "link": "https://minhtuanmobile.com/iphone-16-pro-max-256gb-chinh-hang-vn-a-titan-tu-nhien/?srsltid=AfmBOorqCpNFWslWwHOtE7rrfAAzYf1U4zkIaNqK0sEiOgi6H4fwbrRp0SM",
+            "price": "₫32,290,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ15Ru5k05w8rdBZluFyyb9Qdg1bacx6FAB7HzbawKXV_KWJjnY7gFY1hEQbrH4DGIjJAe-Dw&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 3,
+            "position": 4
+        },
+        {
+            "title": "iPhone 16 Pro Max 1TB",
+            "source": "Fptshop.com.vn",
+            "link": "https://fptshop.com.vn/dien-thoai/iphone-16-pro-max-1tb?sku=00911057",
+            "price": "₫44,990,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRWCQMGxUiHMIob3O1ggDr6OAmIAH-uVnubuJWtQA6Ye-cLgurQcdYpWW9zxfocNb4oYl5SHA&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 3,
+            "position": 5
+        },
+        {
+            "title": "Apple iPhone 16 Pro Max 256GB Titan Tự Nhiên",
+            "source": "Phong Vũ",
+            "link": "https://phongvu.vn/iphone-16-pro-max--s240900709?srsltid=AfmBOorVpZ3tF-53Kvt8eH8cFJcjVONvHDHcioqQ5ffUaon02xNSB62kwXc",
+            "price": "₫32,790,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTwi5UOZOy6YSSPGnaKG7DjXGkWXKqeFSjxJy6sXATJ_0lDzWNpadRq_WybGFDEK3HfHob4VA&usqp=CAE",
+            "rating": 5,
+            "ratingCount": 1,
+            "offers": "3",
+            "productId": "1776289728174371730",
+            "position": 6
+        },
+        {
+            "title": "Điện thoại iPhone 16 Pro Max 256GB",
+            "source": "Điện máy XANH",
+            "link": "https://www.dienmayxanh.com/dien-thoai/iphone-16-pro-max",
+            "price": "₫32,890,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT5x7ILQsGUOCc_guZac1ydW0JANYAjjb8-x9kOZiXgapxFYdNw6Cx7ZtUXoqFYCN-nnzzg&usqp=CAE",
+            "rating": 5,
+            "ratingCount": 1,
+            "position": 7
+        },
+        {
+            "title": "Apple iPhone 16 Pro 128GB Titan Sa Mạc",
+            "source": "tiki.vn",
+            "link": "https://tiki.vn/apple-iphone-16-pro-titan-sa-mac-128gb-p276110023.html?spid=276110025",
+            "price": "₫26,490,000",
+            "delivery": "",
+            "imageUrl": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ2w8xsQgkGgLJqjm1V9Qc3vgjizYV9Gh-_awZQyFx98Vga_gB_VklqBNZDtLG717TIxLn5Xg&usqp=CAE",
+            "rating": 5,
+            "ratingCount": 3,
+            "offers": "5+",
+            "productId": "12295364471296159114",
+            "position": 8
+        },
+        {
+            "title": "Apple iPhone 16 128GB Hồng",
+            "source": "Bạch Long Mobile",
+            "link": "https://bachlongmobile.com/products/iphone-16-128gb-chinh-hang-vn-a/?sku=CTX002864&srsltid=AfmBOorKVlab5Y8t5BOCwzYBPJCfGJvsC7g-PCr40tZ_hu4Hc1NtdG3Z5CU",
+            "price": "₫19,280,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRfrTZbhAkeDest-U4S_5RXjuVvcf-ScZHo-iCJYo1XZklI9dEj6NZo35bH6F76Cb_Q19RG&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 2,
+            "offers": "2",
+            "productId": "5104691625356139032",
+            "position": 9
+        },
+        {
+            "title": "Apple iPhone 16 128GB Chính hãng VN/A",
+            "source": "Shopee",
+            "link": "https://shopee.vn/product/308461157/24835940211?gads_t_sig=VTJGc2RHVmtYMTlxTFVSVVRrdENkUm9yWVZMbGw0Q214S0d1TzNEZmUwN29RR1ZieXJXREc3dGVKc1lNd2dnZjh4T1BRaXArbmR4UlpXMWkrRXdaaGw2cjdTYU9UL05CN1dQLzdCd1gzZHhYN2JXOWE3b3NraEtDd1JjTXZrcnA",
+            "price": "₫21,990,000",
+            "delivery": "",
+            "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSxQGaeUCwxi-WhS8Gu30jE28WL1_37HelBko9iOwtg0yaYTrxEynWpnShBvw4Rih4Wn9VN&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 2,
+            "position": 10
+        },
+        {
+            "title": "iPhone 16 Pro Max 1Tb Chính Hãng - [Mới 100%]",
+            "source": "Hà Nội",
+            "link": "https://hanhmobile.com/san-pham/iphone-16-pro-max-1tb-chinh-hang-moi-100/?srsltid=AfmBOoolOrH5K9G0zj_5Tlg4LtuON2rxQX9qY60pQYR5rie5DJc0hgZwvfA",
+            "price": "₫48,400,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS5AD7Z4xwltfJEFaTFHGvAdDYPcdUsPylvA4m61yLJnCkY5ldu4ciFFMsWyx2hSCjX_iE_XQ&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 3,
+            "position": 11
+        },
+        {
+            "title": "【Rẻ Vô Địch】iPhone 16 Pro Max 1TB | Chính Hãng New Seal -Việt Nam / Thu Cũ Đổi Mới",
+            "source": "Fogo Store",
+            "link": "https://www.fogostore.vn/products/iphone-16-pro-max-1tb-chinh-hang-chua-active?variant=1130041753&source=googleshop&srsltid=AfmBOoqFJ6wr-YkNNhG_3EiBNinG8tRWfUFtxUIQqgo9Vd6Y43GXNPIeWm4",
+            "price": "₫43,290,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQIJfBl-sR0GwUxzl8Y2in6F3cJVLIY_NHDOYdprs1d0IrBy6Z8CDJyP209oZcdJqnE-j8mZw&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 3,
+            "position": 12
+        },
+        {
+            "title": "iPhone 16 256GB Mới Xanh Ngọc",
+            "source": "Trang Thiên Long Mobile",
+            "link": "https://trangthienlong.com.vn/san-pham/iphone-16-256gb/?attribute_pa_mau-sac=xanh-ngoc&srsltid=AfmBOopJGnDWqAskgZUxdp6tVrOOQENNfYrLtjFda5UuRmDoZ_bxp55_0qY",
+            "price": "₫21,400,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT0eTLSpdmAk2RSqhMv9kB_qHGdSIuE1V6YBl_sEaMkQr-iHZeP90-C3udMX8pbQQ696ODD1A&usqp=CAE",
+            "position": 13
+        },
+        {
+            "title": "iPhone 16 128GB Chính Hãng VN/A",
+            "source": "dienthoaigiakho.vn",
+            "link": "https://dienthoaigiakho.vn/iphone-16-1723542266?srsltid=AfmBOoo5zgxDUi0mRBimfwwz6fYfTqgC_B9s9I__hcHJKErVkogqymvYtJY",
+            "price": "₫20,490,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTwfGcrUx4yafyApjHVj22kD01C7gce0pd-nxfb64318UY0JpsXvpAd3sQ2zmhDW5ICkFge&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 2,
+            "position": 14
+        },
+        {
+            "title": "iPhone 16 Pro Max 2 Sim Vật Lý (ZA/A Mới 100%) -1TB / Titan Trắng",
+            "source": "Tinh Tế Mobile",
+            "link": "https://www.tinhtemobile88.com/products/iphone-16-pro-max-2-sim-vat-ly-za-a-moi-100?variant=1130522966&source=googleshop&srsltid=AfmBOophGbUFL4tdDwBksGXgi7GcX7nlDPc8uXgjpaDfbTwoHGak7pPAewc",
+            "price": "₫46,490,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQkJNKzYbkqjsG9nekFIMRMigJvElIbgTLz3A7GWXPWVTqW_mj001NpDexaKd1yTV7qCYWk&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 3,
+            "position": 15
+        },
+        {
+            "title": "iPhone 16 256GB",
+            "source": "Viettel Store",
+            "link": "http://viettelstore.vn/dien-thoai/iphone-16-256gb-pid339615.html?srsltid=AfmBOopqpJhzsnHJRhCp6H6r3-x_ERwLZsQ4FyQuFpaMMBogMP7IAJhabjw",
+            "price": "₫23,790,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSDpd-PI_ZYL0kL4NK5RH6pfdYuRFpGWImWabOLhXiXo2qhQV94fv9OQq5qFAKeET-ghqzi&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 1,
+            "position": 16
+        },
+        {
+            "title": "Apple iPhone 16 Pro Max 256GB LL/A",
+            "source": "HnamMobile",
+            "link": "https://www.hnammobile.com/dien-thoai/apple-iphone-16-pro-max-256gb-ll-a.26296.html?utm_content=apple-iphone-16-pro-max-256gb-ll-a&utm_source=google&utm_medium=shopping&utm_campaign=shopping&srsltid=AfmBOorjDQNzPWNU4AYVc4_iznqlpeA4dvhWOZw3JpfrShPuNOC6M9_CJEM",
+            "price": "₫28,990,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRBzMf9DBMNYRv4ZcWXTO7oE4E3pjJnZb8bBMx-oi14IAPi1qGg6oo7PdHs&usqp=CAE",
+            "rating": 4.5,
+            "ratingCount": 3,
+            "position": 17
+        },
+        {
+            "title": "iPhone 16 Pro Max ZA/A",
+            "source": "TheTekCoffee",
+            "link": "https://thetekcoffee.com/iphone-16-pro-max-za-a/",
+            "price": "₫32,990,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT40oCq1jH0uVTaktf1o6PG_b1M3k18lezsMA9oVU7OJK4TI5vXw_DQe7jXOmF4ZqcAey63Jw&usqp=CAE",
+            "position": 18
+        },
+        {
+            "title": "iPhone 16 Pro Max 256GB | Chính hãng LL/A",
+            "source": "Masta Shop",
+            "link": "https://masta.vn/iphone-16-pro-max/iphone-16-pro-max-256gb-chinh-hang-ll-a/?attribute_mau=Natural+Titanium+-+Titan+T%E1%BB%B1+Nhi%C3%AAn&srsltid=AfmBOoonyZ45ACxFyQmfAnEmSE7Xq7eYn6WDTX4S2MchZ_0HmvQdaSppi4I",
+            "price": "₫27,700,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRmoHvIpomdMOkGq6F_AnaD_VtwXR5w__w2Geh-ed0_qdT413yGGaBT7_6-qJF21CAbg3p7ww&usqp=CAE",
+            "position": 19
+        },
+        {
+            "title": "iPhone 16 Pro Max 256GB Chính Hãng VN/A",
+            "source": "Đức Huy Mobile",
+            "link": "https://www.duchuymobile.com/iphone-16-pro-max?srsltid=AfmBOoo6bZoSXili_AoyZwbDI36JuNCx9U4HVY5R0QARMgL_JIM5RBcHdYo",
+            "price": "₫28,699,000",
+            "delivery": "Free shipping",
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR0ZhqX7S35eRfSoer7gdhVmen3c8s9Dg6s9fTxOp7O04uQuLZeoc4bZxSkgLq1uiTHk-c0&usqp=CAE",
+            "rating": 5,
+            "ratingCount": 1,
+            "position": 20
+        }
+    ],
+    "credits": 2
+}
+
+AgentHistoryList(all_results=[ActionResult(is_done=False, extracted_content='🔍  Searched for "địa chỉ bán iphone 16" in Google', error=None, include_in_memory=True), ActionResult(is_done=False, extracted_content='📄  Extracted page as markdown\n: # Bộ lọc và chủ đề\n\n[Tất\ncả
+    ](/search?sca_esv=3ec2e23cd9a0380f&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&source=lnms&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQ0pQJegQIDhAB)\n\n[Mua\nsắm
+    ](/search?sca_esv=3ec2e23cd9a0380f&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&tbm=shop&source=lnms&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&ved=1t: 200715&ictx=111)\n\n[Chuyến\nbay
+    ](/travel/flights?sca_esv=3ec2e23cd9a0380f&output=search&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&source=lnms&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&ved=1t: 200715&ictx=111)\n\n[Tài\nchính
+    ](/finance?sca_esv=3ec2e23cd9a0380f&output=search&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&source=lnms&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQ0pQJegQIDRAB)\n\nWeb\n\n[Hình\nảnh
+    ](/search?sca_esv=3ec2e23cd9a0380f&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&udm=2&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQtKgLegQIEBAB)\n\n[Tin\ntức
+    ](/search?sca_esv=3ec2e23cd9a0380f&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&tbm=nws&source=lnms&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQ0pQJegQIChAB)\n\nThêm\n\n[Video
+    ](/search?sca_esv=3ec2e23cd9a0380f&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&udm=7&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQtKgLegQINRAB)\n\n[Sách
+    ](/search?sca_esv=3ec2e23cd9a0380f&q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&udm=36&source=lnms&fbs=ABzOT_AfCikcO6SgGMxZXxAG9tmSIOLbd_AoP0pZsd-\nqDL2YE4bpBZeaBhLAtTHrZrzg88_M_qoURowEMkmxra7oAJn-Y7XpovAwTuime3fryXKP6eeDkQPyN0oduo3obL4wXGPkuy_3j2IA4qzh14BSvOmDa34hLYh57B2l6YsH7gE3zR2-Uipx4fuEqxxoaY3Tn_muFFzeC8O4dZc8nowy0wU631lkI9dWnO7e7oJnb5lZwgy8mcg&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQ0pQJegQINhAB)\n\nCông cụ\n\nMọi ngôn ngữ\n\nMọi ngôn ngữ\n\n[Tìm những trang Tiếng\nViệt
+    ](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&source=lnt&tbs=lr:lang_1vi&lr=lang_vi&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQpwV6BAgEEAc)\n\nMọi lúc\n\nMọi lúc\n\n[ Giờ\nqua
+    ](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&source=lnt&tbs=qdr:h&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQpwV6BAgEEAw)\n\n[
+        24 giờ\nqua
+    ](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&source=lnt&tbs=qdr:d&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQpwV6BAgEEA0)\n\n[ Tuần\nqua
+    ](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&source=lnt&tbs=qdr:w&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQpwV6BAgEEA4)\n\n[ Tháng\nqua
+    ](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&source=lnt&tbs=qdr:m&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQpwV6BAgEEA8)\n\n[ Năm\nqua
+    ](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&source=lnt&tbs=qdr:y&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQpwV6BAgEEBA)\n\nPhạm vi tùy chỉnh...\n\nPhạm vi ngày tùy chỉnh\n\nTừTới\n\nTìm\n\nTất cả kết quả\n\nTất cả kết quả\n\n[Nguyên\nvăn
+    ](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&source=lnt&tbs=li: 1&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQpwV6BAgEEBg)\n\n[ Tìm kiếm nâng cao\n
+    ](https: //www.google.com/advanced_search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&udm=14)\n\nCtrl+Shift+X để chọn\n\nLooking for results in English?\n\n[Change to\nEnglish](/setprefs?sig=0_kK7q6SrlkOZH6okZDBSBhTB6c7I%3D&source=en_ignored_notification&prev=https://www.google.com/search?q%3D%25C4%2591%25E1%25BB%258Ba%2Bch%25E1%25BB%2589%2Bb%25C3%25A1n%2Biphone%2B16%26udm%3D14&hl=en&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQhoQCKAF6BAgIEAQ)  \nTiếp tục sử dụng Tiếng Việt  \n\n[Cài đặt ngôn ngữ](/preferences?lang=1&hl=vi&sa=X&ved=2ahUKEwj12ZKDvJ-\nLAxXl2TQHHU3FMBsQiIQCKAN6BAgIEAY#languages)\n\n# Kết quả tìm kiếm\n\n[  \niPhone 16 (Pro/Pro Max/Plus) giá tốt, thu cũ giảm 5 triệu,\n...![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAk1BMVEXhBCrgBSrhACnhACfiAB3iABflh5PjiZjkiJ3cACHUABz////+///YAAbZABr9/Pz///37+vz35+303ej03+bz2ufYAADgU2bcAADmkJfZAAvdWm7rucP33N7iBS3/8/v3z9rkfo/yxMjWABPfSmnlbXrcFjPXEz3qoqj77u3oq7HbMlLcK0Lwwc7ZQVjidX7lhpzmhyg6AAABEklEQVR4AW2SBZaEMAxA0wQPDmPIuPv9T7fYDoHHh+qvtzCNUoCiNFA0KGn6EEClOodkmJbANG3opcM1rtsFZk9IPwhD/uFyNJIcJ0mSJsms+jmYIwzkYt6xnK84QwApc1sRIkEVloVfVQrplg4hrJsqUgBi2A2zu81ovVZNLWK/z2ovu5J5n60JcL2GfszWaodjUdnTWYfKjkAg/XI1L7f7WSeYgDSiRxTen9mExvoGFi7z603T95h92OUwA0Hfcp1dmaO5OKH10667VcDa/nA4kKr0CbEdV2skiLN19/PMq468/k8jeYjC6sbSltgdS9fl//t2x5IlLrtCgm2Y3x7L+togaJ/m74HaKKUaAgM5zR8tqhaPJPtMXgAAAABJRU5ErkJggg==)CellphoneShttps://cellphones.com.vn\n› Điện thoại › Apple](https://cellphones.com.vn/mobile/apple/iphone-16.html)\n\nCellphoneS\n\nhttps://cellphones.com.vn › Điện thoại › Apple\n\n _iPhone 16_ giá bao nhiêu tiền? Bảng giá mới nhất 01/2025 ; _iPhone 16_\n128GB. $799. 22.190.000đ ; _iPhone 16_ Plus 128GB. $899. 25.990.000đ ; _iPhone\n16_ Pro 128GB. $999.\n\n20.990.000 ₫ · \u200eCòn hàng\n\n[  \niPhone 16 (Pro/Pro Max/Plus) chính hãng, giá tốt, thu cũ\n...![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC1UlEQVR4AXWTU6BkORRFkxTHtm3Pz9i2bZtt27Zt27b5bKNs1+rcausjONrHAjjpRJ2rnvcXtO3k2ffDJG/W76MCpf3+jwdy7jyV7nFEuGbmh7UrLsG9/VkCWU8T3n8+od12/OvOxrHmIny5jfoZQKcE8Bd2bOfc/Dgx5wyIToO6t6DyfH0U1ClS5ZLg3rOoXXEx4bq57x4HECwb+Ldr2/MkI7sgPpO0Rxt7zewca+HycyUdmpggKMEvieTYMiCHIxHJmOe8ujU3kAhshPhc0v43oNYOMcHA/xVCSD64z0TMI7jxGknxNEUo5wydToP+GYBgaf9/fNmfQHQj6dCj4LWRqDYxtoONKe3O5qEbLfT4006r383ce40Vx14Fbknd6gt1FHm3C+e2lzZFK/8A7/+kg4polYmZvW2YzZLrr7Jw+6UK+5mKJt+aIKWPX5IKCNzrz8Pojqhfd2dNsupR8FlJeSSXWE188bDSUSiuvFDx51dm4kEtCwsIy4O18AhC+8/Em/XrGFG39tb6ZJkdnIKkS7JlhInd8xSVZZIX7rOyaJSJoDYgIUlHFUQEOBThHDvGnAjHpkez4nkWqJcQUcRrbVilpGsLM2DmoVslt92gjdMS4kYU+rgV3s2X4C9o3UUY1fRtPgt8Oty3JA/dJNk4zkK8wpQxyN5o1bUw8+HLClL6hARpv6Bw7oVEXWueFXF/1l21qy4nXXImrT400b+tGSISfPJguCnJf7/bmDzIlEkDbezbfi41yy8mlYybBCB8ec16OhZfAB4JIX3qFThEBiQdlpDUJyYy8mihiaJZFxCunvbpkUlMJaNWX85/g2qWnEe6yHywHpWHTp0Ah4RqSWSvhewZ52OM/Um7kAHJb9GjftnF1K88j9D6M0ns0kO17Sy8K86gYsF5VC+9iGDZ4D9Pu43Gifv33WtsnWPzk7uNFtevu6vKtf21tcbEGmN/ov4BgBS74zWXkCoAAAAASUVORK5CYII=)Thegioididong.comhttps://www.thegioididong.com\n› dtdd-apple-iphone-16-...](https://www.thegioididong.com/dtdd-apple-\niphone-16-series)\n\nThegioididong.com\n\nhttps://www.thegioididong.com › dtdd-apple-iphone-16-...\n\n_iPhone 16 Series (Pro/Pro Max/Plus) gi_ á tốt, thu cũ trợ giá đến 2tr, trả\nchậm 0% lãi suất, giảm giá các sản phẩm Apple khi mua kèm, bảo hành 1 năm.\n\n21.490.000 ₫ - 45.990.000 ₫\n\n[  \nMua iPhone 16 ở đâu? Những địa chỉ uy tín, đáng\n...![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAsVBMVEVHcExgvUf4axpivUf2bx/0biIIUKLedS/0biNivEYKUaH3biEeqWk8jnfaczkXTaIET6VUwUn4bhxZwEj8ZhkGTKAGTar0bBsEUKL1axv5ZxJfvkcGS59YuTrzbyVjvEcLUaH///5ZuTkBTqH9388AR51fu0H0Zwi7zuXV7c14xV/0bRrS3eyLqtD7zLLm8exljMD4nW/+9O6d1Y2u3KD1hEfu9Pr6tZG24Kowaa7A5LZeHNBjAAAAHnRSTlMAhFHIOPOJCMjo5pwdEBknazRwXSTOSN+7t3uW3M9FLUrwAAABcUlEQVQ4jc2Sx3aDMBBFZTqmGzBuUcE0g8HG3fn/D4skSrII6+QeFjq8J2nmaQD4h6g9U7qw1jjCxHYN9kwYNoMeBT9/W67CcYNoMKxVYPkzBtWdFe5YSfJgMIAnIg7dP+917C7gWIKJ0GBwcdqBl0aVcyAMZlnMyYC6wnXBqOdO9EyShn532fq4HRifJTB3NWE86tCGCV+SVjP1W7e8gmVaPPaMVBHulyav8idpNz7K4iu5xhkCbvogx+Ox2GN305JLkiQXAoUZQvGNlBktUnmTEzWcU+ysnyRhtHJAe4wPhDahg/BMzuwGjO2oIRXrsdJsHaHsdIoREgEuTu99HxMtoYvJo3pJXtSwBfv6zHWsCLC58xPgwmeGV0mv8AGNqctxacC806G0ZRnGrAQPDDmH1vjUsi0OQYvqYNg56vgQNKZBtxwwZ4SKA6TRYHg6R5yZwPyeivEp5YlpMsYDfh9YW4MyQ1tMjLMqddgT+l/yBY2ePq0b/uNNAAAAAElFTkSuQmCC)FPT\nShophttps://fptshop.com.vn › tin-tuc › danh-gia › mua-\niphon...](https://fptshop.com.vn/tin-tuc/danh-gia/mua-iphone-16-o-dau-noi-ban-\niphone-uy-tin-155851)\n\nFPT Shop\n\nhttps://fptshop.com.vn › tin-tuc › danh-gia › mua-iphon...\n\nCác sàn thương mại điện tử: Các sàn thương mại điện tử lớn như Lazada, Shopee,\nTiki cũng có các _cửa hàng_ chính hãng của Apple.\n\n[  \nMua iPhone 16 ở đâu uy tín, sẵn hàng, giá tốt\nnhất?![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAABX1BMVEVHcEyl1pyBvH/H4MXC27/M4cvY6dbg79/2/PWs06in06N/vHtap1M2lSwijRQBhQBUn0611bLn9uT4/PjH3cWu0qtpqWigypv9//z4/PjI5MVbrFIAeAADdAONvIns9evt9uy32rMUkAAEfAAAewD3+/b////9/v0GgAAqhij9//wTigFvrG3p9ejz+fIQhQAziy6s1aYzlyoIgQCnzqL///99xHOy2K2kzKG63bpIlkIAggBjn2EQiAA1kC93sXKLv4Y+kjhxs2ff7t0jjhUAfgDW6tN9sHplp2IZgw6Kvoai0JtAiz1jslLT6tAZigBmq2AAaACMvohrqGaOt45FgUJLmERfmV1epldkrlcAgQB7snkjih2hzJxIjUWKxYEAhQBkrV0+nTHM5spIpUEaiwMqlBPE4MH7//q537QcfRrE5MJvrmxaoVfd7dv5/fkhlQD0/PTH4cD2+vXZ6diFXWSsAAAAdXRSTlMAAxJJfqGLShAcjvXw4+L//+VhC1a6tnwzIjpttf/+iW+eFJn/BlIXxf9IMP+UP6n+3lZH+mAmb1og0+r1///Ld/xwXGi5s8DM/5Fi/EiCIv//3feZ7f/g/5XW//+p9Fr36/8pkv//wSko/7Ha6lCvdtPlnrc2pG0CAAABxUlEQVR4AXRSA5IDURD9szZi27Zt27ad+1dsvELbDc4APTw+Pb+8voEbeP/4/Pr++f37h8EvTXAEEoXGYHF4ApFEvgh+o1AftxyNziCRoVMbk0VhH0pzuP+8UyOGxTwK/F+B8ERki6DTrsUSKQZcA4IAWwbkvwrloVGVGq3Rritr0GgcTwfx9SQhfNco2mD8NZlxAFisDKPN7kDznQLXrj+0hOj2eL0+4A8wjNagTRUKEyI7I04XjWEf48QEL5n6YqRxNOid5szsjOr4nx2o4l5p2hv6YqCwK1WYs4+Ev78DgGRk/hgarNGbZa6NubzwsEFsLJrKFBCgGC2VN1uoKCj7tT79Rauf3pjf/1mrUusrjcy73x/OXUg2YF+MpvG3VWumVqEQPdXubGxdc6/Q76AjAxRqUKsNE10AaPq8ENqcw8JlFNK6kkHNZlN7gY+3ldbRk7I2gfWYsbVCc/gKQJVoHa11+swYvu3GPhq9vo5GIjiAjxCP60EmRAUL3AGfGBmfiJ3T49Fykunpg0HKzoEPO62z80Oz5487Ts7528x/Gipq+7prE12fb4vAJXDIT91P7kfwf3jCUzBxL67lSuTZkZ0CAKu4TdeveiC3AAAAAElFTkSuQmCC)24hStore.vnhttps://24hstore.vn\n› Tin tức › Review sản phẩm](https://24hstore.vn/review-san-pham/mua-\niphone-16-o-dau-uy-\ntin-n8841?srsltid=AfmBOor7xijVFp6XuwScragC864nmUlh7ky1PEMuqntaS6znYrbHg939)\n\n24hStore.vn\n\nhttps://24hstore.vn › Tin tức › Review sản phẩm\n\n29 thg 11, 2024 — _Apple Store chính hãng_ : Đây là địa chỉ bán iPhone 16 uy\ntín. · Các sàn thương mại điện tử: Các sàn thương mại điện từ như Shopee,\nLazada, Tiki ...\n\n[  \nDigibox - Đại lý uỷ quyền Apple chính\nhãng![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAANlBMVEUAAAAAAAB5eXnY2NhYWFjs7Oz////Hx8ciIiL39/e/v79ISEiJiYnh4eGysrI6OjqXl5ekpKRwzOHXAAAAAXRSTlOEqjOfXwAAAIVJREFUeAG80kUCxCAMQNG2KR+3+x92XJHVSDbIw8myrNNordFv4ib7HBX6n2imuInFOj9ExzVC7DFB3LIvFjr04K7bqh4d9lbbe1Sk+VWg3FE6tE+MuAYFuT8EhAYD7NdaBdPeU2H9bVRaW/SA1KRABpmQBQDSOE32KrrkX2XfccQleQYAqCkGjbejstkAAAAASUVORK5CYII=)Digiboxhttps://www.digibox.com.vn](https://www.digibox.com.vn/)\n\nDigibox\n\nhttps://www.digibox.com.vn\n\n _Digibox_ là chuỗi đại lý bán lẻ ủy quyền của Apple tại Việt Nam,được phát\n... Địa chỉ trụ sở tại tầng 9, Tòa nhà Lim Tower 3, 29A Nguyễn Đình Chiểu ...\n\n[  \nĐiện thoại Iphone 16 pro max hàng có sẵn giá rẻ tại quận\n...![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAxlBMVEUAAABlXy/98HlxajW/tl7/9nzLwV9mYjT/+YL/+H5dWCv17H//9YCyqlZaWDS0rl+LhUTBu2f+9YXw5nkODwz/+ozw32cZFwlraDtUUStjYTiXklCblE336HD/7WnIt0v28IiBeDb/6mDDv3Dv6IKbjz///pZCQSOsqGPPwVm5q0l5dET/83PXyFm7rmPr5ohnWC7y3XzhyGylmkawl09+fEh/eT/Qx2ZANRrlwmXZuF/r0nP/72A0Mhq9olTMvWvX03whIBA4lmHAAAAAs0lEQVR4AczJQwIDQRAAwJhr27b9/2/F1jkz7Rr9+xv/wsn0u83mi6+2XK03X3ELgBCMfDYUwwlyNafoD8aQJMvxgijJH1Ah4WNTNe3ddNI4dfMDMpZlOyi6cCXNe0PDcnwLAwJJ08JXi4x4BMPwzPNCSQKfLUkN9jp7gfiMWcrf5jyYPFmRZYlfllWlqqopBfWjNW3W9QqJzQNpGIJgvp8tA4qsnZ29g4O5LhjwOjIMRQAAjjQSpKOWAGAAAAAASUVORK5CYII=)bachlongstore.vnhttps://bachlongstore.vn\n› Điện thoại › APPLE IPHONE](https://bachlongstore.vn/apple-iphone-16-pro-\nmax.html?srsltid=AfmBOop7tLRmNjhJprq3qR6JJqem_x345b6s71lyVYXlVnkOCJrK_bMi)\n\nbachlongstore.vn\n\nhttps://bachlongstore.vn › Điện thoại › APPLE IPHONE\n\nBảng giá iPhone 16 bản tiêu chuẩn (iPhone 16 thường) tại _Bạch Long Store_ ;\niPhone 16 128GB. $799. 22.190.000đ ; iPhone 16 256GB. $899. 25.990.000đ ;\niPhone 16 ...\n\n[  \niPhone 16 (128GB) - VN/A - Giá bán chính thức, nhận máy\n...![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB+0lEQVR4Ae3XAURrURjA8fMk8+QZ5snz8PA8eZ4nkIQzSGoyCSQkgSSEkCSpQEgSshISkoGEJCQkJCRMQpIwhJDMzOlvOpyt+12rE4XhZ7R7zve/19klZYz58pFKAqoB1QC1MjOiUtPpt2L9JupVR3xCdeh0sPgiuhCxAXZ4Lc5hPNyohfFvbH4LE07v8xlzA2LIewbssulvNs+Lg0vNuwFtMJ6m2LQHpkLXbsAkjKcEm/Zhp8whCoERTsCO5/AcfgSddAZ1wgTIKecA3gobpzH0QmpmlM8H57pMwHAbMCsEXNqABuSEgNagTfl7Y+mhnV4PCdgTArZsQK8wvICoEJDAsaNHGB72sxy1AQtCwLnvm44h/6QDCK0YUoMjIWDtHQIGhOH3+K5UqvgCuhMCBr0D2vWy8CY84bsaxZDmwOEpcNCEu4qixWKjXyFP4FQIWC5+z6Bh4e6ziFb2WPWwcPd1kF7L/cVrGLIhBByE3NWqs1EBTcJ1Whiex38bcCoEzIUEnJUF8Jj18UvxSyEgi4gNuBACRtBQ5icLY3iE8bBnGG4DMjAVWuLOWu3v2sOsG5B+RUAfi8dgPHW6ARoPFQzP4y+Ltz2HF1BvA+yrOIkzmBBZ1d9dx+Irz4AMaksCniMi+IM2JANoFn5FgnOQfLt4c/X/gmrApwp4AmCIDHeyqVnyAAAAAElFTkSuQmCC)Hoàng\nHà Mobilehttps://hoanghamobile.com › ... › iPhone 16\nSeries](https://hoanghamobile.com/dien-\nthoai/iphone-16?srsltid=AfmBOorq3Pi3ZSy_-\nnqVrIPbV17-TWpedKTCgh_gOToWsLAzQWOhzjh5)\n\nHoàng Hà Mobile\n\nhttps://hoanghamobile.com › ... › iPhone 16 Series\n\n _iPhone 16 (128GB) - Chính hãng VN/A_ ; 0965868348 · 348 Hồ Tùng Mậu, Cầu\nDiễn, Từ Liêm, Hà Nội ; 0962066208 · 194 Lê Duẩn, Hà Nội ; 0973790122 · 122\nThái Hà, Hà Nội.\n\n4,0(1) · 20.990.000 ₫ · \u200eCòn hàng\n\n\u200e[iPhone 16 Series](https://hoanghamobile.com/dien-thoai-di-\ndong/iphone/iphone-16-series) · \u200e[iPhone 16 Plus\n(128GB)](https://hoanghamobile.com/dien-thoai/iphone-16-plus) · \u200e[Điện thoại\niPhone 16 Pro](https://hoanghamobile.com/dien-thoai/iphone-16-pro) ·\n\u200e[256GB](https://hoanghamobile.com/dien-thoai/iphone-16-256gb)\n\n[  \nNhững Cửa Hàng TOP Bán iPhone 16 Pro Max Uy Tín\n...![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA21BMVEX/8/T/9PT/9/j+/v7////h9fXV8fL/9ff56OPx39P57e+ij37/+/qyqqupoaGYkJD79e379vBsbWzy6+K2sani3NWspZ+Tj4rLv7Sbs7aEfX6GhobAwMBMTEyjo6OqqqqNjY2TlJSbm5vR0dHW2dl4eHjw8PBrd3Xs4eLNx8Hp6enj4+PK4+KDjoxnYmLh1cTT4t3u+vr/4Nv/1M4lJSUAAAD3xr7/1c8cHBw5OTlUVFQ3NzfBwcHwwKmFaGaZgH6+npnnwbs3LSvVtKVPSUOrjIJ4ZGHYrahnV1cYDvK2AAAB9UlEQVR4AWzShWKDMAAEUCA3z1aor7hlHZUJA+pu//9FC9TlcO7hCJcRJQKeu/tdTqqH/Yp0A0gPj+LTqbg/godnSZBenh+fxcO5nik5Aun1LScr+YKiFGSeYqlUlksVWS4UCtX3FNDaW05RNR2GaQGwNcf1HNv28j4zPz4yUK9VP6EGJnwQ+IHKVDQ0k5lBpdlq3gtiO+d+qZYJ1XE5sGFDc/KBAQeV71Z2k6KoEPAQEMKnbC2LwsjPj5BGTqus2S33AEQ8AgSNIFsyt7ED9d8wPAH2n86XMCI1crYgDsPk9BKWBYJGxOB2ABCqxMk50DUOXA0wuwDoJQAijwMeL3IBeg1YlNXQeH8T8CunwooYAHIA0gEY7bRo90jq6AHgACwTgNbV+/0eyAmQDk9xEnoCaApwTugpqNfrJTCKbd/InuAUEKOvFqG6yDLwA17vnoIOk4SfAd1nGT1b1QAEtjUwQQ2n1iAUn6PxZCqAdSEj0li/gUa3EfypaESe1yFw/Okk4sDLQ6ZdwHfRCwDThGYBXUr7iH9n/BKmA9lVAZ2hA6DnwRqA6Qh6GM5nvwL8AQpOWSn0FaXcdv2oAL2kuHmKhbOcrThoPP7G6zjeTpP1ers2jSej9Xo1SQT+V4XJjYTJZrUa88cM/4cDgNQYgwLKnAAAAG1mWTIenSl+AAAAAElFTkSuQmCC)Tinh\nTế Mobilehttps://www.tinhtemobile88.com › blogs › review ›\nnhu...](https://www.tinhtemobile88.com/blogs/review/nhung-cua-hang-top-ban-\niphone-16-pro-max-uy-tin-nhat-ha-\nnoi?srsltid=AfmBOoq0xppXgI_Hqo9x3HToI9MD6bDCjI4AbL2wvvHUqb3IYgpht0ua)\n\nTinh Tế Mobile\n\nhttps://www.tinhtemobile88.com › blogs › review › nhu...\n\n19 thg 10, 2024 — Những Cửa Hàng TOP Bán iPhone 16 Pro Max Uy Tín Nhất Hà Nội\n· _1\\. Thế Giới Di Động_ · 2. CellPhones · 3. Hoàng Hà Mobile · 4. FPT Shop ·\n5. Tinh ...\n\n[  \niPhone 16 series chính hãng giá cực rẻ | Giảm đến 35%![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAb1BMVEXwTirwTCfwSiTxXkDzdFzybVTxZEfvOQDyb1bvQxb97+z////72tTya1D3raDwRx/vPQf71M73qZz1kH/4ua74vbP2opX+9PL6ycH2nIz++fjwUzHzgGvvNQDxWTnzemTwRRv0h3T96eX84d36ysLWiH/XAAAA9UlEQVR4AcXQhQHDMAwEQEthZmbYf8ZaX24HyIdzRqlLQsxMuDP9mWFalu1YrmW55P0q+0EQhFEgiR2FJJ5OIl1T0cyG5lCnKMuyqqFJo3+3JrRLtYXy1g+EgVWvP6oRWnhTdjdWCM+YsIAuLR6GDIokmLHrglfsuyGrhSHjp5nrU6CL/Nuquy3fG2YlS642WK/4yxjbke5Q+lDyUAiUCWlWepmzSwmNewl3ue/pU51Dfx4DrJowSnA4d52kXL6CnZNi7qEp7JRJ7n+ySVY3tMdx7PGqlCfl6mdY6DzWl+poIzuu627d8rquN9hnaNUhlnuirs8N8SkUlykaAk8AAAAASUVORK5CYII=)XTmobilehttps://www.xtmobile.vn › Điện thoại › Điện thoại iPhone](https://www.xtmobile.vn/iphone-16)\n\nXTmobile\n\nhttps://www.xtmobile.vn › Điện thoại › Điện thoại iPhone\n\nHiện tại, XTmobile đang bán iPhone 16 (Plus/Pro/Pro Max) với các ưu đãi kèm\n... Địa chỉ: _666 Lê Hồng Phong, P. 10, Q.10, TP.Hồ Chí Minh_. Điện thoại ...\n\n22.999.000 ₫ - 46.999.000 ₫\n\n\u200e[iPhone 16 Pro Max 256GB](https://www.xtmobile.vn/iphone-16-pro-max) ·\n\u200e[iPhone 16 256GB (VN/A)](https://www.xtmobile.vn/iphone-16-256gb-chinh-hang)\n· \u200e[iPhone 16 Pro 128GB (VN/A)](https://www.xtmobile.vn/iphone-16-pro)\n\n[  \nMua iPhone 16 và iPhone 16\nPlus![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC5UlEQVR4Aa1XQ3hkQRjc+ynX2OZtbfu+tm3b1nlt27a9O4qNS5xxbdd+cTKvXydT31fJoPuvmvf6/ejw86dBlX6CwwQXCq6t5cLaz/xV4+ld6F8r9NdgsCAjIwf5+UUoLCwBydf8jN+JNQbBddzjDQM+gocErRSyWm2QgWu4lntq9/q01UAfwYKCgmK43W6ognu4lzEE+6oamCboLC0tR3vBGIwlOF2vgZm5uQWoqamBXrhcLpw5cxZ79uxFKxCxrGBMxpYZ6Eu33KAXNDp+/AQEBgbzv8Y6Kxi7+e1ofuAKVS/7zp27KE7i6dNnem5HAbVaM3CYh0YF/PWRkdEUpxHoQe3BPNTcQJCgTc9pT0tLh8VigdPpBLFv3368evVKBC7A16/fkJmZKX06qCXo39jAej67Wnjx4iVGjBiJ0NBwBAeHYsCAgTh48BCuXLmCKVOmIioqBrwS4eGRGDduPMxmMzyBWtRsbMCglWSePXuOkJAwCuhmnz79YLVaPSUrGjDWGQhgCvWEyspKdOrURUk8JiYO799/0Exg1KQ2DQxjHveEO3fuKomTPBcyUJPaNLCQxcQTNm3arGzAYDBABmoK7UU0sE7rAC5dukxJPCgoRPy6DMhATWpLDWzbtl35Cty//0DBgOQW3LhxU9nAsGEj4HA4dN0CySHkwvy6bKfECRMmISsrS34IZY8hMXnyFAZV5rFjx6WPoa5E9PnzZ2XxpKQUlJaWaiUik1IqXrBgkZKB06fPwBOKiv4fwA3Ni5FdK3NVVFSgd+++usRnzJilXIzII7JynJOTAxaa7t17Yt68+bh37z6+fPmKCxcuYvToMejVqzdWrVrNMi0rx4cVGxIFKDQkCi2ZAhRaMklTavWqeF6epCltxuneasvLyurb8lmqg0lfLw4m/dozmh0RtBUV6R/NuJZ7avf6eGs4ZeIwMoVmZrYcTvkZv+MarlUZTlUZIDi8diRfX8uFtZ8FqMb7Bx+2VJbBTrlcAAAAAElFTkSuQmCC)Applehttps://www.apple.com\n› iPhone › iPhone 16](https://www.apple.com/vn/shop/buy-iphone/iphone-16)\n\nApple\n\nhttps://www.apple.com › iPhone › iPhone 16\n\nGiảm giá 1.000.000đ - 22.200.000đ cho _iPhone 16_ hoặc _iPhone 16_ Plus khi\nđổi cũ lấy mới cho phiên bản _iPhone_ 8 Plus trở lên. Có hỗ trợ tài chính với\nlãi suất ...\n\n# Điều hướng trang\n\n| 1|\n[2](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=10&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAE)|\n[3](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=20&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAG)|\n[4](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=30&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAI)|\n[5](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=40&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAK)|\n[6](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=50&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAM)|\n[7](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=60&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAO)|\n[8](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=70&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAQ)|\n[9](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=80&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAS)|\n[10](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=90&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8tMDegQIBhAU)|\n[Tiếp](/search?q=%C4%91%E1%BB%8Ba+ch%E1%BB%89+b%C3%A1n+iphone+16&sca_esv=3ec2e23cd9a0380f&udm=14&ei=BICcZ_XHHuWz0-kPzYrD2QE&start=10&sa=N&sstk=Af40H4WoojVZcs2cyojg6Wmtlibi_xJE1huy7aVWCQVN5AXpCaQRIrdsKFide7fGnV8Zv8dnIdYE3aCoTyXdaa5YR-\naBk4q8c2MVRA&ved=2ahUKEwj12ZKDvJ-LAxXl2TQHHU3FMBsQ8NMDegQIBhAW)  \n---|---|---|---|---|---|---|---|---|---|---|---  \n  \n# Đường liên kết ở chân trang\n\nViệt Nam\n\nThủ Đức, Hồ Chí Minh \\- Dựa trên địa chỉ IP của bạn\n\n\\-\n\nCập nhật vị trí\n\nKhông thể cập nhật vị trí của bạnTìm hiểu thêm\n\nĐang cập nhật vị trí...\n\n[Trợ\ngiúp](https://support.google.com/websearch/?p=ws_results_help&hl=vi&fg=1)Gửi\nphản hồi[Quyền riêng tư](https://policies.google.com/privacy?hl=vi&fg=1)[Điều\nkhoản](https://policies.google.com/terms?hl=vi&fg=1)\n\n\n', error=None, include_in_memory=False), ActionResult(is_done=True, extracted_content='I found some stores that sell the iPhone 16: CellphoneS, Thegioididong.com, FPT Shop, 24hStore.vn, Digibox, bachlongstore.vn, Hoang Ha Mobile, Tinh Te Mobile, XTmobile and Apple', error=None, include_in_memory=False)], all_model_outputs=[{'search_google': {'query': 'địa chỉ bán iphone 16'}}, {'extract_content': {'include_links': True}}, {'done': {'text': 'I found some stores that sell the iPhone 16: CellphoneS, Thegioididong.com, FPT Shop, 24hStore.vn, Digibox, bachlongstore.vn, Hoang Ha Mobile, Tinh Te Mobile, XTmobile and Apple'}}])
