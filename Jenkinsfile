@@ -44,17 +44,19 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Đăng nhập vào Docker Hub (nếu cần)
-                    sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
-                    // Đẩy Docker image lên Docker Hub
-                    sh 'docker push danny1708/ai-agent-service-m1'
+                    echo 'Pushing Docker image to the registry...'
+                    docker.withRegistry('', DOCKER_REGISTRY_CREDENTIAL) {
+                        docker.image("${DOCKER_FULL_IMAGE}").push()
+                        docker.image("${DOCKER_FULL_IMAGE}").push('latest')
+                    }
                 }
             }
         }
     }
 
     environment {
-        DOCKER_USERNAME = credentials('docker-username') // Thay thế bằng ID credential của bạn
-        DOCKER_PASSWORD = credentials('docker-password') // Thay thế bằng ID credential của bạn
+        DOCKER_IMAGE = 'danny1708/ai-agent-service'
+        DOCKER_FULL_IMAGE = "${DOCKER_IMAGE}:lastest"
+        DOCKER_REGISTRY_CREDENTIAL = 'dockerhub'
     }
 }

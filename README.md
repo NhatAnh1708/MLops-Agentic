@@ -225,20 +225,19 @@ sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 ##### 9.1.5. Create a service account
 
 - Navigate to [Service acounts](https://console.cloud.google.com/iam-admin/serviceaccounts) and click "CREATE SERVICE ACCOUNT".
-- Select `Kubernetes Engine Admin` role.
-- Create new key as json type for your service account. Download this json file and save it in [terraform/.credentials](production/terraform/.credentials) directory. Update **credentials** in [terraform/main.tf](production/terraform/main.tf) with your json directory.
+- Create new key as json type for your service account. Download this json file and save it in [sercets](sercets) directory. Update **credentials** in [terraform/main.tf](production/terraform/main.tf) with your json directory.
 - Navigate to [IAM](https://console.cloud.google.com/iam-admin/iam) and click on "GRANT ACCESS". Then, add new principals; this principal should be your service account. Finally, select the `Owner` role.
 
-After completion, this is the result:
+Example how to create credentials:
 
-![IAM](static/images/IAM.png)
+![IAM](./assets/videos/create_iam.gif)
 
 #### 9.2. Install terraform
 
 - Download terraform as instructions via this link: [Download terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Get terraform version and update **required_version** in [terraform/main.tf](production/terraform/main.tf)
 
-    ![terraform-version](static/images/terraform-version.png)
+    ![terraform-version](./assets/images/terraform_version.png)
 
 #### 9.3. Install kubectl, kubectx and kubens
 
@@ -266,7 +265,7 @@ terraform plan
 terraform apply
 ```
 
-The GKE cluster I configured has 1 node and its machine is "e2-standard-4" (4 CPU and 16 GB Memory)
+The GKE cluster I configured has 1 node and its machine is "e2-standard-2" (2 CPU and 8 GB Memory)
 
 ![GKE cluster](static/images/GKE-cluster.png)
 
@@ -433,3 +432,6 @@ TBD
 TBS
 
 ## Contact
+
+
+cp -r secrets iac/ansible_setup/deploy_jenkins

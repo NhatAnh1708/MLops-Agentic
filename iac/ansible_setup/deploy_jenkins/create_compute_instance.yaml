@@ -11,7 +11,7 @@
         project: gen-lang-client-0208746421
         # The service account is needed to create the resources
         auth_kind: serviceaccount
-        service_account_file: ../secrets/gen-lang-client-0208746421-195c2e818acf.json
+        service_account_file: secrets/gen-lang-client-0208746421-10275fe2751d.json
         disks:
           - auto_delete: true
             boot: true
@@ -42,4 +42,4 @@
         description: Allow incoming traffic on port 30000
         project: gen-lang-client-0208746421
         auth_kind: serviceaccount
-        service_account_file: ../secrets/gen-lang-client-0208746421-195c2e818acf.json
+        service_account_file: secrets/gen-lang-client-0208746421-10275fe2751d.json
