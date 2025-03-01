@@ -6,7 +6,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from loguru import logger
 
 from agent.base_agent import base_agent
-from agent.gemini_agent import gemini_agent
+from src.agent.operator_agent import gemini_agent
 
 load_dotenv()
 
@@ -121,7 +121,7 @@ async def websocket_text_endpoint(websocket: WebSocket):
                         )
                 except:
                     logger.error("Could not send error message to client")
-                continue
+                break  # Dừng tác vụ khi gặp lỗi
     finally:
         try:
             if websocket.client_state.CONNECTED:

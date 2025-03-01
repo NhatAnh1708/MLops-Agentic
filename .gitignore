@@ -6,6 +6,7 @@ iac/terraform/*.json
 iac/ansible_setup/secrets/*.json
 .python-version
 pyproject.toml
+iac/ansible_setup/deploy_app/secrets/
 uv.lock
 iac/ansible_setup/inventory
 iac/ansible_setup/secrets/*

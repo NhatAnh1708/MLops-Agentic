@@ -13,24 +13,25 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    set -e  # Dừng khi có lỗi
+
                     # Kiểm tra Python 3
                     if ! command -v python3 &> /dev/null; then
                         echo "Python3 not found! Installing..."
                         apt update && apt install python3 python3-venv -y
-                    else
-                        echo "Python3 is available: $(python3 --version)"
                     fi
 
-                    # Kiểm tra và cài đặt Black Duck
-                    if ! [ -f "${BLACKDUCK_PATH}/blackduck" ]; then
-                        echo "Black Duck not found! Installing..."
+                    # Kiểm tra và tải Black Duck nếu chưa có
+                    if [ ! -f "${BLACKDUCK_PATH}/blackduck" ]; then
+                        echo "Black Duck not found! Downloading..."
                         curl -LO https://detect.synopsys.com/detect.sh
                         chmod +x detect.sh
                         mkdir -p "${BLACKDUCK_PATH}"
                         mv detect.sh "${BLACKDUCK_PATH}/blackduck"
-                    else
-                        echo "Black Duck is already installed."
                     fi
+
+                    # Kiểm tra quyền thực thi
+                    chmod +x "${BLACKDUCK_PATH}/blackduck"
                     '''
                 }
             }
@@ -42,7 +43,6 @@ pipeline {
                     sh '''
                     python3 -m venv venv
                     . venv/bin/activate
-                    cd src
                     pip install -r requirements.txt
                     '''
                 }
@@ -53,10 +53,10 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    ${BLACKDUCK_PATH}/blackduck scan --detect.project.name=ai-agent-service \
-                                   --detect.project.version.name=1.0 \
-                                   --detect.source.path=. \
-                                   --detect.blackduck.signature.scanner.snippet.mode=rapid
+                    bash ${BLACKDUCK_PATH}/blackduck scan --detect.project.name=ai-agent-service \
+                                  --detect.project.version.name=1.0 \
+                                  --detect.source.path=. \
+                                  --detect.blackduck.signature.scanner.snippet.mode=rapid
                     '''
                 }
             }
@@ -67,7 +67,6 @@ pipeline {
                 script {
                     sh '''
                     . venv/bin/activate
-                    cd src
                     uvicorn server:app --reload --port 8000 --host 0.0.0.0 &
                     sleep 5
                     kill $(lsof -t -i:8000)

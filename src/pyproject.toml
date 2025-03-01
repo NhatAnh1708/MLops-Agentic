@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "browser-use>=0.1.24",
+    "browser-use>=0.1.40",
     "fastapi[standard]>=0.115.7",
     "google-genai==0.5.0",
     "isort>=6.0.0",
@@ -17,6 +17,7 @@ dependencies = [
     "lmnr[all]>=0.4.59",
     "loguru>=0.7.3",
     "mistralai==0.4.2",
+    "pillow>=10.4.0",
     "pydantic>=2.10.3",
     "pylint>=3.3.4",
     "redis>=5.2.1",

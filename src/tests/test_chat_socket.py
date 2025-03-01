@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from fastapi.websockets import WebSocket
 
 from ..agent.base_agent import base_agent
-from ..agent.gemini_agent import gemini_agent
+from ..agent.operator_agent import gemini_agent
 
 # Import các module cần thiết
 from ..routes.chat_socket import websocket_router

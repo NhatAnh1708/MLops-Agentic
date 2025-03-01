@@ -20,7 +20,7 @@ class BaseAgent:
     client = genai.Client(
         api_key=os.getenv("GEMINI_API_KEY"), http_options={"api_version": "v1alpha"}
     )
-    model_id = "gemini-2.0-flash-exp"
+    model_name = "gemini-2.0-flash-exp"
     config = {"response_modalities": ["TEXT"]}
 
     async def chat(self, message: str):
@@ -28,7 +28,7 @@ class BaseAgent:
         Chat with the Gemini model.
         """
         async with self.client.aio.live.connect(
-            model=self.model_id, config=self.config
+            model=self.model_name, config=self.config
         ) as session:
             logger.info(str(message))
             # greetings_question = self.classify_question(message=message)
@@ -73,7 +73,7 @@ class BaseAgent:
         ]
 
         model = genai2.GenerativeModel(
-            model_name=self.model_id, generation_config={"temperature": 0}, tools=tools
+            model_name=self.model_name, generation_config={"temperature": 0}, tools=tools
         )
 
         chat = model.start_chat()

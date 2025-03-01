@@ -42,7 +42,7 @@ class GeminiAgent(MySystemPrompt):
 
     model = "gemini-2.0-flash-exp"
     llm = ChatGoogleGenerativeAI(model=model, api_key=SecretStr(api_key))
-    browser = Browser(config=BrowserConfig(headless=True))
+    browser = Browser(config=BrowserConfig(headless=True, disable_security=False))
     # TODO: Use remote browser with noVNC
     # browser = Browser(
     # config = BrowserConfig(
@@ -117,9 +117,9 @@ class GeminiAgent(MySystemPrompt):
             f"### 📍 Step: {valid_data['step']}\n"
             f"🧠 **Memory:** {valid_data['thoughts']['memory']}\n"
             f"🎯 **Next Goal:** {valid_data['thoughts']['next_goal']}\n"
-            f"🛠️ **Actions:**\n"
-            f"- {', '.join([str(action) for action in valid_data['actions']])}\n"
-            f"🔗 **URL:** {valid_data['url']}\n"
+            f"🛠️ **Actions:**"
+            f"{', '.join([str(action) for action in valid_data['actions']])}\n"
+            f"🔗 **Link:** <a href='{valid_data['url']}'>{valid_data['url']}</a>\n"
             f"🔍 **Title:** {valid_data['title']}\n"
         )
         return output

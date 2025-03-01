@@ -1566,6 +1566,7 @@ dependencies = [
     { name = "lmnr", extra = ["all"] },
     { name = "loguru" },
     { name = "mistralai" },
+    { name = "pillow" },
     { name = "pydantic" },
     { name = "pylint" },
     { name = "redis" },
@@ -1576,7 +1577,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "browser-use", specifier = ">=0.1.24" },
+    { name = "browser-use", specifier = ">=0.1.40" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.7" },
     { name = "google-genai", specifier = "==0.5.0" },
     { name = "isort", specifier = ">=6.0.0" },
@@ -1588,6 +1589,7 @@ requires-dist = [
     { name = "lmnr", extras = ["all"], specifier = ">=0.4.59" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "mistralai", specifier = "==0.4.2" },
+    { name = "pillow", specifier = ">=10.4.0" },
     { name = "pydantic", specifier = ">=2.10.3" },
     { name = "pylint", specifier = ">=3.3.4" },
     { name = "redis", specifier = ">=5.2.1" },
