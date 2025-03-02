@@ -483,16 +483,13 @@
             <h2 class="text-2xl font-bold text-center mb-6">WebSocket Configuration</h2>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Text WebSocket URL</label>
-                    <input type="text" id="textWsInput"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="ws://your-ip:port">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Voice WebSocket URL</label>
-                    <input type="text" id="voiceWsInput"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="ws://your-ip:port">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Server IP Address</label>
+                    <div class="flex items-center">
+                        <span class="text-gray-500 mr-2">ws://</span>
+                        <input type="text" id="serverIpInput"
+                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="localhost:8000">
+                    </div>
                 </div>
                 <button onclick="saveWsConfig()"
                     class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
@@ -893,8 +890,8 @@
     <script defer>
         let TEXT_WS_URL = "";
         let VOICE_WS_URL = "";
+        let VISION_WS_URL = "";
         console.log(TEXT_WS_URL)
-        console.log(VOICE_WS_URL)
         let currentFrameB64;
         let webSocket = null;
         let audioContext = null;
@@ -905,6 +902,35 @@
         let initialized = false;
         let audioInputContext;
         let workletNode;
+
+        // At the top of your JavaScript, add base endpoints
+        const TEXT_ENDPOINT = "/ws/text";
+        const VOICE_ENDPOINT = "/ws";
+        const VISION_ENDPOINT = "/ws/vision";
+
+        // Update the WebSocket Config Modal HTML
+        let wsConfigModal = `
+        <div id="wsConfigModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-8 w-[500px] max-w-90vw">
+                <h2 class="text-2xl font-bold text-center mb-6">WebSocket Configuration</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Server IP Address</label>
+                        <div class="flex items-center">
+                            <span class="text-gray-500 mr-2">ws://</span>
+                            <input type="text" id="serverIpInput"
+                                class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="localhost:8000">
+                        </div>
+                    </div>
+                    <button onclick="saveWsConfig()"
+                        class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
+                        Save Configuration
+                    </button>
+                </div>
+            </div>
+        </div>
+        `;
 
         // Add PDF handling
         const pdfInput = document.getElementById('pdfInput');
@@ -926,22 +952,22 @@
         });
 
         window.addEventListener("load", async () => {
-            const savedTextWs = localStorage.getItem('textWsUrl');
-            const savedVoiceWs = localStorage.getItem('voiceWsUrl');
+            const savedIp = localStorage.getItem('serverIp');
 
             // Hide all modals first
             document.getElementById('chatOptionsModal').classList.add('hidden');
             document.getElementById('wsConfigModal').classList.add('hidden');
 
-            if (!savedTextWs || !savedVoiceWs) {
+            if (!savedIp) {
                 // Show WebSocket config modal first
                 document.getElementById('wsConfigModal').classList.remove('hidden');
                 isInitialized = false;
             } else {
-                TEXT_WS_URL = savedTextWs;
-                VOICE_WS_URL = savedVoiceWs;
-                console.log(TEXT_WS_URL);
-                console.log(VOICE_WS_URL);
+                // Construct WebSocket URLs from saved IP
+                const baseWsUrl = `ws://${savedIp}`;
+                TEXT_WS_URL = `${baseWsUrl}${TEXT_ENDPOINT}`;
+                VOICE_WS_URL = `${baseWsUrl}${VOICE_ENDPOINT}`;
+                VISION_WS_URL = `${baseWsUrl}${VISION_ENDPOINT}`;
                 isInitialized = true;
             }
 
@@ -1424,8 +1450,6 @@
             const titleElement = document.getElementById('screenModeTitle');
             const video = document.getElementById('screenVideo');
 
-            let frameInterval;
-
             try {
                 let stream;
                 if (type === 'camera') {
@@ -1434,66 +1458,36 @@
                         audio: true
                     });
                     titleElement.textContent = 'Camera Preview';
-
-                    // Ensure video plays properly
-                    video.srcObject = stream;
-                    video.muted = true; // Prevent feedback when audio is enabled
-
-                    // Wait for video metadata to load before proceeding
-                    await new Promise(resolve => {
-                        video.onloadedmetadata = () => {
-                            video.play().then(resolve).catch(err => {
-                                console.error("Error playing video:", err);
-                                resolve(); // Continue even if play fails
-                            });
-                        };
-
-                        // If metadata already loaded
-                        if (video.readyState >= 2) {
-                            video.play().then(resolve).catch(err => {
-                                console.error("Error playing video:", err);
-                                resolve();
-                            });
-                        }
-                    });
-
-                    // Now that video is playing, set up canvas with correct dimensions
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.width = video.videoWidth || 640;
-                    canvas.height = video.videoHeight || 480;
-
-                    console.log("Video dimensions:", video.videoWidth, "x", video.videoHeight);
-
-                    // Send frames to backend at regular intervals
-                    frameInterval = setInterval(() => {
-                        if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                            // Draw current video frame to canvas
-                            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                            // Convert to JPEG data URL and send to backend
-                            canvas.toBlob((blob) => {
-                                const formData = new FormData();
-                                formData.append('frame', blob, 'frame.jpg');
-
-                                // Send to backend
-                                // Replace with your actual endpoint
-                                // fetch('/api/video-frames', {
-                                //     method: 'POST',
-                                //     body: formData
-                                // })
-                                // .catch(err => console.error('Error sending frame:', err));
-                            }, 'image/jpeg', 0.8);
-                        }
-                    }, 100);
                 } else {
                     stream = await navigator.mediaDevices.getDisplayMedia({
                         video: true
                     });
                     titleElement.textContent = 'Screen Share Preview';
-                    video.srcObject = stream;
-                    await video.play();
                 }
+
+                // Set up video stream
+                video.srcObject = stream;
+                video.muted = true;
+
+                // Wait for video metadata to load
+                await new Promise(resolve => {
+                    video.onloadedmetadata = () => {
+                        video.play().then(resolve).catch(err => {
+                            console.error("Error playing video:", err);
+                            resolve();
+                        });
+                    };
+
+                    if (video.readyState >= 2) {
+                        video.play().then(resolve).catch(err => {
+                            console.error("Error playing video:", err);
+                            resolve();
+                        });
+                    }
+                });
+
+                // Connect to vision WebSocket
+                await connect(VISION_WS_URL);
 
                 // Show video preview, hide selection buttons
                 selectionDiv.classList.add('hidden');
@@ -1501,11 +1495,115 @@
 
                 // Handle stream stop
                 stream.getTracks()[0].onended = () => {
-                    if (frameInterval) clearInterval(frameInterval);
                     stopScreenMode();
                 };
+
+                // Update sendVideoMessage function to capture and send current frame
+                window.sendVideoMessage = function() {
+                    const input = document.getElementById('videoChatInput');
+                    const message = input.value.trim();
+                    if (!message) return;
+
+                    // Capture current frame
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const context = canvas.getContext('2d');
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const currentFrame = canvas.toDataURL('image/jpeg', 0.8);
+
+                    // Add message to chat
+                    addVideoMessage('You: ' + message, 'user');
+
+                    // Clear input
+                    input.value = '';
+
+                    // Add thinking indicator
+                    addVideoMessage('AI is typing...', 'thinking');
+
+                    // Send message and frame to WebSocket
+                    if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+                        const payload = {
+                            text: message,
+                            frame: currentFrame
+                        };
+                        webSocket.send(JSON.stringify(payload));
+                    } else {
+                        console.error("WebSocket not connected");
+                        showNotification('error', 'Connection Error', 'Lost connection to vision service');
+                        removeThinkingMessage();
+                    }
+                };
+
+                // Set up WebSocket message handler
+                webSocket.onmessage = function(event) {
+                    try {
+                        const response = JSON.parse(event.data);
+                        removeThinkingMessage();
+                        
+                        // Hiển thị text response nếu có
+                        if (response.text) {
+                            addVideoMessage('AI: ' + response.text, 'ai');
+                        }
+
+                        // Hiển thị ảnh nếu có image_path
+                        if (response.image_path) {
+                            // Lấy video container
+                            const videoContainer = document.querySelector('.video-preview-container') || 
+                                                  document.getElementById('screenVideo').parentNode;
+                            
+                            // Lấy video element
+                            const videoElement = document.getElementById('screenVideo');
+                            
+                            // Dừng video stream nếu đang chạy
+                            if (videoElement && videoElement.srcObject) {
+                                videoElement.srcObject.getTracks().forEach(track => track.stop());
+                                videoElement.srcObject = null;
+                            }
+                            
+                            // Xóa video element
+                            if (videoElement) {
+                                videoElement.remove();
+                            }
+                            
+                            // Tạo image element mới
+                            const imgElement = document.createElement('img');
+                            imgElement.id = 'capturedImage';
+                            imgElement.className = 'w-full h-[400px] bg-black rounded-lg object-contain mb-4';
+                            imgElement.src = response.image_path;
+                            imgElement.alt = 'Captured Image';
+                            imgElement.style.display = 'block';
+                            
+                            // Thêm image vào container
+                            videoContainer.appendChild(imgElement);
+                            
+                            // Debug
+                            console.log("Added image with src:", response.image_path);
+                            console.log("Image element:", imgElement);
+                            
+                            // Thêm event listeners để debug
+                            imgElement.onload = function() {
+                                console.log("Image loaded successfully");
+                            };
+                            
+                            imgElement.onerror = function(e) {
+                                console.error("Error loading image:", e);
+                                // Thử lại với đường dẫn khác
+                                const altPath = '/' + response.image_path;
+                                console.log("Trying alternative path:", altPath);
+                                imgElement.src = altPath;
+                            };
+                        }
+                    } catch (err) {
+                        console.error("Error processing vision response:", err);
+                        removeThinkingMessage();
+                        showNotification('error', 'Response Error', 'Failed to process AI response');
+                    }
+                };
+
             } catch (err) {
                 console.error("Error starting " + type + ":", err);
+                showNotification('error', 'Stream Error', `Failed to start ${type} stream`);
             }
         }
 
@@ -1528,7 +1626,7 @@
             selectionDiv.classList.remove('hidden');
         }
 
-        // Sửa lại hàm switchMode
+        // Sửa đổi hàm switchMode
         async function switchMode(mode) {
             // Update active button
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
@@ -1997,46 +2095,50 @@
 
         // Add WebSocket configuration functions
         function showWsConfig() {
-            // Load saved values from localStorage if they exist
-            const savedTextWs = localStorage.getItem('textWsUrl');
-            const savedVoiceWs = localStorage.getItem('voiceWsUrl');
+            const savedIp = localStorage.getItem('serverIp');
+            if (savedIp) {
+                document.getElementById('serverIpInput').value = savedIp;
+            }
 
-            if (savedTextWs) document.getElementById('textWsInput').value = savedTextWs;
-            if (savedVoiceWs) document.getElementById('voiceWsInput').value = savedVoiceWs;
-
-            // Hide all other modals and show config modal
             document.getElementById('chatOptionsModal').classList.add('hidden');
             document.getElementById('wsConfigModal').classList.remove('hidden');
         }
 
         function saveWsConfig() {
-            const textWs = document.getElementById('textWsInput').value.trim();
-            const voiceWs = document.getElementById('voiceWsInput').value.trim();
+            const serverIp = document.getElementById('serverIpInput').value.trim();
 
-            if (!textWs || !voiceWs) {
-                showNotification('error', 'Configuration Error', 'Please enter both WebSocket URLs');
+            if (!serverIp) {
+                showNotification('error', 'Configuration Error', 'Please enter server IP address');
                 return;
             }
 
-            // Show loading state
+            // Remove any existing ws:// prefix if user added it
+            const cleanIp = serverIp.replace(/^ws:\/\//, '');
+            
+            // Construct the WebSocket URLs
+            const baseWsUrl = `ws://${cleanIp}`;
+            const textWsUrl = `${baseWsUrl}${TEXT_ENDPOINT}`;
+            const voiceWsUrl = `${baseWsUrl}${VOICE_ENDPOINT}`;
+            const visionWsUrl = `${baseWsUrl}${VISION_ENDPOINT}`;
+
             const saveButton = document.querySelector('#wsConfigModal button');
             const originalButtonText = saveButton.innerHTML;
             saveButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Testing connection...';
             saveButton.disabled = true;
 
-            // Test connections sequentially (first text, then voice)
-            testConnection(textWs)
-                .then(() => testConnection(voiceWs))
+            // Test all connections sequentially
+            testConnection(textWsUrl)
+                .then(() => testConnection(voiceWsUrl))
+                .then(() => testConnection(visionWsUrl))
                 .then(() => {
-                    // Both connections successful - save config
-                    localStorage.setItem('textWsUrl', textWs);
-                    localStorage.setItem('voiceWsUrl', voiceWs);
-
+                    // All connections successful - save config
+                    localStorage.setItem('serverIp', cleanIp);
+                    
                     // Update global variables
-                    TEXT_WS_URL = textWs;
-                    VOICE_WS_URL = voiceWs;
+                    TEXT_WS_URL = textWsUrl;
+                    VOICE_WS_URL = voiceWsUrl;
+                    VISION_WS_URL = visionWsUrl;
 
-                    // Hide config modal and show chat options
                     document.getElementById('wsConfigModal').classList.add('hidden');
 
                     if (!initialized) {
@@ -2044,44 +2146,44 @@
                         initialized = true;
                     }
 
-                    showNotification('info', 'Configuration Saved', 'WebSocket connection successful');
+                    showNotification('info', 'Configuration Saved', 'WebSocket connections successful');
                 })
                 .catch((error) => {
                     showNotification('error', 'Connection Failed', error.message || 'Failed to connect to WebSocket');
                 })
                 .finally(() => {
-                    // Restore button state
                     saveButton.innerHTML = originalButtonText;
                     saveButton.disabled = false;
                 });
-            function testConnection(url) {
-                return new Promise((resolve, reject) => {
-                    try {
-                        const ws = new WebSocket(url);
+        }
 
-                        // Set connection timeout
-                        const timeout = setTimeout(() => {
-                            ws.close();
-                            reject(new Error(`Connection timeout: ${url}`));
-                        }, 5000);
+        function testConnection(url) {
+            return new Promise((resolve, reject) => {
+                try {
+                    const ws = new WebSocket(url);
 
-                        ws.onopen = () => {
-                            clearTimeout(timeout);
-                            // Connection established successfully
-                            ws.close();
-                            resolve();
-                        };
+                    // Set connection timeout
+                    const timeout = setTimeout(() => {
+                        ws.close();
+                        reject(new Error(`Connection timeout: ${url}`));
+                    }, 5000);
 
-                        ws.onerror = () => {
-                            clearTimeout(timeout);
-                            reject(new Error(`Failed to connect to: ${url}`));
-                            ws.close();
-                        };
-                    } catch (error) {
-                        reject(error);
-                    }
-                });
-            }
+                    ws.onopen = () => {
+                        clearTimeout(timeout);
+                        // Connection established successfully
+                        ws.close();
+                        resolve();
+                    };
+
+                    ws.onerror = () => {
+                        clearTimeout(timeout);
+                        reject(new Error(`Failed to connect to: ${url}`));
+                        ws.close();
+                    };
+                } catch (error) {
+                    reject(error);
+                }
+            });
         }
 
     </script>

@@ -16,6 +16,7 @@ secrets/*
 *.py[cod]
 *$py.class
 agent_history.gif
+src/frontend/uploaded_images/
 notebooks/
 # C extensions
 *.so

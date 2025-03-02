@@ -6,7 +6,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from loguru import logger
 
 from agent.base_agent import base_agent
-from src.agent.operator_agent import gemini_agent
+from agent.operator_agent import gemini_agent
 
 load_dotenv()
 

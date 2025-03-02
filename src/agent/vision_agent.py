@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from src.agent.base_agent import BaseAgent
+from agent.base_agent import BaseAgent
 from PIL import Image
 from loguru import logger
 load_dotenv()
@@ -20,7 +20,7 @@ class VisionAgent(BaseAgent):
         pass
     
     async def chat_with_image(self, img: Image, prompt: str):
-        response = self.clientmodels.generate_content(
+        response = self.client.models.generate_content(
             model=self.model_name,
             contents=[prompt, img],
             config=types.GenerateContentConfig(
@@ -38,5 +38,15 @@ class VisionAgent(BaseAgent):
         logger.info(str(response.text))
         return response.text
 
+def cleanup_uploaded_images():
+    """
+    Clean up uploaded images from the frontend/uploaded_images directory.
+    """
+    import os
+    import shutil
+    upload_dir = "frontend/uploaded_images"
+
+    if os.path.exists(upload_dir):
+        shutil.rmtree(upload_dir)
 
 vision_agent = VisionAgent()
