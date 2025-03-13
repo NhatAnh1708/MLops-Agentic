@@ -14,7 +14,7 @@ terraform {
 // managing the infrastructure in GCP, this will
 // apply to all the resources in the project
 provider "google" {
-  credentials = ".credentials/gen-lang-client-0208746421-195c2e818acf.json"
+  credentials = ".credentials/gen-lang-client-0208746421-10275fe2751d.json"
   project = var.project_id
   region  = var.region
 }

@@ -4,15 +4,31 @@ metadata:
   name: {{ .Release.Name }}-nginx-ingress
   namespace: model-serving
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/proxy-body-size: 16m
+    nginx.ingress.kubernetes.io/proxy-body-size: "16m"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
     nginx.ingress.kubernetes.io/websocket-services: "{{ .Release.Name }}"
     nginx.ingress.kubernetes.io/enable-websockets: "true"
+    # Add SSL redirect
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # Thêm annotation cho WebSocket
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - donyai.space
+      secretName: nginx-selfsigned
   rules:
-    - host: mlops-agentic.com
+    - host: donyai.space
       http:
         paths:
         - path: /
@@ -22,8 +38,15 @@ spec:
               name: {{ .Release.Name }}
               port:
                 number: 30000
-                number: 80
-
+        # Thêm đường dẫn cụ thể cho WebSocket
+        - path: /ws
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000
+        # Các đường dẫn khác giữ nguyên
         - path: /docs
           pathType: Prefix
           backend:
@@ -31,8 +54,6 @@ spec:
               name: {{ .Release.Name }}
               port:
                 number: 30000
-                number: 80
-
         - path: /openapi.json
           pathType: Prefix
           backend:
@@ -40,4 +61,10 @@ spec:
               name: {{ .Release.Name }}
               port:
                 number: 30000
-                number: 80
+        - path: /health
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000
