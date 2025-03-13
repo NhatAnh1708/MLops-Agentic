@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/certbot:/var/www/certbot
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - "30000:30000"
+    env_file:
+      - src/.env
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge 

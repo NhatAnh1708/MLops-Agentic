@@ -6,7 +6,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from loguru import logger
 
 from agent.base_agent import base_agent
-from agent.gemini_agent import gemini_agent
+from agent.operator_agent import gemini_agent
 
 load_dotenv()
 
@@ -32,7 +32,7 @@ async def websocket_text_endpoint(websocket: WebSocket):
                     while retries < MAX_RETRIES:
                         try:
                             # Sử dụng agent nếu flag được bật
-                            if data["agent"]:
+                            if data["deepSearch"] and data["googleSearch"]:
                                 async for response_chunk in gemini_agent.chat(
                                     message=data
                                 ):
@@ -44,10 +44,47 @@ async def websocket_text_endpoint(websocket: WebSocket):
                                             "format": "markdown",
                                         }
                                     )
+                            elif data["deepSearch"]:
+                                async for response_chunk in gemini_agent.chat(
+                                    message=data
+                                ):
+                                    await websocket.send_json(
+                                        {
+                                            "text": response_chunk["text"],
+                                            "gif_url": response_chunk["gif_url"],
+                                            "type": "chunk",
+                                            "format": "markdown",
+                                        }
+                                    )
+                            elif data["googleSearch"]:
+                                async for response_chunk in base_agent.chat_qwen(
+                                    message=data["text"], google_search=True
+                                ):
+                                    try:
+                                        chunk_content = str(response_chunk["content"])
+                                        await websocket.send_json(
+                                            {
+                                                "text": chunk_content,
+                                                "gif_url": None,
+                                                "type": "chunk",
+                                                "format": "markdown",
+                                            }
+                                        )
+                                    except Exception as send_error:
+                                        logger.error(
+                                            f"Error sending chunk: {send_error}"
+                                        )
+                                        await websocket.send_json(
+                                            {
+                                                "text": "Error sending response chunk",
+                                                "type": "error",
+                                            }
+                                        )
+                                        continue
                             else:
-                                logger.info("No use AI Agent")
-                                async for response_chunk in base_agent.chat(
-                                    message=data["text"]
+                                logger.info("Normal mode")
+                                async for response_chunk in base_agent.chat_qwen(
+                                    message=data["text"], google_search=False
                                 ):
                                     try:
                                         chunk_content = str(response_chunk["content"])
@@ -121,7 +158,7 @@ async def websocket_text_endpoint(websocket: WebSocket):
                         )
                 except:
                     logger.error("Could not send error message to client")
-                continue
+                break  # Dừng tác vụ khi gặp lỗi
     finally:
         try:
             if websocket.client_state.CONNECTED:

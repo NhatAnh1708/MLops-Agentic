@@ -11,13 +11,13 @@
         project: gen-lang-client-0208746421
         # The service account is needed to create the resources
         auth_kind: serviceaccount
-        service_account_file: ../secrets/gen-lang-client-0208746421-195c2e818acf.json
+        service_account_file: secrets/gen-lang-client-0208746421-10275fe2751d.json
         disks:
           - auto_delete: true
             boot: true
             initialize_params:
               source_image: projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230727
-              disk_size_gb: 30
+              disk_size_gb: 50
         network_interfaces:
           - network:
               selfLink: global/networks/default
@@ -26,7 +26,7 @@
                 type: ONE_TO_ONE_NAT
         state: present # change to absent to delete the instance
 
-    - name: Create inbound firewall rule for production
+    - name: Create inbound firewall rule for production 
       gcp_compute_firewall:
         name: allow-port-80-443-30000
         network:
@@ -43,4 +43,4 @@
         description: Allow incoming traffic on port 30000
         project: gen-lang-client-0208746421
         auth_kind: serviceaccount
-        service_account_file: ../secrets/gen-lang-client-0208746421-195c2e818acf.json
+        service_account_file: secrets/gen-lang-client-0208746421-10275fe2751d.json

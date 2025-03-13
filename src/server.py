@@ -8,6 +8,7 @@ from routes.chat_socket import websocket_router
 from routes.health import health_router
 from routes.index import web_router
 from routes.voice_socket import voice_routers
+from routes.vision_socket import vision_router
 
 app = FastAPI()
 
@@ -32,3 +33,4 @@ app.include_router(websocket_router)
 app.include_router(health_router)
 app.include_router(web_router)
 app.include_router(voice_routers)
+app.include_router(vision_router)

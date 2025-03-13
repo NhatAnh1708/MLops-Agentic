@@ -1,18 +1,44 @@
+        .markdown-body code {
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+        
+        /* Xử lý bảng */
+        .markdown-body table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        
+        /* Xử lý hình ảnh */
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Xử lý URL dài */
+        .markdown-body a {
+            word-break: break-all;
+        }
+        
+        /* Đảm bảo tất cả các phần tử block đều có max-width */
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Dony AI</title>
+    <link rel="shortcut icon" href="#" /> <!-- Add this line to prevent favicon 404 -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .chat-container {
             overflow-y: auto;
-            max-height: 700px;
+            max-height: 650px;
             padding: 0 15%;
             margin-bottom: 0;
         }
+
         .message {
             max-width: 100%;
             margin: 20px 0;
@@ -21,32 +47,47 @@
             line-height: 1.5;
             font-size: 16px;
         }
+
         .user-message {
             background-color: #FB923C;
             color: white;
             border: 1px solid #F97316;
         }
+
         .bot-message {
             background-color: white;
             color: #374151;
             border: 1px solid #e5e7eb;
         }
+        
+        .google-search-message {
+            background-color: #F8FAFF;
+            border-color: #D1E0FF;
+        }
+        
+        .deep-search-message {
+            background-color: #F9F7FF;
+            border-color: #E4D7FF;
+        }
+
         .message-container {
             overflow-y: auto;
-            display: flex;
             padding: 16px 0;
             border-bottom: 1px solid #e5e7eb;
         }
+
         .message-avatar {
             width: 30px;
             height: 30px;
             margin-right: 16px;
             flex-shrink: 0;
         }
+
         .message-content {
             flex: 1;
             overflow-y: auto;
         }
+
         .input-container {
             max-width: 50rem;
             margin: 0 auto;
@@ -54,66 +95,89 @@
             background-color: white;
             z-index: 10;
         }
+
         .input-box {
             border: 2px solid #FB923C;
             box-shadow: 0 0 10px rgba(251, 146, 60, 0.1);
             border-radius: 0.75rem;
             background-color: #FFF7ED;
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            margin-bottom: 0.4rem;
             transition: all 0.2s ease;
             margin-top: 0.5rem;
         }
+
         .input-box:focus-within {
             border-color: #F97316;
             box-shadow: 0 0 15px rgba(251, 146, 60, 0.2);
         }
+
         #messageInput::placeholder {
             color: #FB923C;
         }
+
         #sendButton {
             color: #F97316;
         }
+
         #sendButton:hover {
             color: #EA580C;
         }
+
         .pulse-animation {
             animation: pulse 1.5s infinite;
         }
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
+
         .sidebar {
             width: 260px;
         }
+
         #pdf-container {
             margin-top: 20px;
             width: 100%;
             height: 480px;
             display: none;
         }
+
         .main-chat-area {
             display: flex;
             flex-direction: column;
             height: 100%;
         }
+
         .mode-btn {
             color: #9CA3AF;
             transition: all 0.2s;
         }
+
         .mode-btn:hover {
             color: white;
         }
+
         .mode-btn.active {
             background-color: #4B5563;
             color: white;
         }
+
         .markdown-body {
             color: #24292e;
             line-height: 1.5;
         }
+
         .markdown-body pre {
             background-color: #f6f8fa;
             border-radius: 6px;
@@ -121,14 +185,16 @@
             margin: 16px 0;
             overflow: auto;
         }
+
         .markdown-body code {
-            background-color: rgba(27,31,35,.05);
+            background-color: rgba(27, 31, 35, .05);
             border-radius: 3px;
             padding: .2em .4em;
             margin: 0;
-            font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
             font-size: 85%;
         }
+
         .markdown-body pre code {
             background-color: transparent;
             padding: 0;
@@ -138,44 +204,58 @@
             white-space: pre;
             border: 0;
         }
+
         .markdown-body p {
             margin-bottom: 16px;
         }
-        .markdown-body h1, .markdown-body h2, .markdown-body h3,
-        .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+
+        .markdown-body h1,
+        .markdown-body h2,
+        .markdown-body h3,
+        .markdown-body h4,
+        .markdown-body h5,
+        .markdown-body h6 {
             margin-top: 24px;
             margin-bottom: 16px;
             font-weight: 600;
             line-height: 1.25;
         }
-        .markdown-body ul, .markdown-body ol {
+
+        .markdown-body ul,
+        .markdown-body ol {
             padding-left: 2em;
             margin-bottom: 16px;
         }
+
         .markdown-body blockquote {
             padding: 0 1em;
             color: #6a737d;
             border-left: 0.25em solid #dfe2e5;
             margin: 0 0 16px 0;
         }
+
         .markdown-body table {
             border-spacing: 0;
             border-collapse: collapse;
             margin: 16px 0;
             width: 100%;
         }
+
         .markdown-body table th,
         .markdown-body table td {
             padding: 6px 13px;
             border: 1px solid #dfe2e5;
         }
+
         .markdown-body table tr {
             background-color: #fff;
             border-top: 1px solid #c6cbd1;
         }
+
         .markdown-body table tr:nth-child(2n) {
             background-color: #f6f8fa;
         }
+
         /* Notification styles */
         .notifications-container {
             position: fixed;
@@ -254,6 +334,7 @@
                 transform: translateX(100%);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -265,6 +346,7 @@
                 transform: translateX(0);
                 opacity: 1;
             }
+
             to {
                 transform: translateX(100%);
                 opacity: 0;
@@ -277,20 +359,20 @@
         }
 
         /* Make toggle switch more prominent */
-        #agentToggle:checked + div {
+        #agentToggle:checked+div {
             background-color: #2563eb;
         }
 
-        #agentToggle:checked + div:after {
+        #agentToggle:checked+div:after {
             transform: translateX(100%);
         }
 
         /* Add transition effects */
-        #agentToggle + div {
+        #agentToggle+div {
             transition: all 0.3s ease;
         }
 
-        #agentToggle + div:after {
+        #agentToggle+div:after {
             transition: all 0.3s ease;
         }
 
@@ -304,6 +386,68 @@
             z-index: 20;
         }
 
+        /* Search button styles */
+        .search-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-btn.active {
+            color: white;
+        }
+        
+        #googleSearchBtn.active {
+            background-color: #4285F4;
+        }
+        
+        #deepSearchBtn.active {
+            background-color: #8B5CF6;
+        }
+        
+        .search-btn.active i.fab.fa-google {
+            color: white;
+        }
+        
+        .search-btn.active i.fas.fa-search-plus {
+            color: white;
+        }
+        
+        .search-btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:active::after {
+            opacity: 1;
+        }
+
+        /* Deep Search toggle styles */
+        .toggle-container.active {
+            background-color: #EBF5FF;
+            border: 1px solid #3B82F6;
+        }
+        
+        .toggle-container.active .text-gray-700 {
+            color: #1E40AF;
+        }
+        
+        .toggle-container.active .text-gray-500 {
+            color: #3B82F6;
+        }
+
         /* Thêm style cho clear chat button hover */
         .clear-chat-btn {
             transition: all 0.2s ease;
@@ -315,7 +459,8 @@
 
         /* Đảm bảo chat container có thể scroll */
         #chatLog {
-            min-height: 0; /* Quan trọng cho flexbox scroll */
+            min-height: 0;
+            /* Quan trọng cho flexbox scroll */
         }
 
         .copy-section {
@@ -387,7 +532,6 @@
         }
 
         .content-wrapper {
-            display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 20px;
@@ -396,11 +540,11 @@
 
         .text-container {
             flex: 1;
-            min-width: 0; /* Để tránh overflow */
+            min-width: 0;
+            /* Để tránh overflow */
         }
 
         .api-image {
-            max-width: 400px;
             height: auto;
             object-fit: contain;
         }
@@ -426,6 +570,34 @@
         .example-questions-sidebar .example-btn:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
+
+        /* Thêm vào phần CSS */
+        .google-search-message {
+            background-color: #F8FAFF;
+            border-left: 3px solid #4285F4;
+        }
+
+        .google-search-message a {
+            color: #4285F4;
+            text-decoration: underline;
+        }
+
+        .google-search-message pre, 
+        .google-search-message code {
+            background-color: #f1f5f9;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        .deep-search-message {
+            background-color: #F9F7FF;
+            border-left: 3px solid #8B5CF6;
+        }
+
+        .deep-search-message a {
+            color: #8B5CF6;
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -436,16 +608,17 @@
             <h2 class="text-2xl font-bold text-center mb-6">WebSocket Configuration</h2>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Text WebSocket URL</label>
-                    <input type="text" id="textWsInput"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="ws://your-ip:port">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Voice WebSocket URL</label>
-                    <input type="text" id="voiceWsInput"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="ws://your-ip:port">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Server Address</label>
+                    <div class="flex items-center">
+                        <select id="wsProtocol" class="px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="auto">Auto (Same as page)</option>
+                            <option value="ws">ws://</option>
+                            <option value="wss">wss://</option>
+                        </select>
+                        <input type="text" id="serverIpInput"
+                            class="flex-1 px-3 py-2 border border-l-0 border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="example.com:8000">
+                    </div>
                 </div>
                 <button onclick="saveWsConfig()"
                     class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
@@ -460,7 +633,8 @@
             <h2 class="text-2xl font-bold text-center mb-6">Choose Chat Mode</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Text Chat Option -->
-                <div onclick="startNewChat('text')" class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-blue-500 transition-all">
+                <div onclick="startNewChat('text')"
+                    class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-blue-500 transition-all">
                     <div class="text-center mb-4">
                         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-keyboard text-2xl text-blue-500"></i>
@@ -471,7 +645,8 @@
                 </div>
 
                 <!-- Voice Chat Option -->
-                <div onclick="startNewChat('voice')" class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-green-500 transition-all">
+                <div onclick="startNewChat('voice')"
+                    class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-green-500 transition-all">
                     <div class="text-center mb-4">
                         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-microphone text-2xl text-green-500"></i>
@@ -482,7 +657,8 @@
                 </div>
 
                 <!-- Screen Share Option -->
-                <div onclick="startNewChat('screen')" class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-purple-500 transition-all">
+                <div onclick="startNewChat('screen')"
+                    class="cursor-pointer bg-white hover:bg-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-purple-500 transition-all">
                     <div class="text-center mb-4">
                         <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-desktop text-2xl text-purple-500"></i>
@@ -517,18 +693,17 @@
             <div class="max-w-4xl mx-auto">
                 <div class="flex items-end space-x-2">
                     <div class="flex-1 relative">
-                        <textarea
-                            id="textInput"
+                        <textarea id="textInput"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 resize-none overflow-hidden focus:outline-none focus:border-blue-500"
-                            placeholder="Type your message..."
-                            rows="1"
-                            style="min-height: 44px; max-height: 200px;"
-                        ></textarea>
-                        <button id="sendTextMessage" class="absolute right-2 bottom-2 text-blue-500 hover:text-blue-600 disabled:text-gray-400">
+                            placeholder="Type your message..." rows="1"
+                            style="min-height: 44px; max-height: 200px;"></textarea>
+                        <button id="sendTextMessage"
+                            class="absolute right-2 bottom-2 text-blue-500 hover:text-blue-600 disabled:text-gray-400">
                             <i class="fas fa-paper-plane text-lg"></i>
                         </button>
                     </div>
-                    <button id="textMicButton" class="p-2 text-gray-500 hover:text-blue-500 rounded-full hover:bg-blue-50">
+                    <button id="textMicButton"
+                        class="p-2 text-gray-500 hover:text-blue-500 rounded-full hover:bg-blue-50">
                         <i class="fas fa-microphone text-lg"></i>
                     </button>
                 </div>
@@ -541,7 +716,8 @@
 
     <div id="screenShareContainer" class="hidden w-full">
         <div class="p-4 bg-gray-100">
-            <video id="screenVideo" class="w-full h-64 bg-black rounded-lg" autoplay></video>
+            <video id="screenVideo" class="w-full h-[400px] bg-black rounded-lg object-contain mb-4" autoplay
+                playsinline></video>
             <div class="mt-4 flex justify-center">
                 <button id="startScreenShare" class="bg-purple-500 text-white px-6 py-2 rounded-lg">
                     <i class="fas fa-desktop mr-2"></i>
@@ -565,7 +741,8 @@
             <!-- Mode Selection Buttons -->
             <div id="screenModeSelection" class="space-y-4 mb-6">
                 <!-- Camera Option -->
-                <button onclick="startScreenMode('camera')" class="w-full flex items-center space-x-3 p-4 rounded-lg hover:bg-gray-100 transition-colors">
+                <button onclick="startScreenMode('camera')"
+                    class="w-full flex items-center space-x-3 p-4 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-camera text-blue-500 text-xl"></i>
                     </div>
@@ -576,7 +753,8 @@
                 </button>
 
                 <!-- Screen Share Option -->
-                <button onclick="startScreenMode('screen')" class="w-full flex items-center space-x-3 p-4 rounded-lg hover:bg-gray-100 transition-colors">
+                <button onclick="startScreenMode('screen')"
+                    class="w-full flex items-center space-x-3 p-4 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-desktop text-purple-500 text-xl"></i>
                     </div>
@@ -592,9 +770,11 @@
                 <div class="flex space-x-4">
                     <!-- Video Preview -->
                     <div class="w-1/2">
-                        <video id="screenVideo" class="w-full h-[400px] bg-black rounded-lg object-contain mb-4" autoplay></video>
+                        <video id="screenVideo" class="w-full h-[400px] bg-black rounded-lg object-contain mb-4"
+                            autoplay playsinline></video>
                         <div class="flex justify-end space-x-2">
-                            <button onclick="stopScreenMode()" class="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200">
+                            <button onclick="stopScreenMode()"
+                                class="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200">
                                 <i class="fas fa-stop mr-1"></i>
                                 Stop Sharing
                             </button>
@@ -615,15 +795,13 @@
                         <div class="p-4 bg-white border-t rounded-b-lg">
                             <div class="flex items-end space-x-2">
                                 <div class="flex-1 relative">
-                                    <textarea
-                                        id="videoChatInput"
+                                    <textarea id="videoChatInput"
                                         class="w-full resize-none border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Type your message..."
-                                        rows="1"
-                                        style="min-height: 40px; max-height: 120px;"
-                                    ></textarea>
+                                        placeholder="Type your message..." rows="1"
+                                        style="min-height: 40px; max-height: 120px;"></textarea>
                                 </div>
-                                <button onclick="sendVideoMessage()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                                <button onclick="sendVideoMessage()"
+                                    class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
                                     <i class="fas fa-paper-plane"></i>
                                 </button>
                             </div>
@@ -646,11 +824,13 @@
                     Unable to connect to chat server. Please check your connection and try again.
                 </p>
                 <div class="flex justify-center space-x-3">
-                    <button onclick="retryConnection()" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                    <button onclick="retryConnection()"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                         <i class="fas fa-redo mr-2"></i>
                         Retry
                     </button>
-                    <button onclick="closeErrorModal()" class="bg-gray-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                    <button onclick="closeErrorModal()"
+                        class="bg-gray-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors">
                         Cancel
                     </button>
                 </div>
@@ -741,15 +921,18 @@
                     <h1 class="text-xl font-bold">AI Assistant</h1>
                     <!-- Mode Switcher -->
                     <div class="flex items-center bg-gray-700 rounded-lg p-1">
-                        <button onclick="switchMode('text')" id="textModeBtn" class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
+                        <button onclick="switchMode('text')" id="textModeBtn"
+                            class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
                             <i class="fas fa-keyboard"></i>
                             <span class="text-sm">Text</span>
                         </button>
-                        <button onclick="switchMode('voice')" id="voiceModeBtn" class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
+                        <button onclick="switchMode('voice')" id="voiceModeBtn"
+                            class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
                             <i class="fas fa-microphone"></i>
                             <span class="text-sm">Voice</span>
                         </button>
-                        <button onclick="switchMode('screen')" id="screenModeBtn" class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
+                        <button onclick="switchMode('screen')" id="screenModeBtn"
+                            class="mode-btn px-3 py-1 rounded-md flex items-center space-x-2">
                             <i class="fas fa-desktop"></i>
                             <span class="text-sm">Screen</span>
                         </button>
@@ -765,7 +948,7 @@
             <div class="flex-1 flex">
                 <!-- PDF Preview -->
                 <div id="pdf-container" class="w-1/2 p-4 border-r border-gray-200">
-                    <embed id="pdfPreview" type="application/pdf" class="w-full h-full rounded-lg"/>
+                    <embed id="pdfPreview" type="application/pdf" class="w-full h-full rounded-lg" />
                 </div>
 
                 <!-- Chat Container -->
@@ -778,10 +961,12 @@
                         <!-- Voice Controls -->
                         <div id="voiceControls" class="hidden p-4">
                             <div class="flex items-center justify-center space-x-4">
-                                <button id="startButton" class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 focus:outline-none">
+                                <button id="startButton"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 focus:outline-none">
                                     <i class="fas fa-microphone text-xl"></i>
                                 </button>
-                                <button id="stopButton" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-4 focus:outline-none">
+                                <button id="stopButton"
+                                    class="bg-red-500 hover:bg-red-600 text-white rounded-full p-4 focus:outline-none">
                                     <i class="fas fa-stop text-xl"></i>
                                 </button>
                             </div>
@@ -791,31 +976,41 @@
                         <!-- Text Controls -->
                         <div id="textControls" class="hidden">
                             <div class="input-container">
-                                <div class="flex justify-end mb-2">
-                                    <div class="toggle-container flex items-center bg-gray-100 hover:bg-gray-200 transition-colors duration-200 px-4 py-2 rounded-lg cursor-pointer">
-                                        <span class="text-sm font-medium text-gray-700 mr-3">Power Search</span>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" id="agentToggle" class="sr-only peer">
-                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300
-                                                rounded-full peer dark:bg-gray-600
-                                                peer-checked:after:translate-x-full peer-checked:bg-blue-600
-                                                after:content-[''] after:absolute after:top-0.5 after:left-[2px]
-                                                after:bg-white after:rounded-full after:h-6 after:w-6
-                                                after:transition-all dark:border-gray-600"></div>
-                                        </label>
+                                <div class="flex justify-between mb-2">
+                                    <!-- Model selection dropdown -->
+                                    <div class="relative flex items-center">
+                                        <span class="text-sm font-medium text-gray-700 mr-2">Model name:</span>
+                                        <select id="modelSelect" class="bg-gray-100 hover:bg-gray-200 transition-colors duration-200 px-4 py-2 rounded-lg cursor-pointer text-sm font-medium text-gray-700 appearance-none pr-8">
+                                            <option value="qwen2.5">Qwen 2.5</option>
+                                            <option value="llama3">Llama 3</option>
+                                            <option value="gemma">Gemma</option>
+                                            <option value="deepseek">DeepSeek</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <i class="fas fa-chevron-down text-xs"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Search buttons -->
+                                    <div class="flex space-x-2">
+                                        <button id="googleSearchBtn" class="search-btn flex items-center space-x-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 px-3 py-2 rounded-lg cursor-pointer text-sm font-medium text-gray-700">
+                                            <i class="fab fa-google text-blue-500"></i>
+                                            <span>Google Search</span>
+                                        </button>
+                                        <button id="deepSearchBtn" class="search-btn flex items-center space-x-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 px-3 py-2 rounded-lg cursor-pointer text-sm font-medium text-gray-700">
+                                            <i class="fas fa-search-plus text-purple-500"></i>
+                                            <span>Deep Search</span>
+                                        </button>
                                     </div>
                                 </div>
 
                                 <div class="input-box">
                                     <div class="flex items-end space-x-2">
                                         <div class="flex-1 relative">
-                                            <textarea
-                                                id="messageInput"
+                                            <textarea id="messageInput"
                                                 class="w-full resize-none focus:outline-none border-0 bg-transparent p-0"
-                                                placeholder="Message..."
-                                                rows="1"
-                                                style="min-height: 24px; max-height: 200px;"
-                                            ></textarea>
+                                                placeholder="Message..." rows="1"
+                                                style="min-height: 24px; max-height: 200px;"></textarea>
                                         </div>
                                         <button id="sendButton" class="p-2 hover:scale-110 transition-transform">
                                             <i class="fas fa-paper-plane"></i>
@@ -836,8 +1031,8 @@
     <script defer>
         let TEXT_WS_URL = "";
         let VOICE_WS_URL = "";
+        let VISION_WS_URL = "";
         console.log(TEXT_WS_URL)
-        console.log(VOICE_WS_URL)
         let currentFrameB64;
         let webSocket = null;
         let audioContext = null;
@@ -848,6 +1043,39 @@
         let initialized = false;
         let audioInputContext;
         let workletNode;
+
+        // At the top of your JavaScript, add base endpoints
+        const TEXT_ENDPOINT = "/ws/text";
+        const VOICE_ENDPOINT = "/ws";
+        const VISION_ENDPOINT = "/ws/vision";
+
+        // Update the WebSocket Config Modal HTML
+        let wsConfigModal = `
+        <div id="wsConfigModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-8 w-[500px] max-w-90vw">
+                <h2 class="text-2xl font-bold text-center mb-6">WebSocket Configuration</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Server Address</label>
+                        <div class="flex items-center">
+                            <select id="wsProtocol" class="px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="auto">Auto (Same as page)</option>
+                                <option value="ws">ws://</option>
+                                <option value="wss">wss://</option>
+                            </select>
+                            <input type="text" id="serverIpInput"
+                                class="flex-1 px-3 py-2 border border-l-0 border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="example.com:8000">
+                        </div>
+                    </div>
+                    <button onclick="saveWsConfig()"
+                        class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
+                        Save Configuration
+                    </button>
+                </div>
+            </div>
+        </div>
+        `;
 
         // Add PDF handling
         const pdfInput = document.getElementById('pdfInput');
@@ -861,30 +1089,40 @@
 
         // Cấu hình marked để xử lý code blocks tốt hơn
         marked.setOptions({
-            highlight: function(code, lang) {
+            highlight: function (code, lang) {
                 return code;
             },
             breaks: true,
             gfm: true
         });
 
+        // Update window.addEventListener("load") to handle saved protocol
         window.addEventListener("load", async () => {
-            const savedTextWs = localStorage.getItem('textWsUrl');
-            const savedVoiceWs = localStorage.getItem('voiceWsUrl');
+            const savedIp = localStorage.getItem('serverIp');
+            const savedProtocol = localStorage.getItem('wsProtocol');
 
             // Hide all modals first
             document.getElementById('chatOptionsModal').classList.add('hidden');
             document.getElementById('wsConfigModal').classList.add('hidden');
 
-            if (!savedTextWs || !savedVoiceWs) {
+            if (!savedIp) {
                 // Show WebSocket config modal first
                 document.getElementById('wsConfigModal').classList.remove('hidden');
                 isInitialized = false;
             } else {
-                TEXT_WS_URL = savedTextWs;
-                VOICE_WS_URL = savedVoiceWs;
-                console.log(TEXT_WS_URL);
-                console.log(VOICE_WS_URL);
+                // Set the protocol
+                let wsProtocol;
+                if (savedProtocol === 'auto') {
+                    wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+                } else {
+                    wsProtocol = (savedProtocol || 'ws') + '://';
+                }
+
+                // Construct WebSocket URLs from saved IP
+                const baseWsUrl = `${wsProtocol}${savedIp}`;
+                TEXT_WS_URL = `${baseWsUrl}${TEXT_ENDPOINT}`;
+                VOICE_WS_URL = `${baseWsUrl}${VOICE_ENDPOINT}`;
+                VISION_WS_URL = `${baseWsUrl}${VISION_ENDPOINT}`;
                 isInitialized = true;
             }
 
@@ -895,41 +1133,41 @@
                 console.log("pdfInput change event detected!");
                 const file = event.target.files[0];
 
-                 if (file && file.type === 'application/pdf') {
-                      const reader = new FileReader();
+                if (file && file.type === 'application/pdf') {
+                    const reader = new FileReader();
 
-                      reader.onload = (e) => {
-                          pdfPreview.setAttribute('src', e.target.result);
-                          pdfContainer.style.display = 'block';
-                          console.log('pdf rendered');
+                    reader.onload = (e) => {
+                        pdfPreview.setAttribute('src', e.target.result);
+                        pdfContainer.style.display = 'block';
+                        console.log('pdf rendered');
 
-                           // Convert to base64 and send immediately
-                         const base64Reader = new FileReader();
-                           base64Reader.onload = function(e){
-                            try{
-                                    const base64PDF = e.target.result.split(',')[1];
-                                    sendPDFMessage(base64PDF, file.name);
-                                }
-                                catch (err){
-                                    console.error("error processing pdf file", err)
-                                }
-
-                            };
-                           base64Reader.onerror = (err) => {
-                                console.error("error reading pdf file", err);
+                        // Convert to base64 and send immediately
+                        const base64Reader = new FileReader();
+                        base64Reader.onload = function (e) {
+                            try {
+                                const base64PDF = e.target.result.split(',')[1];
+                                sendPDFMessage(base64PDF, file.name);
                             }
-                            base64Reader.readAsDataURL(file);
-                      };
-                      reader.readAsDataURL(file);
+                            catch (err) {
+                                console.error("error processing pdf file", err)
+                            }
+
+                        };
+                        base64Reader.onerror = (err) => {
+                            console.error("error reading pdf file", err);
+                        }
+                        base64Reader.readAsDataURL(file);
+                    };
+                    reader.readAsDataURL(file);
 
 
-                    } else {
-                        alert('Please select a valid PDF file.');
-                        pdfContainer.style.display = 'none';
-                        pdfInput.value = ""; // Clear the file input
-                        pdfPreview.removeAttribute('src');
-                        console.warn("no pdf file detected");
-                    }
+                } else {
+                    alert('Please select a valid PDF file.');
+                    pdfContainer.style.display = 'none';
+                    pdfInput.value = ""; // Clear the file input
+                    pdfPreview.removeAttribute('src');
+                    console.warn("no pdf file detected");
+                }
 
             });
         });
@@ -1066,79 +1304,98 @@
                 }
 
                 if (response.text) {
-                    // Check if agent mode is enabled
-                    const isAgentMode = document.getElementById('agentToggle').checked;
-
-                    if (isAgentMode) {
-                        // Original behavior for agent mode - create new message for each response
-                        displayMessage("GEMINI: " + response.text);
-
-                        // Handle GIF URL for agent mode
-                        if (response.gif_url) {
-                            const messageContainer = document.querySelector('.message-container:last-child');
-                            const contentWrapper = messageContainer.querySelector('.content-wrapper');
-
-                            const imageElement = document.createElement("img");
-                            imageElement.src = response.gif_url;
-                            imageElement.alt = "Image from API";
-                            imageElement.className = "api-image";
-
-                            contentWrapper.appendChild(imageElement);
-                        }
-                    } else {
-                        // Streaming behavior for non-agent mode
-                        let messageContainer = document.querySelector('.message-container:last-child');
-
-                        if (!messageContainer || messageContainer.querySelector('.user-message')) {
-                            messageContainer = document.createElement("div");
-                            messageContainer.className = "message-container";
-
-                            const avatar = document.createElement("div");
-                            avatar.className = "message-avatar";
+                    // Check if any search mode is enabled
+                    const isGoogleSearch = document.getElementById('googleSearchBtn').classList.contains('active');
+                    const isDeepSearch = document.getElementById('deepSearchBtn').classList.contains('active');
+                    
+                    // Xử lý nội dung tin nhắn - đảm bảo luôn áp dụng Markdown
+                    let messageText = response.text;
+                    let messagePrefix = "AI: ";
+                    
+                    if (isGoogleSearch) {
+                        messagePrefix = "Google Search: ";
+                    } else if (isDeepSearch) {
+                        messagePrefix = "Deep Search: ";
+                    }
+                    
+                    // Sử dụng cùng một phương thức hiển thị cho tất cả các loại tin nhắn
+                    let messageContainer = document.querySelector('.message-container:last-child');
+                    
+                    if (!messageContainer || messageContainer.querySelector('.user-message')) {
+                        // Tạo container mới nếu cần
+                        messageContainer = document.createElement("div");
+                        messageContainer.className = "message-container";
+                        
+                        const avatar = document.createElement("div");
+                        avatar.className = "message-avatar";
+                        
+                        // Set avatar dựa trên loại tin nhắn
+                        if (isGoogleSearch) {
+                            avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                                <i class="fab fa-google text-white"></i>
+                            </div>`;
+                        } else if (isDeepSearch) {
+                            avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
+                                <i class="fas fa-search-plus text-white"></i>
+                            </div>`;
+                        } else {
                             avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
                                 <i class="fas fa-robot text-white"></i>
                             </div>`;
-
-                            const messageContent = document.createElement("div");
-                            messageContent.className = "message-content";
-
-                            const contentWrapper = document.createElement("div");
-                            contentWrapper.className = "content-wrapper";
-
-                            const textContainer = document.createElement("div");
-                            textContainer.className = "bot-message message markdown-body";
-
-                            contentWrapper.appendChild(textContainer);
-                            messageContent.appendChild(contentWrapper);
-                            messageContainer.appendChild(avatar);
-                            messageContainer.appendChild(messageContent);
-
-                            document.getElementById('chatLog').appendChild(messageContainer);
                         }
-
+                        
+                        const messageContent = document.createElement("div");
+                        messageContent.className = "message-content";
+                        
+                        const contentWrapper = document.createElement("div");
+                        contentWrapper.className = "content-wrapper";
+                        
+                        const textContainer = document.createElement("div");
+                        textContainer.className = "bot-message message markdown-body";
+                        
+                        // Thêm class đặc biệt dựa trên loại tin nhắn
+                        if (isGoogleSearch) {
+                            textContainer.classList.add("google-search-message");
+                        } else if (isDeepSearch) {
+                            textContainer.classList.add("deep-search-message");
+                        }
+                        
+                        // Lưu trữ văn bản gốc
+                        textContainer.setAttribute('data-raw-text', messageText);
+                        // Áp dụng Markdown
+                        textContainer.innerHTML = marked.parse(messageText);
+                        
+                        contentWrapper.appendChild(textContainer);
+                        messageContent.appendChild(contentWrapper);
+                        messageContainer.appendChild(avatar);
+                        messageContainer.appendChild(messageContent);
+                        
+                        document.getElementById('chatLog').appendChild(messageContainer);
+                    } else {
+                        // Cập nhật tin nhắn hiện có
                         const textContainer = messageContainer.querySelector('.message-content .bot-message');
                         const currentText = textContainer.getAttribute('data-raw-text') || '';
-                        const newText = currentText + response.text;
+                        const newText = currentText + messageText;
                         textContainer.setAttribute('data-raw-text', newText);
                         textContainer.innerHTML = marked.parse(newText);
-
-                        // Handle GIF URL for non-agent mode
-                        if (response.gif_url) {
-                            const existingImage = messageContainer.querySelector('.api-image');
-                            if (existingImage) {
-                                existingImage.remove();
-                            }
-
+                    }
+                    
+                    // Xử lý GIF URL nếu có
+                    if (response.gif_url) {
+                        const contentWrapper = messageContainer.querySelector('.content-wrapper');
+                        const existingImage = contentWrapper.querySelector('.api-image');
+                        
+                        if (existingImage) {
+                            existingImage.src = response.gif_url;
+                        } else {
                             const imageElement = document.createElement("img");
                             imageElement.src = response.gif_url;
                             imageElement.alt = "Image from API";
                             imageElement.className = "api-image";
-
-                            const contentWrapper = messageContainer.querySelector('.content-wrapper');
                             contentWrapper.appendChild(imageElement);
                         }
                     }
-
+                    
                     // Scroll to bottom
                     const chatLog = document.getElementById('chatLog');
                     chatLog.scrollTop = chatLog.scrollHeight;
@@ -1283,8 +1540,11 @@
             const messageContainer = document.createElement("div");
             messageContainer.className = "message-container";
 
-            // Xác định loại tin nhắn
+            // Determine message type
             const isUser = text.startsWith("You:");
+            const isGoogleSearch = text.startsWith("Google Search:");
+            const isDeepSearch = text.startsWith("Deep Search:");
+            
             const avatar = document.createElement("div");
             avatar.className = "message-avatar";
 
@@ -1292,6 +1552,14 @@
             if (isUser) {
                 avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
                     <i class="fas fa-user text-white"></i>
+                </div>`;
+            } else if (isGoogleSearch) {
+                avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                    <i class="fab fa-google text-white"></i>
+                </div>`;
+            } else if (isDeepSearch) {
+                avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
+                    <i class="fas fa-search-plus text-white"></i>
                 </div>`;
             } else {
                 avatar.innerHTML = `<div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
@@ -1306,11 +1574,29 @@
             const contentWrapper = document.createElement("div");
             contentWrapper.className = "content-wrapper";
 
-            // Create text container
+            // Create text container with appropriate styling
             const textContainer = document.createElement("div");
-            textContainer.className = isUser ? "user-message message" : "bot-message message markdown-body";
-            textContainer.innerHTML = isUser ? text.replace(/^(You:|GEMINI:)\s*/, '') :
-                           marked.parse(text.replace(/^(You:|GEMINI:)\s*/, ''));
+            
+            if (isUser) {
+                textContainer.className = "user-message message";
+            } else if (isGoogleSearch) {
+                textContainer.className = "bot-message message markdown-body google-search-message";
+                textContainer.style.borderLeft = "3px solid #4285F4";
+            } else if (isDeepSearch) {
+                textContainer.className = "bot-message message markdown-body deep-search-message";
+                textContainer.style.borderLeft = "3px solid #8B5CF6";
+            } else {
+                textContainer.className = "bot-message message markdown-body";
+            }
+            
+            // Clean the prefix from the message
+            let cleanText = text;
+            if (isUser) cleanText = text.replace(/^You:\s*/, '');
+            else if (isGoogleSearch) cleanText = text.replace(/^Google Search:\s*/, '');
+            else if (isDeepSearch) cleanText = text.replace(/^Deep Search:\s*/, '');
+            else cleanText = text.replace(/^(AI:|GEMINI:)\s*/, '');
+            
+            textContainer.innerHTML = isUser ? cleanText : marked.parse(cleanText);
 
             contentWrapper.appendChild(textContainer);
             messageContent.appendChild(contentWrapper);
@@ -1368,21 +1654,116 @@
             const video = document.getElementById('screenVideo');
 
             try {
+                // Check for secure context
+                if (!window.isSecureContext) {
+                    throw new Error('Media access requires a secure context (HTTPS or localhost)');
+                }
+
                 let stream;
                 if (type === 'camera') {
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: true,
-                        audio: true
-                    });
+                    // Check if mediaDevices API is supported
+                    if (!navigator.mediaDevices) {
+                        // Try older APIs as fallback
+                        navigator.mediaDevices = {};
+                    }
+
+                    // Polyfill getUserMedia
+                    if (!navigator.mediaDevices.getUserMedia) {
+                        navigator.mediaDevices.getUserMedia = function(constraints) {
+                            const getUserMedia = navigator.webkitGetUserMedia || 
+                                               navigator.mozGetUserMedia ||
+                                               navigator.msGetUserMedia;
+
+                            if (!getUserMedia) {
+                                throw new Error('Camera access is not supported in this browser. Please try using Chrome, Firefox, or Edge.');
+                            }
+
+                            return new Promise((resolve, reject) => {
+                                getUserMedia.call(navigator, constraints, resolve, reject);
+                            });
+                        }
+                    }
+
+                    try {
+                        // Request camera with lower resolution first
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: { ideal: 640 },
+                                height: { ideal: 480 }
+                            },
+                            audio: true
+                        });
+                    } catch (err) {
+                        if (err.name === 'NotAllowedError') {
+                            throw new Error('Camera access was denied. Please allow camera access in your browser settings and try again.');
+                        } else if (err.name === 'NotFoundError') {
+                            throw new Error('No camera device found. Please check your camera connection.');
+                        } else if (err.name === 'NotReadableError') {
+                            throw new Error('Camera is in use by another application. Please close other apps using the camera.');
+                        } else if (err.name === 'OverconstrainedError') {
+                            // Try again with minimal constraints
+                            try {
+                                stream = await navigator.mediaDevices.getUserMedia({
+                                    video: true,
+                                    audio: true
+                                });
+                            } catch (fallbackErr) {
+                                throw new Error(`Camera error: ${fallbackErr.message}`);
+                            }
+                        } else {
+                            throw new Error(`Camera error: ${err.message}`);
+                        }
+                    }
                     titleElement.textContent = 'Camera Preview';
                 } else {
-                    stream = await navigator.mediaDevices.getDisplayMedia({
-                        video: true
-                    });
+                    // Screen sharing
+                    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+                        throw new Error('Screen sharing is not supported in this browser or environment. Please try using Chrome, Firefox, or Edge.');
+                    }
+                    
+                    try {
+                        stream = await navigator.mediaDevices.getDisplayMedia({
+                            video: {
+                                cursor: 'always'
+                            }
+                        });
+                    } catch (err) {
+                        if (err.name === 'NotAllowedError') {
+                            throw new Error('Screen sharing was denied. Please allow screen sharing and try again.');
+                        } else {
+                            throw new Error(`Screen sharing error: ${err.message}`);
+                        }
+                    }
                     titleElement.textContent = 'Screen Share Preview';
                 }
 
+                // Set up video stream
                 video.srcObject = stream;
+                video.muted = true;
+
+                // Wait for video metadata to load with timeout
+                await Promise.race([
+                    new Promise((resolve, reject) => {
+                        video.onloadedmetadata = () => {
+                            video.play()
+                                .then(resolve)
+                                .catch(err => {
+                                    console.error("Error playing video:", err);
+                                    reject(new Error('Failed to play video stream'));
+                                });
+                        };
+
+                        video.onerror = (err) => {
+                            reject(new Error(`Video loading error: ${video.error.message}`));
+                        };
+                    }),
+                    new Promise((_, reject) => 
+                        setTimeout(() => reject(new Error('Video stream loading timeout')), 10000)
+                    )
+                ]);
+
+                // Connect to vision WebSocket
+                await connect(VISION_WS_URL);
 
                 // Show video preview, hide selection buttons
                 selectionDiv.classList.add('hidden');
@@ -1392,8 +1773,243 @@
                 stream.getTracks()[0].onended = () => {
                     stopScreenMode();
                 };
+
+                // Update sendVideoMessage function to capture and send current frame
+                window.sendVideoMessage = function() {
+                    const input = document.getElementById('videoChatInput');
+                    const message = input.value.trim();
+                    if (!message) return;
+
+                    // Capture current frame
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const context = canvas.getContext('2d');
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const currentFrame = canvas.toDataURL('image/jpeg', 0.8);
+
+                    // Add message to chat
+                    addVideoMessage('You: ' + message, 'user');
+
+                    // Clear input
+                    input.value = '';
+
+                    // Add thinking indicator
+                    addVideoMessage('AI is typing...', 'thinking');
+
+                    // Send message and frame to WebSocket
+                    if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+                        const payload = {
+                            text: message,
+                            frame: currentFrame
+                        };
+                        webSocket.send(JSON.stringify(payload));
+                    } else {
+                        console.error("WebSocket not connected");
+                        showNotification('error', 'Connection Error', 'Lost connection to vision service');
+                        removeThinkingMessage();
+                    }
+                };
+
+                // Set up WebSocket message handler
+                webSocket.onmessage = function(event) {
+                    try {
+                        const response = JSON.parse(event.data);
+                        removeThinkingMessage();
+                        
+                        // Hiển thị text response nếu có
+                        if (response.text) {
+                            addVideoMessage('AI: ' + response.text, 'ai');
+                        }
+
+                        // Hiển thị ảnh nếu có image_path
+                        if (response.image_path) {
+                            try {
+                                console.log("Processing image path:", response.image_path);
+                                
+                                // Đảm bảo popup đang hiển thị
+                                const popup = document.getElementById('screenModePopup');
+                                popup.classList.remove('hidden');
+                                popup.style.display = 'flex';
+                                
+                                // Cập nhật tiêu đề
+                                const titleElement = document.getElementById('screenModeTitle');
+                                if (titleElement) {
+                                    titleElement.textContent = 'Captured Image';
+                                }
+                                
+                                // Xử lý đường dẫn ảnh
+                                let imagePath = response.image_path;
+                                if (!imagePath.startsWith('/') && !imagePath.startsWith('http')) {
+                                    imagePath = '/' + imagePath;
+                                }
+                                
+                                // Tìm hoặc tạo image element trong popup
+                                let imgElement = document.getElementById('capturedImage');
+                                if (!imgElement) {
+                                    // Tìm container cho image trong popup
+                                    const imageContainer = document.querySelector('#screenModePopup .flex.space-x-4 > div:first-child') || 
+                                                      document.querySelector('#videoPreviewContainer > div:first-child');
+                                    
+                                    if (!imageContainer) {
+                                        throw new Error("Image container not found in popup");
+                                    }
+                                    
+                                    // Xóa nội dung hiện tại của container
+                                    imageContainer.innerHTML = '';
+                                    
+                                    // Tạo image element mới
+                                    imgElement = document.createElement('img');
+                                    imgElement.id = 'capturedImage';
+                                    imgElement.className = 'w-full h-[400px] bg-black rounded-lg object-contain mb-4';
+                                    imgElement.alt = 'Captured Image';
+                                    imgElement.style.display = 'block';
+                                    
+                                    // Thêm image vào container
+                                    imageContainer.appendChild(imgElement);
+                                }
+                                
+                                // Cập nhật src cho image
+                                imgElement.src = imagePath;
+                                
+                                console.log("Set image src to:", imagePath);
+                                
+                                // Thêm event listeners để debug
+                                imgElement.onload = function() {
+                                    console.log("Image loaded successfully");
+                                    
+                                    // Tìm hoặc tạo controls div
+                                    const imageContainer = imgElement.parentNode;
+                                    let controlsDiv = imageContainer.querySelector('.flex.justify-end');
+                                    
+                                    if (!controlsDiv) {
+                                        controlsDiv = document.createElement('div');
+                                        controlsDiv.className = 'flex justify-end space-x-2 mt-4';
+                                        imageContainer.appendChild(controlsDiv);
+                                    } else {
+                                        controlsDiv.innerHTML = '';
+                                    }
+                                    
+                                    // Thêm nút Stop Sharing
+                                    const stopButton = document.createElement('button');
+                                    stopButton.className = 'px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600';
+                                    stopButton.innerHTML = '<i class="fas fa-stop mr-1"></i> Stop Sharing';
+                                    stopButton.onclick = function() {
+                                        closeScreenModePopup();
+                                    };
+                                    
+                                    // Thêm nút Restart Camera
+                                    const restartButton = document.createElement('button');
+                                    restartButton.className = 'px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 ml-2';
+                                    restartButton.innerHTML = '<i class="fas fa-camera mr-1"></i> Restart Camera';
+                                    restartButton.onclick = function() {
+                                        // Tìm video container
+                                        const videoContainer = document.querySelector('#videoPreviewContainer > div:first-child');
+                                        if (!videoContainer) {
+                                            console.error("Video container not found");
+                                            return;
+                                        }
+                                        
+                                        // Xóa image
+                                        imgElement.remove();
+                                        
+                                        // Tạo lại video element
+                                        const newVideo = document.createElement('video');
+                                        newVideo.id = 'screenVideo';
+                                        newVideo.className = 'w-full h-[400px] bg-black rounded-lg object-contain mb-4';
+                                        newVideo.autoplay = true;
+                                        newVideo.playsinline = true;
+                                        
+                                        // Thêm video vào container
+                                        videoContainer.appendChild(newVideo);
+                                        
+                                        // Cập nhật tiêu đề
+                                        if (titleElement) {
+                                            titleElement.textContent = 'Camera Preview';
+                                        }
+                                        
+                                        // Khởi động lại camera
+                                        startScreenMode('camera');
+                                    };
+                                    
+                                    controlsDiv.appendChild(stopButton);
+                                    controlsDiv.appendChild(restartButton);
+                                    
+                                    // Thông báo cho người dùng
+                                    showNotification('info', 'Image Captured', 'Image has been processed and displayed');
+                                };
+                                
+                                imgElement.onerror = function(e) {
+                                    console.error("Error loading image:", e);
+                                    
+                                    // Thử các đường dẫn thay thế
+                                    const altPaths = [
+                                        '/static/uploaded_images/' + imagePath.split('/').pop(),
+                                        imagePath.replace('/static/', '/'),
+                                        imagePath.replace('static/', '/static/'),
+                                        '/static/' + imagePath.split('/').pop()
+                                    ];
+                                    
+                                    console.log("Trying alternative paths:", altPaths);
+                                    
+                                    // Thử lần lượt các đường dẫn
+                                    let currentPathIndex = 0;
+                                    
+                                    const tryNextPath = () => {
+                                        if (currentPathIndex < altPaths.length) {
+                                            console.log("Trying path:", altPaths[currentPathIndex]);
+                                            imgElement.src = altPaths[currentPathIndex];
+                                            currentPathIndex++;
+                                        } else {
+                                            console.error("All paths failed");
+                                            showNotification('error', 'Image Error', 'Failed to load image');
+                                            
+                                            // Hiển thị placeholder thay vì ảnh
+                                            imgElement.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_15ba800aa20%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_15ba800aa20%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22277%22%20y%3D%22218.3%22%3EImage%20Failed%20to%20Load%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E';
+                                        }
+                                    };
+                                    
+                                    // Set up error handler for subsequent attempts
+                                    imgElement.onerror = tryNextPath;
+                                    
+                                    // Try first alternative path
+                                    tryNextPath();
+                                }
+                            } catch (error) {
+                                console.error("Error processing image:", error);
+                                showNotification('error', 'Processing Error', error.message);
+                            }
+                        }
+                    } catch (err) {
+                        console.error("Error processing vision response:", err);
+                        removeThinkingMessage();
+                        showNotification('error', 'Response Error', 'Failed to process AI response');
+                    }
+                };
+
             } catch (err) {
-                console.error("Error starting " + type + ":", err);
+                console.error(`Error starting ${type}:`, err);
+                showNotification('error', 'Stream Error', err.message || `Failed to start ${type} stream`);
+                stopScreenMode(); // Clean up on error
+                
+                // Reset UI
+                selectionDiv.classList.remove('hidden');
+                previewDiv.classList.add('hidden');
+                titleElement.textContent = 'Choose Screen Mode';
+
+                // Show alternative options if camera/screen sharing is not available
+                const alternativeMessage = document.createElement('div');
+                alternativeMessage.className = 'text-center mt-4 text-gray-600';
+                alternativeMessage.innerHTML = `
+                    <p class="mb-2">Unable to access camera/screen. You can:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Try using a different browser (Chrome, Firefox, or Edge recommended)</li>
+                        <li>Make sure you're using HTTPS or localhost</li>
+                        <li>Check your browser's camera/screen sharing permissions</li>
+                        <li>Use text chat mode instead</li>
+                    </ul>
+                `;
+                selectionDiv.appendChild(alternativeMessage);
             }
         }
 
@@ -1416,7 +2032,7 @@
             selectionDiv.classList.remove('hidden');
         }
 
-        // Sửa lại hàm switchMode
+        // Sửa đổi hàm switchMode
         async function switchMode(mode) {
             // Update active button
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
@@ -1439,7 +2055,7 @@
             clearInterval(interval);
 
             // Initialize new mode
-            switch(mode) {
+            switch (mode) {
                 case 'text':
                     document.getElementById('textControls').classList.remove('hidden');
                     document.querySelector('h1.text-xl').textContent = 'AI Assistant';
@@ -1575,17 +2191,20 @@
                     const message = messageInput.value.trim();
                     if (!message) return;
 
-                    // Get agent toggle state
-                    const useAgent = document.getElementById('agentToggle').checked;
+                    // Get active search mode
+                    const useGoogleSearch = document.getElementById('googleSearchBtn').classList.contains('active');
+                    const useDeepSearch = document.getElementById('deepSearchBtn').classList.contains('active');
 
                     // Add message to chat
                     displayMessage("You: " + message);
 
-                    // Send message through WebSocket with agent info
+                    // Send message through WebSocket with search mode info
                     if (webSocket && webSocket.readyState === WebSocket.OPEN) {
                         webSocket.send(JSON.stringify({
                             text: message,
-                            agent: useAgent  // true/false based on toggle
+                            googleSearch: useGoogleSearch,
+                            deepSearch: useDeepSearch,
+                            model: document.getElementById('modelSelect').value
                         }));
                     } else {
                         console.error("WebSocket not connected");
@@ -1594,7 +2213,9 @@
                             // Retry sending message after reconnection
                             webSocket.send(JSON.stringify({
                                 text: message,
-                                agent: useAgent
+                                googleSearch: useGoogleSearch,
+                                deepSearch: useDeepSearch,
+                                model: document.getElementById('modelSelect').value
                             }));
                         }).catch(error => {
                             console.error("Failed to reconnect:", error);
@@ -1724,7 +2345,7 @@
             notification.className = `notification ${type}`;
 
             let iconHtml = '';
-            switch(type) {
+            switch (type) {
                 case 'error':
                     iconHtml = '<i class="fas fa-exclamation-circle text-red-500"></i>';
                     break;
@@ -1773,28 +2394,46 @@
             }
         }
 
-        // Lưu trạng thái toggle vào localStorage
-        document.getElementById('agentToggle').addEventListener('change', function(e) {
-            localStorage.setItem('useAIAgent', e.target.checked);
-        });
-
-        // Khôi phục trạng thái toggle khi load page
+        // Add event listeners for search buttons
         document.addEventListener('DOMContentLoaded', function() {
-            const savedState = localStorage.getItem('useAIAgent');
-            if (savedState !== null) {
-                document.getElementById('agentToggle').checked = savedState === 'true';
-            }
+            const googleSearchBtn = document.getElementById('googleSearchBtn');
+            const deepSearchBtn = document.getElementById('deepSearchBtn');
+            
+            // Load saved states from localStorage
+            const savedGoogleSearch = localStorage.getItem('useGoogleSearch') === 'true';
+            const savedDeepSearch = localStorage.getItem('useDeepSearch') === 'true';
+            
+            // Apply saved states
+            if (savedGoogleSearch) googleSearchBtn.classList.add('active');
+            if (savedDeepSearch) deepSearchBtn.classList.add('active');
+            
+            // Add click handlers
+            googleSearchBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                localStorage.setItem('useGoogleSearch', this.classList.contains('active'));
+                
+                // Show notification
+                if (this.classList.contains('active')) {
+                    showNotification('info', 'Google Search Enabled', 'AI will use Google to find information');
+                }
+            });
+            
+            deepSearchBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                localStorage.setItem('useDeepSearch', this.classList.contains('active'));
+                
+                // Show notification
+                if (this.classList.contains('active')) {
+                    showNotification('info', 'Deep Search Enabled', 'AI will use advanced web search capabilities');
+                }
+            });
         });
-
-        // Thêm event listener cho container
-        document.querySelector('.toggle-container').addEventListener('click', function(e) {
-            const toggle = document.getElementById('agentToggle');
-            if (e.target !== toggle) { // Nếu không click trực tiếp vào input
-                toggle.checked = !toggle.checked;
-                // Trigger change event
-                toggle.dispatchEvent(new Event('change'));
-            }
-        });
+        
+        // Lưu trạng thái toggle vào localStorage
+        // Remove old agentToggle event listener since we've replaced it with the new buttons
+        
+        // Khôi phục trạng thái toggle khi load page
+        // Remove old toggle restoration code since we've replaced it with the new buttons
 
         function clearChat() {
             // Hiển thị confirm dialog
@@ -1825,7 +2464,7 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             function setupCopyButtons() {
                 document.querySelectorAll('.copy-section').forEach(section => {
                     if (!section.querySelector('.copy-button')) {
@@ -1861,12 +2500,12 @@
         });
 
         // Thêm hàm xử lý example questions
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const exampleButtons = document.querySelectorAll('.example-btn');
             const messageInput = document.getElementById('messageInput');
 
             exampleButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     // Copy nội dung của button vào input
                     messageInput.value = this.textContent.trim();
 
@@ -1885,45 +2524,108 @@
 
         // Add WebSocket configuration functions
         function showWsConfig() {
-            // Load saved values from localStorage if they exist
-            const savedTextWs = localStorage.getItem('textWsUrl');
-            const savedVoiceWs = localStorage.getItem('voiceWsUrl');
+            const savedIp = localStorage.getItem('serverIp');
+            if (savedIp) {
+                document.getElementById('serverIpInput').value = savedIp;
+            }
 
-            if (savedTextWs) document.getElementById('textWsInput').value = savedTextWs;
-            if (savedVoiceWs) document.getElementById('voiceWsInput').value = savedVoiceWs;
-
-            // Hide all other modals and show config modal
             document.getElementById('chatOptionsModal').classList.add('hidden');
             document.getElementById('wsConfigModal').classList.remove('hidden');
         }
 
         function saveWsConfig() {
-            const textWs = document.getElementById('textWsInput').value.trim();
-            const voiceWs = document.getElementById('voiceWsInput').value.trim();
+            const serverIp = document.getElementById('serverIpInput').value.trim();
+            const protocolSelect = document.getElementById('wsProtocol');
+            const selectedProtocol = protocolSelect.value;
 
-            if (!textWs || !voiceWs) {
-                showNotification('error', 'Configuration Error', 'Please enter both WebSocket URLs');
+            if (!serverIp) {
+                showNotification('error', 'Configuration Error', 'Please enter server address');
                 return;
             }
 
-            // Save to localStorage
-            localStorage.setItem('textWsUrl', textWs);
-            localStorage.setItem('voiceWsUrl', voiceWs);
-
-            // Update global variables
-            TEXT_WS_URL = textWs;
-            VOICE_WS_URL = voiceWs;
-
-            // Hide config modal and show chat options
-            document.getElementById('wsConfigModal').classList.add('hidden');
-
-            if (!initialized) {
-                document.getElementById('chatOptionsModal').classList.remove('hidden');
-                initialized = true;
+            // Determine the WebSocket protocol
+            let wsProtocol;
+            if (selectedProtocol === 'auto') {
+                wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+            } else {
+                wsProtocol = selectedProtocol + '://';
             }
 
-            showNotification('info', 'Configuration Saved', 'WebSocket configuration has been updated');
+            // Remove any existing protocol prefix if user added it
+            const cleanIp = serverIp.replace(/^(ws|wss):\/\//, '');
+            
+            // Construct the WebSocket URLs
+            const baseWsUrl = `${wsProtocol}${cleanIp}`;
+            const textWsUrl = `${baseWsUrl}${TEXT_ENDPOINT}`;
+            const voiceWsUrl = `${baseWsUrl}${VOICE_ENDPOINT}`;
+            const visionWsUrl = `${baseWsUrl}${VISION_ENDPOINT}`;
+
+            const saveButton = document.querySelector('#wsConfigModal button');
+            const originalButtonText = saveButton.innerHTML;
+            saveButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Testing connection...';
+            saveButton.disabled = true;
+
+            // Test all connections sequentially
+            testConnection(textWsUrl)
+                .then(() => testConnection(voiceWsUrl))
+                .then(() => testConnection(visionWsUrl))
+                .then(() => {
+                    // All connections successful - save config
+                    localStorage.setItem('serverIp', cleanIp);
+                    localStorage.setItem('wsProtocol', selectedProtocol);
+                    
+                    // Update global variables
+                    TEXT_WS_URL = textWsUrl;
+                    VOICE_WS_URL = voiceWsUrl;
+                    VISION_WS_URL = visionWsUrl;
+
+                    document.getElementById('wsConfigModal').classList.add('hidden');
+
+                    if (!initialized) {
+                        document.getElementById('chatOptionsModal').classList.remove('hidden');
+                        initialized = true;
+                    }
+
+                    showNotification('info', 'Configuration Saved', 'WebSocket connections successful');
+                })
+                .catch((error) => {
+                    showNotification('error', 'Connection Failed', error.message || 'Failed to connect to WebSocket');
+                })
+                .finally(() => {
+                    saveButton.innerHTML = originalButtonText;
+                    saveButton.disabled = false;
+                });
         }
+
+        function testConnection(url) {
+            return new Promise((resolve, reject) => {
+                try {
+                    const ws = new WebSocket(url);
+
+                    // Set connection timeout
+                    const timeout = setTimeout(() => {
+                        ws.close();
+                        reject(new Error(`Connection timeout: ${url}`));
+                    }, 5000);
+
+                    ws.onopen = () => {
+                        clearTimeout(timeout);
+                        // Connection established successfully
+                        ws.close();
+                        resolve();
+                    };
+
+                    ws.onerror = () => {
+                        clearTimeout(timeout);
+                        reject(new Error(`Failed to connect to: ${url}`));
+                        ws.close();
+                    };
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
     </script>
 </body>
 

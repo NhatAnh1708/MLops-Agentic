@@ -16,3 +16,4 @@ redis>=5.2.1
 ruff>=0.9.3
 speechrecognition>=3.14.1
 websockets>=14.2
+pillow>=10.4.0

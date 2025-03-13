@@ -20,9 +20,11 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 # Copy the rest of the application files
 COPY . /app
 
+COPY ssl/ /etc/nginx/ssl/
+
 # Set working directory
 WORKDIR /app
 
 EXPOSE 30000
 
-CMD ["uvicorn", "server:app", "--port", "30000", "--host", "0.0.0.0"]
+CMD ["uvicorn", "server:app", "--port", "30000", "--host", "0.0.0.0", "--ssl-keyfile", "/etc/nginx/ssl/nginx-selfsigned.key", "--ssl-certfile", "/etc/nginx/ssl/nginx-selfsigned.crt"]

@@ -4,10 +4,20 @@
 __pycache__/
 iac/terraform/*.json
 iac/ansible_setup/secrets/*.json
+.python-version
+pyproject.toml
+iac/ansible_setup/deploy_app/secrets/
+uv.lock
 iac/ansible_setup/inventory
+iac/ansible_setup/secrets/*
+iac/ansible_setup/deploy_jenkins/secrets/*
+src/ssl/
+secrets/*
+.DS_Store
 *.py[cod]
 *$py.class
 agent_history.gif
+src/frontend/uploaded_images/
 notebooks/
 # C extensions
 *.so
