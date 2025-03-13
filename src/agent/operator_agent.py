@@ -21,7 +21,6 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 lr.initialize(project_api_key=os.getenv("LAMINAR_API_KEY"))
 
-
 # exporter = OTLPSpanExporter(
 #     endpoint="https://0.0.0.0:8001/v1/traces",
 #     # important: `authorization` starts with a lowercase letter
@@ -33,7 +32,6 @@ lr.initialize(project_api_key=os.getenv("LAMINAR_API_KEY"))
 #     # other parameters
 # )
 
-
 @dataclass
 class GeminiAgent(MySystemPrompt):
     """
@@ -42,7 +40,10 @@ class GeminiAgent(MySystemPrompt):
 
     model = "gemini-2.0-flash-exp"
     llm = ChatGoogleGenerativeAI(model=model, api_key=SecretStr(api_key))
-    browser = Browser(config=BrowserConfig(headless=True, disable_security=False))
+    browser = Browser(config=BrowserConfig(
+        headless=True, 
+        disable_security=False
+    ))
     # TODO: Use remote browser with noVNC
     # browser = Browser(
     # config = BrowserConfig(
@@ -61,7 +62,13 @@ class GeminiAgent(MySystemPrompt):
             system_prompt_class=MySystemPrompt,
             register_new_step_callback=self.new_step_callback,
         )
-
+        # ollama_agent = Agent(
+        #     task=message,
+        #     llm=self.llm_qwen,
+        #     browser=self.browser,
+        #     system_prompt_class=MySystemPrompt,
+        #     register_new_step_callback=self.new_step_callback, 
+        # )
         # Create the agent task
         agent_task = asyncio.create_task(agent.run(max_steps=10))
         logger.info(f"Agent task: {agent_task}")
@@ -71,13 +78,14 @@ class GeminiAgent(MySystemPrompt):
                     step_data = await asyncio.wait_for(
                         self.data_queue.get(), timeout=60
                     )
+                    logger.info(f"Step data: {step_data}")
                     valid_data = {
-                        "step": step_data["step"],
-                        "screenshot_path": step_data["screenshot_path"],
-                        "thoughts": step_data["thoughts"],
-                        "actions": step_data["actions"],
-                        "url": step_data["url"],
-                        "title": step_data["title"],
+                        "step": step_data.get("step", 0),
+                        "screenshot_path": step_data.get("screenshot_path", ""),
+                        "thoughts": step_data.get("thoughts", {}),
+                        "actions": step_data.get("actions", []),
+                        "url": step_data.get("url", ""),
+                        "title": step_data.get("title", ""),
                     }
                     output_after_processing = self.process_output(valid_data)
 
@@ -133,7 +141,6 @@ class GeminiAgent(MySystemPrompt):
         img_path = base64_to_image(
             base64_string=str(last_screenshot), output_filename=path
         )
-
         thoughts = {
             "evaluation": model_output.current_state.evaluation_previous_goal,
             "memory": model_output.current_state.memory,

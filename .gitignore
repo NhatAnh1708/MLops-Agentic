@@ -11,6 +11,7 @@ uv.lock
 iac/ansible_setup/inventory
 iac/ansible_setup/secrets/*
 iac/ansible_setup/deploy_jenkins/secrets/*
+src/ssl/
 secrets/*
 .DS_Store
 *.py[cod]

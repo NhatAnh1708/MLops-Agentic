@@ -15,7 +15,7 @@ async def websocket_vision_endpoint(websocket: WebSocket):
     await websocket.accept()
     
     try:
-        cleanup_uploaded_images()
+        # cleanup_uploaded_images()
         while True:
             # Receive message from client
             data = await websocket.receive_json()
