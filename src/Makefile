@@ -23,14 +23,18 @@ dev:
 	uv run uvicorn server:app --reload
 
 
+docker-prune:
+	docker system prune
 docker-amd64:
 	docker build -t danny1708/ai-agent-service . --platform linux/amd64
-docker-m1:
+docker-m1: docker-prune
 	docker build -t danny1708/ai-agent-service-m1 .
 
 prod: docker-m1
-	docker run --env-file .env -p 30000:30000 danny1708/ai-agent-service-m1
-
+	docker run \
+  --env-file .env \
+  -p 30000:30000 \
+  danny1708/ai-agent-service-m1
 stop:
 	docker stop ai-agent-service
 

@@ -65,77 +65,466 @@ TBD
 Using project structures of [LLM-Kit](https://engineering.grab.com/supercharging-llm-application-development-with-llm-kit)
 ```
 .
+├── Jenkinsfile
+├── LLM_serving.ipynb
 ├── README.md
 ├── assets
 │   ├── images
 │   │   ├── Architecture-realtime.png
+│   │   ├── Architecture.png
+│   │   └── terraform_version.png
 │   └── videos
+│       └── create_iam.gif
+├── deployments
+│   ├── app
+│   │   ├── Chart.yaml
+│   │   ├── templates
+│   │   │   ├── app_ingress.yaml
+│   │   │   ├── deployment.yaml
+│   │   │   └── service.yaml
+│   │   └── values.yaml
+│   ├── lmnr
+│   ├── nginx_ingress
+│   │   ├── Chart.yaml
+│   │   ├── README.md
+│   │   ├── crds
+│   │   │   ├── appprotect.f5.com_aplogconfs.yaml
+│   │   │   ├── appprotect.f5.com_appolicies.yaml
+│   │   │   ├── appprotect.f5.com_apusersigs.yaml
+│   │   │   ├── appprotectdos.f5.com_apdoslogconfs.yaml
+│   │   │   ├── appprotectdos.f5.com_apdospolicy.yaml
+│   │   │   ├── appprotectdos.f5.com_dosprotectedresources.yaml
+│   │   │   ├── externaldns.nginx.org_dnsendpoints.yaml
+│   │   │   ├── k8s.nginx.org_globalconfigurations.yaml
+│   │   │   ├── k8s.nginx.org_policies.yaml
+│   │   │   ├── k8s.nginx.org_transportservers.yaml
+│   │   │   ├── k8s.nginx.org_virtualserverroutes.yaml
+│   │   │   └── k8s.nginx.org_virtualservers.yaml
+│   │   ├── templates
+│   │   │   ├── NOTES.txt
+│   │   │   ├── _helpers.tpl
+│   │   │   ├── controller-configmap.yaml
+│   │   │   ├── controller-daemonset.yaml
+│   │   │   ├── controller-deployment.yaml
+│   │   │   ├── controller-globalconfiguration.yaml
+│   │   │   ├── controller-hpa.yaml
+│   │   │   ├── controller-ingress-class.yaml
+│   │   │   ├── controller-leader-election-configmap.yaml
+│   │   │   ├── controller-pdb.yaml
+│   │   │   ├── controller-secret.yaml
+│   │   │   ├── controller-service.yaml
+│   │   │   ├── controller-serviceaccount.yaml
+│   │   │   ├── controller-servicemonitor.yaml
+│   │   │   ├── controller-wildcard-secret.yaml
+│   │   │   └── rbac.yaml
+│   │   ├── values-icp.yaml
+│   │   ├── values-nsm.yaml
+│   │   ├── values-plus.yaml
+│   │   ├── values.schema.json
+│   │   └── values.yaml
+│   └── prometheus
+│       └── kube-prometheus-stack
+│           ├── CONTRIBUTING.md
+│           ├── Chart.lock
+│           ├── Chart.yaml
+│           ├── README.md
+│           ├── charts
+│           │   ├── crds
+│           │   │   ├── Chart.yaml
+│           │   │   ├── README.md
+│           │   │   └── crds
+│           │   │       ├── crd-alertmanagerconfigs.yaml
+│           │   │       ├── crd-alertmanagers.yaml
+│           │   │       ├── crd-podmonitors.yaml
+│           │   │       ├── crd-probes.yaml
+│           │   │       ├── crd-prometheusagents.yaml
+│           │   │       ├── crd-prometheuses.yaml
+│           │   │       ├── crd-prometheusrules.yaml
+│           │   │       ├── crd-scrapeconfigs.yaml
+│           │   │       ├── crd-servicemonitors.yaml
+│           │   │       └── crd-thanosrulers.yaml
+│           │   ├── grafana
+│           │   │   ├── Chart.yaml
+│           │   │   ├── README.md
+│           │   │   ├── ci
+│           │   │   │   ├── default-values.yaml
+│           │   │   │   ├── with-affinity-values.yaml
+│           │   │   │   ├── with-dashboard-json-values.yaml
+│           │   │   │   ├── with-dashboard-values.yaml
+│           │   │   │   ├── with-extraconfigmapmounts-values.yaml
+│           │   │   │   ├── with-image-renderer-values.yaml
+│           │   │   │   └── with-persistence.yaml
+│           │   │   ├── dashboards
+│           │   │   │   └── custom-dashboard.json
+│           │   │   ├── templates
+│           │   │   │   ├── NOTES.txt
+│           │   │   │   ├── _config.tpl
+│           │   │   │   ├── _helpers.tpl
+│           │   │   │   ├── _pod.tpl
+│           │   │   │   ├── clusterrole.yaml
+│           │   │   │   ├── clusterrolebinding.yaml
+│           │   │   │   ├── configSecret.yaml
+│           │   │   │   ├── configmap-dashboard-provider.yaml
+│           │   │   │   ├── configmap.yaml
+│           │   │   │   ├── dashboards-json-configmap.yaml
+│           │   │   │   ├── deployment.yaml
+│           │   │   │   ├── extra-manifests.yaml
+│           │   │   │   ├── headless-service.yaml
+│           │   │   │   ├── hpa.yaml
+│           │   │   │   ├── image-renderer-deployment.yaml
+│           │   │   │   ├── image-renderer-hpa.yaml
+│           │   │   │   ├── image-renderer-network-policy.yaml
+│           │   │   │   ├── image-renderer-service.yaml
+│           │   │   │   ├── image-renderer-servicemonitor.yaml
+│           │   │   │   ├── ingress.yaml
+│           │   │   │   ├── networkpolicy.yaml
+│           │   │   │   ├── poddisruptionbudget.yaml
+│           │   │   │   ├── podsecuritypolicy.yaml
+│           │   │   │   ├── pvc.yaml
+│           │   │   │   ├── role.yaml
+│           │   │   │   ├── rolebinding.yaml
+│           │   │   │   ├── secret-env.yaml
+│           │   │   │   ├── secret.yaml
+│           │   │   │   ├── service.yaml
+│           │   │   │   ├── serviceaccount.yaml
+│           │   │   │   ├── servicemonitor.yaml
+│           │   │   │   ├── statefulset.yaml
+│           │   │   │   └── tests
+│           │   │   │       ├── test-configmap.yaml
+│           │   │   │       ├── test-podsecuritypolicy.yaml
+│           │   │   │       ├── test-role.yaml
+│           │   │   │       ├── test-rolebinding.yaml
+│           │   │   │       ├── test-serviceaccount.yaml
+│           │   │   │       └── test.yaml
+│           │   │   └── values.yaml
+│           │   ├── kube-state-metrics
+│           │   │   ├── Chart.yaml
+│           │   │   ├── README.md
+│           │   │   ├── templates
+│           │   │   │   ├── NOTES.txt
+│           │   │   │   ├── _helpers.tpl
+│           │   │   │   ├── ciliumnetworkpolicy.yaml
+│           │   │   │   ├── clusterrolebinding.yaml
+│           │   │   │   ├── crs-configmap.yaml
+│           │   │   │   ├── deployment.yaml
+│           │   │   │   ├── extra-manifests.yaml
+│           │   │   │   ├── kubeconfig-secret.yaml
+│           │   │   │   ├── networkpolicy.yaml
+│           │   │   │   ├── pdb.yaml
+│           │   │   │   ├── podsecuritypolicy.yaml
+│           │   │   │   ├── psp-clusterrole.yaml
+│           │   │   │   ├── psp-clusterrolebinding.yaml
+│           │   │   │   ├── rbac-configmap.yaml
+│           │   │   │   ├── role.yaml
+│           │   │   │   ├── rolebinding.yaml
+│           │   │   │   ├── service.yaml
+│           │   │   │   ├── serviceaccount.yaml
+│           │   │   │   ├── servicemonitor.yaml
+│           │   │   │   ├── stsdiscovery-role.yaml
+│           │   │   │   ├── stsdiscovery-rolebinding.yaml
+│           │   │   │   └── verticalpodautoscaler.yaml
+│           │   │   └── values.yaml
+│           │   ├── prometheus-node-exporter
+│           │   │   ├── Chart.yaml
+│           │   │   ├── README.md
+│           │   │   ├── ci
+│           │   │   │   └── port-values.yaml
+│           │   │   ├── templates
+│           │   │   │   ├── NOTES.txt
+│           │   │   │   ├── _helpers.tpl
+│           │   │   │   ├── clusterrole.yaml
+│           │   │   │   ├── clusterrolebinding.yaml
+│           │   │   │   ├── daemonset.yaml
+│           │   │   │   ├── endpoints.yaml
+│           │   │   │   ├── extra-manifests.yaml
+│           │   │   │   ├── networkpolicy.yaml
+│           │   │   │   ├── podmonitor.yaml
+│           │   │   │   ├── psp-clusterrole.yaml
+│           │   │   │   ├── psp-clusterrolebinding.yaml
+│           │   │   │   ├── psp.yaml
+│           │   │   │   ├── rbac-configmap.yaml
+│           │   │   │   ├── service.yaml
+│           │   │   │   ├── serviceaccount.yaml
+│           │   │   │   ├── servicemonitor.yaml
+│           │   │   │   └── verticalpodautoscaler.yaml
+│           │   │   └── values.yaml
+│           │   └── prometheus-windows-exporter
+│           │       ├── Chart.yaml
+│           │       ├── README.md
+│           │       ├── templates
+│           │       │   ├── _helpers.tpl
+│           │       │   ├── config.yaml
+│           │       │   ├── daemonset.yaml
+│           │       │   ├── podmonitor.yaml
+│           │       │   ├── service.yaml
+│           │       │   ├── serviceaccount.yaml
+│           │       │   └── servicemonitor.yaml
+│           │       └── values.yaml
+│           ├── templates
+│           │   ├── NOTES.txt
+│           │   ├── _helpers.tpl
+│           │   ├── alertmanager
+│           │   │   ├── alertmanager.yaml
+│           │   │   ├── extrasecret.yaml
+│           │   │   ├── ingress.yaml
+│           │   │   ├── ingressperreplica.yaml
+│           │   │   ├── podDisruptionBudget.yaml
+│           │   │   ├── psp-role.yaml
+│           │   │   ├── psp-rolebinding.yaml
+│           │   │   ├── psp.yaml
+│           │   │   ├── secret.yaml
+│           │   │   ├── service.yaml
+│           │   │   ├── serviceaccount.yaml
+│           │   │   ├── servicemonitor.yaml
+│           │   │   └── serviceperreplica.yaml
+│           │   ├── exporters
+│           │   │   ├── core-dns
+│           │   │   │   ├── service.yaml
+│           │   │   │   └── servicemonitor.yaml
+│           │   │   ├── kube-api-server
+│           │   │   │   └── servicemonitor.yaml
+│           │   │   ├── kube-controller-manager
+│           │   │   │   ├── endpoints.yaml
+│           │   │   │   ├── service.yaml
+│           │   │   │   └── servicemonitor.yaml
+│           │   │   ├── kube-dns
+│           │   │   │   ├── service.yaml
+│           │   │   │   └── servicemonitor.yaml
+│           │   │   ├── kube-etcd
+│           │   │   │   ├── endpoints.yaml
+│           │   │   │   ├── service.yaml
+│           │   │   │   └── servicemonitor.yaml
+│           │   │   ├── kube-proxy
+│           │   │   │   ├── endpoints.yaml
+│           │   │   │   ├── service.yaml
+│           │   │   │   └── servicemonitor.yaml
+│           │   │   ├── kube-scheduler
+│           │   │   │   ├── endpoints.yaml
+│           │   │   │   ├── service.yaml
+│           │   │   │   └── servicemonitor.yaml
+│           │   │   └── kubelet
+│           │   │       └── servicemonitor.yaml
+│           │   ├── extra-objects.yaml
+│           │   ├── grafana
+│           │   │   ├── configmap-dashboards.yaml
+│           │   │   ├── configmaps-datasources.yaml
+│           │   │   └── dashboards-1.14
+│           │   │       ├── alertmanager-overview.yaml
+│           │   │       ├── apiserver.yaml
+│           │   │       ├── cluster-total.yaml
+│           │   │       ├── controller-manager.yaml
+│           │   │       ├── etcd.yaml
+│           │   │       ├── grafana-overview.yaml
+│           │   │       ├── k8s-coredns.yaml
+│           │   │       ├── k8s-resources-cluster.yaml
+│           │   │       ├── k8s-resources-multicluster.yaml
+│           │   │       ├── k8s-resources-namespace.yaml
+│           │   │       ├── k8s-resources-node.yaml
+│           │   │       ├── k8s-resources-pod.yaml
+│           │   │       ├── k8s-resources-windows-cluster.yaml
+│           │   │       ├── k8s-resources-windows-namespace.yaml
+│           │   │       ├── k8s-resources-windows-pod.yaml
+│           │   │       ├── k8s-resources-workload.yaml
+│           │   │       ├── k8s-resources-workloads-namespace.yaml
+│           │   │       ├── k8s-windows-cluster-rsrc-use.yaml
+│           │   │       ├── k8s-windows-node-rsrc-use.yaml
+│           │   │       ├── kubelet.yaml
+│           │   │       ├── namespace-by-pod.yaml
+│           │   │       ├── namespace-by-workload.yaml
+│           │   │       ├── node-cluster-rsrc-use.yaml
+│           │   │       ├── node-rsrc-use.yaml
+│           │   │       ├── nodes-darwin.yaml
+│           │   │       ├── nodes.yaml
+│           │   │       ├── persistentvolumesusage.yaml
+│           │   │       ├── pod-total.yaml
+│           │   │       ├── prometheus-remote-write.yaml
+│           │   │       ├── prometheus.yaml
+│           │   │       ├── proxy.yaml
+│           │   │       ├── scheduler.yaml
+│           │   │       └── workload-total.yaml
+│           │   ├── prometheus
+│           │   │   ├── _rules.tpl
+│           │   │   ├── additionalAlertRelabelConfigs.yaml
+│           │   │   ├── additionalAlertmanagerConfigs.yaml
+│           │   │   ├── additionalPrometheusRules.yaml
+│           │   │   ├── additionalScrapeConfigs.yaml
+│           │   │   ├── ciliumnetworkpolicy.yaml
+│           │   │   ├── clusterrole.yaml
+│           │   │   ├── clusterrolebinding.yaml
+│           │   │   ├── csi-secret.yaml
+│           │   │   ├── extrasecret.yaml
+│           │   │   ├── ingress.yaml
+│           │   │   ├── ingressThanosSidecar.yaml
+│           │   │   ├── ingressperreplica.yaml
+│           │   │   ├── networkpolicy.yaml
+│           │   │   ├── podDisruptionBudget.yaml
+│           │   │   ├── podmonitors.yaml
+│           │   │   ├── prometheus.yaml
+│           │   │   ├── psp-clusterrole.yaml
+│           │   │   ├── psp-clusterrolebinding.yaml
+│           │   │   ├── psp.yaml
+│           │   │   ├── rules-1.14
+│           │   │   │   ├── alertmanager.rules.yaml
+│           │   │   │   ├── config-reloaders.yaml
+│           │   │   │   ├── etcd.yaml
+│           │   │   │   ├── general.rules.yaml
+│           │   │   │   ├── k8s.rules.container_cpu_usage_seconds_total.yaml
+│           │   │   │   ├── k8s.rules.container_memory_cache.yaml
+│           │   │   │   ├── k8s.rules.container_memory_rss.yaml
+│           │   │   │   ├── k8s.rules.container_memory_swap.yaml
+│           │   │   │   ├── k8s.rules.container_memory_working_set_bytes.yaml
+│           │   │   │   ├── k8s.rules.container_resource.yaml
+│           │   │   │   ├── k8s.rules.pod_owner.yaml
+│           │   │   │   ├── kube-apiserver-availability.rules.yaml
+│           │   │   │   ├── kube-apiserver-burnrate.rules.yaml
+│           │   │   │   ├── kube-apiserver-histogram.rules.yaml
+│           │   │   │   ├── kube-apiserver-slos.yaml
+│           │   │   │   ├── kube-prometheus-general.rules.yaml
+│           │   │   │   ├── kube-prometheus-node-recording.rules.yaml
+│           │   │   │   ├── kube-scheduler.rules.yaml
+│           │   │   │   ├── kube-state-metrics.yaml
+│           │   │   │   ├── kubelet.rules.yaml
+│           │   │   │   ├── kubernetes-apps.yaml
+│           │   │   │   ├── kubernetes-resources.yaml
+│           │   │   │   ├── kubernetes-storage.yaml
+│           │   │   │   ├── kubernetes-system-apiserver.yaml
+│           │   │   │   ├── kubernetes-system-controller-manager.yaml
+│           │   │   │   ├── kubernetes-system-kube-proxy.yaml
+│           │   │   │   ├── kubernetes-system-kubelet.yaml
+│           │   │   │   ├── kubernetes-system-scheduler.yaml
+│           │   │   │   ├── kubernetes-system.yaml
+│           │   │   │   ├── node-exporter.rules.yaml
+│           │   │   │   ├── node-exporter.yaml
+│           │   │   │   ├── node-network.yaml
+│           │   │   │   ├── node.rules.yaml
+│           │   │   │   ├── prometheus-operator.yaml
+│           │   │   │   ├── prometheus.yaml
+│           │   │   │   ├── windows.node.rules.yaml
+│           │   │   │   └── windows.pod.rules.yaml
+│           │   │   ├── secret.yaml
+│           │   │   ├── service.yaml
+│           │   │   ├── serviceThanosSidecar.yaml
+│           │   │   ├── serviceThanosSidecarExternal.yaml
+│           │   │   ├── serviceaccount.yaml
+│           │   │   ├── servicemonitor.yaml
+│           │   │   ├── servicemonitorThanosSidecar.yaml
+│           │   │   ├── servicemonitors.yaml
+│           │   │   └── serviceperreplica.yaml
+│           │   ├── prometheus-operator
+│           │   │   ├── _prometheus-operator.tpl
+│           │   │   ├── admission-webhooks
+│           │   │   │   ├── _prometheus-operator-webhook.tpl
+│           │   │   │   ├── deployment
+│           │   │   │   │   ├── deployment.yaml
+│           │   │   │   │   ├── pdb.yaml
+│           │   │   │   │   ├── service.yaml
+│           │   │   │   │   └── serviceaccount.yaml
+│           │   │   │   ├── job-patch
+│           │   │   │   │   ├── ciliumnetworkpolicy-createSecret.yaml
+│           │   │   │   │   ├── ciliumnetworkpolicy-patchWebhook.yaml
+│           │   │   │   │   ├── clusterrole.yaml
+│           │   │   │   │   ├── clusterrolebinding.yaml
+│           │   │   │   │   ├── job-createSecret.yaml
+│           │   │   │   │   ├── job-patchWebhook.yaml
+│           │   │   │   │   ├── networkpolicy-createSecret.yaml
+│           │   │   │   │   ├── networkpolicy-patchWebhook.yaml
+│           │   │   │   │   ├── psp.yaml
+│           │   │   │   │   ├── role.yaml
+│           │   │   │   │   ├── rolebinding.yaml
+│           │   │   │   │   └── serviceaccount.yaml
+│           │   │   │   ├── mutatingWebhookConfiguration.yaml
+│           │   │   │   └── validatingWebhookConfiguration.yaml
+│           │   │   ├── aggregate-clusterroles.yaml
+│           │   │   ├── certmanager.yaml
+│           │   │   ├── ciliumnetworkpolicy.yaml
+│           │   │   ├── clusterrole.yaml
+│           │   │   ├── clusterrolebinding.yaml
+│           │   │   ├── deployment.yaml
+│           │   │   ├── networkpolicy.yaml
+│           │   │   ├── psp-clusterrole.yaml
+│           │   │   ├── psp-clusterrolebinding.yaml
+│           │   │   ├── psp.yaml
+│           │   │   ├── service.yaml
+│           │   │   ├── serviceaccount.yaml
+│           │   │   ├── servicemonitor.yaml
+│           │   │   └── verticalpodautoscaler.yaml
+│           │   └── thanos-ruler
+│           └── values.yaml
+├── docker-compose.yml
+├── iac
+│   ├── ansible_setup
+│   │   ├── deploy_app
+│   │   │   ├── create_computer_instance.yaml
+│   │   │   └── secrets
+│   │   ├── deploy_jenkins
+│   │   │   ├── create_compute_instance.yaml
+│   │   │   ├── deploy_jenkins.yml
+│   │   │   └── secrets
+│   │   ├── inventory
+│   │   ├── pyproject.toml
+│   │   └── uv.lock
+│   └── terraform
+│       ├── main.tf
+│       └── variables.tf
+├── jenkins
+│   ├── Dockerfile
+│   └── docker-compose-jenkins.yaml
+├── nginx
+│   ├── Dockerfile
+│   ├── certbot
+│   ├── default.conf
+│   ├── generate-ssl.sh
+│   ├── nginx.conf
+│   └── ssl
 ├── notebooks
-│   ├── data
-│   ├── janus-poc
-│   └── poc
-│       ├── README.md
-│       ├── downloads
-│       │   └── dummy.pdf
-│       ├── index copy.py
-│       ├── index.html
-│       ├── index.py
-│       ├── main.py
-│       ├── pcm-processor.js
-│       ├── pyproject.toml
-│       ├── static
-│       │   └── js
-│       │       └── chat.js
-│       ├── storage
-│       │   ├── default__vector_store.json
-│       │   ├── docstore.json
-│       │   ├── graph_store.json
-│       │   ├── image__vector_store.json
-│       │   └── index_store.json
-│       └── uv.lock
-└── src
-    ├── Dockerfile
-    ├── LICENSE
-    ├── Makefile
-    ├── __init__.py
-    ├── agent
-    │   ├── base_agent.py
-    │   ├── gemini_agent.py
-    │   ├── helper
-    │   │   ├── dummy_data.json
-    │   │   └── google_search.py
-    │   ├── nvidia_agent.py
-    │   └── pydantic_ai_agent.py
-    ├── auth
-    ├── core
-    ├── frontend
-    │   ├── index.html
-    │   └── pcm-processor.js
-    ├── models
-    │   ├── action.py
-    │   ├── authentication.py
-    │   ├── base.py
-    │   ├── google_search.py
-    │   ├── history.py
-    │   └── message.py
-    ├── pyproject.toml
-    ├── routes
-    │   ├── health.py
-    │   ├── index.py
-    │   └── websocket.py
-    ├── scripts
-    │   └── clone-supabase.sh
-    ├── server.py
-    ├── storage
-    ├── tools
-    ├── travis-ci.yml
-    ├── utils
-    └── uv.lock
+├── pyproject.toml
+├── secrets
+├── setup.sh
+├── src
+│   ├── Dockerfile
+│   ├── LICENSE
+│   ├── Makefile
+│   ├── __init__.py
+│   ├── agent
+│   │   ├── base_agent.py
+│   │   ├── helper
+│   │   │   ├── dummy_data.json
+│   │   │   ├── google_search.py
+│   │   │   ├── screenshot.py
+│   │   │   └── vllm_serving.py
+│   │   ├── operator_agent.py
+│   │   ├── pydantic_ai_agent.py
+│   │   └── vision_agent.py
+│   ├── frontend
+│   │   ├── images
+│   │   │   └── logo.png
+│   │   ├── index.html
+│   │   ├── pcm-processor.js
+│   ├── models
+│   │   ├── action.py
+│   │   ├── google_search.py
+│   │   ├── history.py
+│   │   ├── message.py
+│   │   └── system_prompt.py
+│   ├── pyproject.toml
+│   ├── requirements.txt
+│   ├── routes
+│   │   ├── chat_socket.py
+│   │   ├── health.py
+│   │   ├── index.py
+│   │   ├── vision_socket.py
+│   │   └── voice_socket.py
+│   ├── scripts
+│   │   └── clone-supabase.sh
+│   ├── server.py
+│   ├── ssl
+│   │   ├── tls.crt
+│   │   └── tls.key
+│   ├── tests
+│   ├── tools
+│   └── uv.lock
+└── uv.lock
 ```
-
-
-
-
 
 ## Key features
 
@@ -167,9 +556,11 @@ uv --version
 > **_IMPORTANT:_** If you want to check the uv package had installed, you should run the above scripts.
 
 ###### Install libraries and dependencies
-
-
-TBD
+With uv package, the source have **pyproject.toml** and you only run uv run fastapi dev to install and test AI services.
+```bash
+cd src
+make dev
+```
 
 ###### Install docker
 
@@ -181,20 +572,23 @@ docker login
 ```
 You will be prompted to enter your Docker Hub username, password, and email address (optional). After successful authentication, you can proceed with your Docker tasks, such as pushing or pulling images from Docker Hub.
 
-
-#### Set up Supabase database
-
-###### Quick start
-
-###### Inference FastAPI app
-
 ###### Inference in localhost
-
+```bash
+make dev
+```
 ###### Inference in Docker container
-
-
-##### Log and trace with Pydantic Logfire
-
+```bash
+make prod
+```
+> **_IMPORTANT:_** Developer using MacOS with M1 chip and the dockerfile to differenece if you want to test in Linux server. You can create docker image for linux:
+```bash
+make docker-amd64
+```
+##### Log and trace with Laminar
+Easily sign in or create a new account on the [Laminar Dashboard](https://www.lmnr.ai/sign-in?callbackUrl=/onboarding) to get started.
+Once signed in, create a new project to monitor and analyze performance with Laminar.
+![laminar-image-tracking](assets/images/laminar.png)
+This setup leverages **Laminar** combined with **OpenTelemetry** to track and analyze agent activity in web browsers, providing deep insights into user behavior and system performance.
 
 ### Production Stage
 
@@ -208,7 +602,7 @@ Refer to [Create a project in Google Cloud Platform (GCP)](#13-create-a-project-
 
 Navigate to the following link to enable Kubernetes Engine API: [Kubernetes Engine API](https://console.cloud.google.com/apis/library/container.googleapis.com)
 
-![kubernetes-engine-api](static/images/kubernetes-engine-api.png)
+![kubernetes-engine-api](assets/images/k8s-ui.png)
 
 ##### 9.1.3. Install and setup Google Cloud CLI
 
@@ -290,8 +684,6 @@ The GKE cluster I configured has 1 node and its machine is "e2-standard-2" (2 CP
 
 #### 10.1. Deploy Nginx Service Controller
 
-> **_TIP:_** I set an alias 'k' for 'kubectl' for faster typing. 😆
-
 ```bash
 alias k='kubectl'
 ```
@@ -325,12 +717,9 @@ We will deploy the FastAPI app to GKE in the namespace **model-serving**. It wil
 cd helm_charts/app
 k create ns model-serving
 kubens model-serving
-helm upgrade --install app .
-```
-
-```bash
 k create secret generic agent-env --from-env-file=.env -n model-serving
 k describe secret agent-env -n model-serving
+helm upgrade --install app .
 ```
 
 Wait several minutes until it deployed sucessfully.
@@ -343,20 +732,20 @@ Now, we will test the app, do the following steps:
     k get ing
     ```
 
-- Add the domain name `human-pose-estimation.com` of this IP to /etc/hosts where the hostnames are mapped to IP addresses.
+- Add the domain name `donyai.space` of this IP to /etc/hosts where the hostnames are mapped to IP addresses.
 
     ```bash
     sudo nano /etc/hosts
-    [YOUR_INGRESS_IP_ADDRESS] human-pose-estimation.com
+    [YOUR_INGRESS_IP_ADDRESS] donyai.space
     ```
 
     Example:
 
     ```nano
-    35.240.217.148 human-pose-estimation.com
+    35.240.217.148 donyai.space
     ```
 
-- Open a web browser and navigate to `human-pose-estimation.com/docs` to access the FastAPI app. Now we can test the app
+- Open a web browser and navigate to `donyai.space` to access the app. Now we can test the app
 
     ![fastapi-gke](static/images/fastapi-gke.png)
 
