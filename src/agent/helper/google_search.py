@@ -18,7 +18,6 @@ def is_google_search(input: str, search_type: str):
     conn.request("POST", f"/{search_type}", payload, headers)
     res = conn.getresponse()
     data = json.load(res)
-    logger.info(str(data))
     context = ""
     if search_type == "search":
         for item in data["organic"]:

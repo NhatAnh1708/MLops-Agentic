@@ -57,7 +57,7 @@ async def websocket_text_endpoint(websocket: WebSocket):
                                         }
                                     )
                             elif data["googleSearch"]:
-                                async for response_chunk in base_agent.chat_qwen(
+                                async for response_chunk in base_agent.chat(
                                     message=data["text"], google_search=True
                                 ):
                                     try:
@@ -83,7 +83,7 @@ async def websocket_text_endpoint(websocket: WebSocket):
                                         continue
                             else:
                                 logger.info("Normal mode")
-                                async for response_chunk in base_agent.chat_qwen(
+                                async for response_chunk in base_agent.chat(
                                     message=data["text"], google_search=False
                                 ):
                                     try:

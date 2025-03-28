@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 from google import genai
 import asyncio
 from loguru import logger
-from langchain_ollama import ChatOllama
-from langchain_core.messages import AIMessage
 
 from agent.helper.google_search import is_google_search
 
@@ -25,46 +23,38 @@ class BaseAgent:
     )
     model_name = "gemini-2.0-flash-exp"
     config = {"response_modalities": ["TEXT"]}
-    llm_qwen = ChatOllama(
-        model="qwen2.5",
-        num_ctx=32000,
-        base_url="https://6a4f-34-125-97-236.ngrok-free.app"
-    )
-    async def chat_qwen(self, message: str, google_search: bool = False):
+    async def chat(self, message: str, google_search: bool = False):
         """
-        Chat with the Qwen model.
-        """
-        try:
-            if google_search:
-                message_after_processing = self.is_process_message(message=message)
-            else:
-                message_after_processing = message
-            message_ollama = [
-                ("human", message_after_processing)
-            ]
-            response = self.llm_qwen.stream(message_ollama)
-            for chunk in response:
-                if chunk.content is None:
-                    continue
-                yield {"type": "text", "content": chunk.content}
-                await asyncio.sleep(0.001)
-        except Exception as e:
-            logger.error(f"Error in chat_qwen: {e}")
+        Asynchronously chat with the Gemini model.
 
+        This function establishes a live connection with the Gemini model,
+        sends a message, and yields the model's responses.
 
-    async def chat(self, message: str):
-        """
-        Chat with the Gemini model.
+        Parameters:
+        message (str): The input message to send to the Gemini model.
+        google_search (bool, optional): If True, processes the message using
+                                        Google Search before sending it to the model.
+                                        Defaults to False.
+
+        Yields:
+        dict: A dictionary containing the response from the model.
+              The dictionary has two keys:
+              - 'type': Always set to "text".
+              - 'content': The text content of the model's response.
+
+        Note:
+        The function uses an asynchronous context manager to handle the connection
+        with the Gemini model. It processes the input message if google_search is True,
+        sends the message to the model, and then yields the responses as they are received.
         """
         async with self.client.aio.live.connect(
             model=self.model_name, config=self.config
         ) as session:
-            logger.info(str(message))
-            # greetings_question = self.classify_question(message=message)
-            greetings_question = True
-            if greetings_question:
+            if google_search:
                 message_after_processing = self.is_process_message(message=message)
-                await session.send(input=message_after_processing, end_of_turn=True)
+            else:
+                message_after_processing = message
+            await session.send(input=message_after_processing, end_of_turn=True)
             async for response in session.receive():
                 if response.text is None:
                     continue

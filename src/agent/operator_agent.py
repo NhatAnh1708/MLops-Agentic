@@ -21,17 +21,6 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 lr.initialize(project_api_key=os.getenv("LAMINAR_API_KEY"))
 
-# exporter = OTLPSpanExporter(
-#     endpoint="https://0.0.0.0:8001/v1/traces",
-#     # important: `authorization` starts with a lowercase letter
-#     headers={"authorization": f"Bearer {os.getenv('LAMINAR_API_KEY')}"},
-# )
-
-# lr.function_that_initiates_tracer(
-#     exporter=exporter,
-#     # other parameters
-# )
-
 @dataclass
 class GeminiAgent(MySystemPrompt):
     """
@@ -41,7 +30,7 @@ class GeminiAgent(MySystemPrompt):
     model = "gemini-2.0-flash-exp"
     llm = ChatGoogleGenerativeAI(model=model, api_key=SecretStr(api_key))
     browser = Browser(config=BrowserConfig(
-        headless=True, 
+        headless=False, 
         disable_security=False
     ))
     # TODO: Use remote browser with noVNC
@@ -62,13 +51,6 @@ class GeminiAgent(MySystemPrompt):
             system_prompt_class=MySystemPrompt,
             register_new_step_callback=self.new_step_callback,
         )
-        # ollama_agent = Agent(
-        #     task=message,
-        #     llm=self.llm_qwen,
-        #     browser=self.browser,
-        #     system_prompt_class=MySystemPrompt,
-        #     register_new_step_callback=self.new_step_callback, 
-        # )
         # Create the agent task
         agent_task = asyncio.create_task(agent.run(max_steps=10))
         logger.info(f"Agent task: {agent_task}")
